@@ -1,23 +1,61 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MFDeploy.Services.BusyService;
 using MFDeploy.Services.Dialog;
+using MFDeploy.Utilities;
+using Microsoft.Practices.ServiceLocation;
 using Template10.Mvvm;
+using Template10.Services.NavigationService;
 using Template10.Services.SettingsService;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Navigation;
 
 namespace MFDeploy.ViewModels
 {
     public class SettingsPageViewModel : MyViewModelBase
     {
+        //private instance of Main to get general stuff
+        private MainViewModel MainVM { get { return ServiceLocator.Current.GetInstance<MainViewModel>(); } }
+
         public SettingsPageViewModel(IMyDialogService dlg, IBusyService busy)
         {
             SettingsPartViewModel  = new SettingsPartViewModel(dlg, busy);
             AboutPartViewModel = new AboutPartViewModel(dlg, busy);
         }
         public SettingsPartViewModel SettingsPartViewModel { get; }
-        public AboutPartViewModel AboutPartViewModel { get; } 
+        public AboutPartViewModel AboutPartViewModel { get; }
+
+        #region Navigation
+        public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> suspensionState)
+        {
+
+            if (suspensionState.Any())
+            {
+                //Value = suspensionState[nameof(Value)]?.ToString();
+            }
+            await Task.CompletedTask;
+
+            MainVM.PageHeader = Res.GetString("ST_PageHeader");
+        }
+
+        public override async Task OnNavigatedFromAsync(IDictionary<string, object> suspensionState, bool suspending)
+        {
+            if (suspending)
+            {
+                //suspensionState[nameof(Value)] = Value;
+            }
+            await Task.CompletedTask;
+        }
+
+        public override async Task OnNavigatingFromAsync(NavigatingEventArgs args)
+        {
+            args.Cancel = false;
+            await Task.CompletedTask;
+        }
+
+        #endregion
     }
 
     public class SettingsPartViewModel : MyViewModelBase
@@ -96,5 +134,7 @@ namespace MFDeploy.ViewModels
 
         public Uri RateMe => new Uri("http://aka.ms/template10");
     }
+
+    
 }
 

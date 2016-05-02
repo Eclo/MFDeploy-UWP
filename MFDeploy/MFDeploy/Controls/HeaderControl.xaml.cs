@@ -22,7 +22,7 @@ namespace MFDeploy.Controls
     public sealed partial class HeaderControl : UserControl
     {
         // strongly-typed view models enable x:bind
-        public MainPageViewModel ViewModel => this.DataContext as MainPageViewModel;
+        public MainViewModel ViewModel => this.DataContext as MainViewModel;
         public HeaderControl()
         {
             this.InitializeComponent();
@@ -30,16 +30,8 @@ namespace MFDeploy.Controls
 
      
 
-
-
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //Flyout f = this.TransportTypeButton.Flyout as Flyout;
-            //if (f != null)
-            //{
-            //    f.Hide();
-            //}
-            
+        {            
             this.TransportTypeButton.Flyout.SetValue(Views.AttachProp.IsOpenProperty, false);
         }
 

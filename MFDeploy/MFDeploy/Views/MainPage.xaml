@@ -42,29 +42,14 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-
-        <controls:PageHeader x:Name="pageHeader"  
-                             RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" 
-                             HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"  >
-            <controls:PageHeader.Content>
-                <Grid >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock x:Uid="MP_PageHeader" Text="Main Page" VerticalAlignment="Center"/>
-                    <ctrls:HeaderControl  Grid.Column="1"/>
-                </Grid>
-            </controls:PageHeader.Content>
-        </controls:PageHeader>
-
-
+       
 
         <ScrollViewer x:Name="pageContent"  Padding="12" VerticalScrollBarVisibility="Auto"
                       RelativePanel.AlignBottomWithPanel="True"
+                      RelativePanel.AlignTopWithPanel="True"
                       RelativePanel.AlignLeftWithPanel="True"
                       RelativePanel.AlignRightWithPanel="True"
-                      RelativePanel.Below="pageHeader">
+                      >
             <Grid>
                 
             </Grid>

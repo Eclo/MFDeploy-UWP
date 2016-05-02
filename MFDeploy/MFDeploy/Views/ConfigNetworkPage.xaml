@@ -43,17 +43,13 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-
-        <controls:PageHeader x:Name="pageHeader" x:Uid="CN_PageHeader" Text="Config Network"
-                             RelativePanel.AlignLeftWithPanel="True" 
-                             RelativePanel.AlignRightWithPanel="True"
-                             RelativePanel.AlignTopWithPanel="True"  />
-
+      
         <ScrollViewer x:Name="pageContent"  Padding="12" VerticalScrollBarVisibility="Auto"
                       RelativePanel.AlignBottomWithPanel="True"
+                      RelativePanel.AlignTopWithPanel="True"
                       RelativePanel.AlignLeftWithPanel="True"
                       RelativePanel.AlignRightWithPanel="True"
-                      RelativePanel.Below="pageHeader">
+                     >
             <Grid>
 
             </Grid>

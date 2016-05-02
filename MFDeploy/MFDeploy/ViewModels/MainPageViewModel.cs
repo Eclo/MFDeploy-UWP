@@ -7,12 +7,16 @@ using MFDeploy.Services.Dialog;
 using MFDeploy.Services.BusyService;
 using MFDeploy.Services.NetMicroFrameworkService;
 using Microsoft.NetMicroFramework.Tools.MFDeployTool.Engine;
+using System.Collections.ObjectModel;
+using MFDeploy.Utilities;
+using Microsoft.Practices.ServiceLocation;
 
 namespace MFDeploy.ViewModels
 {
     public class MainPageViewModel : MyViewModelBase
     {
-        private INetMFUsbDebugClientService UsbDebugService;
+        //private instance of Main to get general stuff
+        private MainViewModel MainVM { get { return ServiceLocator.Current.GetInstance<MainViewModel>(); } }
 
         public MainPageViewModel(IMyDialogService dlg, IBusyService busy, INetMFUsbDebugClientService usbService)
         {
@@ -23,37 +27,25 @@ namespace MFDeploy.ViewModels
 
             this.DialogSrv = dlg;
             this.BusySrv = busy;
-            this.UsbDebugService = usbService;
-            AvailableTransportTypes = EnumHelper.ListOf<TransportType>();
+
         }
 
         string _Value = "Gas";
         public string Value { get { return _Value; } set { Set(ref _Value, value); } }
 
 
-        public TransportType SelectedTransportType { get; set; } 
-
-        public List<TransportType> AvailableTransportTypes { get; set; }
-
-
-        public void Reset()
-        {
-            SelectedTransportType = TransportType.Usb;
-            
-            
-        }
-
 
         #region Navigation
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> suspensionState)
         {
-            Reset();
+           
             if (suspensionState.Any())
             {
                 Value = suspensionState[nameof(Value)]?.ToString();
             }
             await Task.CompletedTask;
-           
+            MainVM.PageHeader = Res.GetString("MP_PageHeader");
+
         }
 
         public override async Task OnNavigatedFromAsync(IDictionary<string, object> suspensionState, bool suspending)

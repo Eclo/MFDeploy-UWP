@@ -117,23 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CN_PageHeader.Text" xml:space="preserve">
+  <data name="CN_PageHeader" xml:space="preserve">
     <value>Network Configuration</value>
     <comment>CN = Config Network</comment>
   </data>
-  <data name="CU_PageHeader.Text" xml:space="preserve">
+  <data name="CU_PageHeader" xml:space="preserve">
     <value>USB Configuration</value>
     <comment>CU = Config USB</comment>
   </data>
-  <data name="DC_PageHeader.Text" xml:space="preserve">
+  <data name="DC_PageHeader" xml:space="preserve">
     <value>Device Capabilities</value>
     <comment>DC = Device Capabilities</comment>
   </data>
-  <data name="DP_PageHeader.Text" xml:space="preserve">
+  <data name="DP_PageHeader" xml:space="preserve">
     <value>Deploy</value>
     <comment>DP = Deploy</comment>
   </data>
-  <data name="MP_PageHeader.Text" xml:space="preserve">
+  <data name="MP_PageHeader" xml:space="preserve">
     <value>Main Page</value>
     <comment>MP = Main Page</comment>
   </data>
@@ -153,7 +153,7 @@
   <data name="SH_HomeMenuText.Text" xml:space="preserve">
     <value>Home</value>
   </data>
-  <data name="ST_PageHeader.Text" xml:space="preserve">
+  <data name="ST_PageHeader" xml:space="preserve">
     <value>Settings</value>
     <comment>ST = Settings</comment>
   </data>

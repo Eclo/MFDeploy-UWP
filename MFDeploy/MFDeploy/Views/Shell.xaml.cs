@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Linq;
+using MFDeploy.ViewModels;
 using Template10.Common;
 using Template10.Controls;
 using Template10.Services.NavigationService;
@@ -13,6 +14,9 @@ namespace MFDeploy.Views
     {
         public static Shell Instance { get; set; }
         public static HamburgerMenu HamburgerMenu => Instance.MyHamburgerMenu;
+
+        // strongly-typed view models enable x:bind
+        public MainViewModel ViewModel => this.DataContext as MainViewModel;
 
         public Shell()
         {

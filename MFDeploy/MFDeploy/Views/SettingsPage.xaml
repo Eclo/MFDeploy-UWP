@@ -42,20 +42,14 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-
-        <!--  header  -->
-        <controls:PageHeader x:Name="pageHeader" x:Uid="ST_PageHeader" Text="Settings Page"
-                             Frame="{x:Bind Frame}"
-                             RelativePanel.AlignLeftWithPanel="True"
-                             RelativePanel.AlignRightWithPanel="True"
-                             RelativePanel.AlignTopWithPanel="True" />
-
+       
         <!--  content  -->
         <Pivot x:Name="MyPivot" Grid.Row="1"
                RelativePanel.AlignBottomWithPanel="True"
+               RelativePanel.AlignTopWithPanel="True"
                RelativePanel.AlignLeftWithPanel="True"
                RelativePanel.AlignRightWithPanel="True"
-               RelativePanel.Below="pageHeader">
+               >
 
             <!--  settings  -->
             <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Settings">

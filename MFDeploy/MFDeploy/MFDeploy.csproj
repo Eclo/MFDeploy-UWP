@@ -122,6 +122,7 @@
     <Compile Include="ViewModels\DeployViewModel.cs" />
     <Compile Include="ViewModels\DeviceCapabilitiesViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MyViewModelBase.cs" />
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />

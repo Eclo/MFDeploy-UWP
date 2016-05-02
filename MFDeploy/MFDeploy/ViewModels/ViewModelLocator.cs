@@ -19,6 +19,7 @@ namespace MFDeploy.ViewModels
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             #region ViewModels
+            SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<MainPageViewModel>();
             SimpleIoc.Default.Register<SettingsPageViewModel>();
             SimpleIoc.Default.Register<ConfigNetworkViewModel>();
@@ -46,7 +47,8 @@ namespace MFDeploy.ViewModels
             return new NetMFUsbDebugClientService(usbDebugClient);
         }
         #endregion
-        #region view model properties
+        #region view model properties        
+        public MainViewModel MainViewModel { get { return ServiceLocator.Current.GetInstance<MainViewModel>(); } }
         public MainPageViewModel MainPageViewModel { get { return ServiceLocator.Current.GetInstance<MainPageViewModel>(); } }
         public SettingsPageViewModel SettingsPageViewModel { get { return ServiceLocator.Current.GetInstance<SettingsPageViewModel>(); } }
         public ConfigNetworkViewModel ConfigNetworkViewModel { get { return ServiceLocator.Current.GetInstance<ConfigNetworkViewModel>(); } }
