@@ -1,6 +1,6 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Microsoft.NetMicroFramework.Tools.MFDeployTool.Engine;
+using Microsoft.SPOT.Debugger.WireProtocol;
 
 namespace MFDeploy.Utilities
 {

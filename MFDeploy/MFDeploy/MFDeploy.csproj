@@ -102,6 +102,8 @@
       <DependentUpon>HeaderControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\IntToObjectConverter.cs" />
+    <Compile Include="Converters\NullToBooleanConverter.cs" />
+    <Compile Include="Models\PingConnectionResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BusyService\BusyService.cs" />
     <Compile Include="Services\BusyService\IBusyService.cs" />
@@ -114,6 +116,8 @@
     <Compile Include="Services\NetMicroFrameworkService\INetMFSerialDebugClientService.cs" />
     <Compile Include="Services\NetMicroFrameworkService\NetMFUsbDebugClientService.cs" />
     <Compile Include="Services\SettingsServices\SettingsService.cs" />
+    <Compile Include="StateTriggers\IsFalseTrigger.cs" />
+    <Compile Include="StateTriggers\ITriggerValue.cs" />
     <Compile Include="Utilities\EnumHelper.cs" />
     <Compile Include="Utilities\Res.cs" />
     <Compile Include="Utilities\TransportTypeTemplateSelector.cs" />
@@ -229,7 +233,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Extensions\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

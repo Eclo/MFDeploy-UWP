@@ -11,34 +11,13 @@
     mc:Ignorable="d"
     d:DesignHeight="40"
     d:DesignWidth="400"
+    
     >
 
     <UserControl.Resources>
-        <DataTemplate x:Key="PingTemplate">
-            <Viewbox Height="32" Width="32"  >
-                <Canvas Height="32" Width="32"  >
-                    <Canvas x:Name="PingNormal" Height="32" Width="32"  >
-                        <Path Data="M 5.40625 5.40625 C -0.442952 11.2555 -0.442952 20.7445 5.40625 26.5938 L 6.8125 25.1875 C 1.7277 20.1027 1.7277 11.8973 6.8125 6.8125 L 5.40625 5.40625 Z M 26.5938 5.40625 L 25.1875 6.8125 C 30.2723 11.8973 30.2723 20.1027 25.1875 25.1875 L 26.5938 26.5938 C 32.443 20.7445 32.443 11.2555 26.5938 5.40625 Z M 9.625 9.625 C 6.11878 13.1312 6.11878 18.8688 9.625 22.375 L 11.0625 20.9375 C 8.32072 18.1957 8.32072 13.8043 11.0625 11.0625 L 9.625 9.625 Z M 22.375 9.625 L 20.9375 11.0625 C 23.6793 13.8043 23.6793 18.1957 20.9375 20.9375 L 22.375 22.375 C 25.8812 18.8688 25.8812 13.1312 22.375 9.625 Z M 16 13 C 14.355 13 13 14.355 13 16 C 13 17.645 14.355 19 16 19 C 17.645 19 19 17.645 19 16 C 19 14.355 17.645 13 16 13 Z M 16 15 C 16.5641 15 17 15.4359 17 16 C 17 16.5641 16.5641 17 16 17 C 15.4359 17 15 16.5641 15 16 C 15 15.4359 15.4359 15 16 15 Z" 
-                              Fill="{Binding Foreground, ElementName=ContentPresenter, Mode=OneWay}"  />
-                    </Canvas>
-                    <Canvas x:Name="PingOk" Height="32" Width="32"  >
-                        <Path Data="M 5.40625 5.40625 C -0.442952 11.2555 -0.442952 20.74445 5.40625 26.59375 L 6.8125 25.1875 C 1.7277 20.1027 1.7277 11.8973 6.8125 6.8125 L 5.40625 5.40625 z M 26.59375 5.40625 L 25.1875 6.8125 C 28.204726 9.8297259 29.425511 13.944717 28.861328 17.855469 C 29.522523 18.080184 30.139287 18.397321 30.699219 18.792969 C 31.59146 14.090115 30.232782 9.0453134 26.59375 5.40625 z M 9.625 9.625 C 6.11878 13.1312 6.11878 18.8688 9.625 22.375 L 11.0625 20.9375 C 8.32072 18.1957 8.32072 13.8043 11.0625 11.0625 L 9.625 9.625 z M 22.375 9.625 L 20.9375 11.0625 C 23.041084 13.166084 23.520273 16.236273 22.394531 18.791016 C 23.121542 18.277907 23.946376 17.896846 24.835938 17.679688 C 25.370047 14.846756 24.555862 11.805862 22.375 9.625 z M 16 13 C 14.355 13 13 14.355 13 16 C 13 17.645 14.355 19 16 19 C 17.645 19 19 17.645 19 16 C 19 14.355 17.645 13 16 13 z M 16 15 C 16.5641 15 17 15.4359 17 16 C 17 16.5641 16.5641 17 16 17 C 15.4359 17 15 16.5641 15 16 C 15 15.4359 15.4359 15 16 15 z " 
-                              Fill="{Binding Foreground, ElementName=ContentPresenter, Mode=OneWay}"   />
-
-                        <Path Data="M 26.03125 20.0625 C 22.740237 20.0625 20.0625 22.740237 20.0625 26.03125 C 20.0625 29.322281 22.740237 32 26.03125 32 C 29.322281 32 32 29.322281 32 26.03125 C 32 22.740237 29.322281 20.0625 26.03125 20.0625 z M 28.603516 23.53125 L 29.630859 24.529297 L 25.957031 28.185547 L 25.583984 28.546875 L 25.242188 28.197266 L 22.947266 25.902344 L 23.916016 24.902344 L 25.572266 26.550781 L 28.603516 23.53125 z " 
-                              Fill="#00c100"  />
-                    </Canvas>
-                    <Canvas x:Name="PingError" Height="32" Width="32"  >
-                        <Path Data="M 5.40625 5.40625 C -0.442952 11.2555 -0.442952 20.74445 5.40625 26.59375 L 6.8125 25.1875 C 1.7277 20.1027 1.7277 11.8973 6.8125 6.8125 L 5.40625 5.40625 z M 26.59375 5.40625 L 25.1875 6.8125 C 28.139062 9.7640622 29.365636 13.765801 28.890625 17.599609 C 29.552661 17.822748 30.179009 18.120198 30.761719 18.484375 C 31.533848 13.870025 30.152831 8.9653615 26.59375 5.40625 z M 9.625 9.625 C 6.11878 13.1312 6.11878 18.8688 9.625 22.375 L 11.0625 20.9375 C 8.32072 18.1957 8.32072 13.8043 11.0625 11.0625 L 9.625 9.625 z M 22.375 9.625 L 20.9375 11.0625 C 22.764644 12.889644 23.367851 15.447757 22.759766 17.763672 C 23.440704 17.492277 24.163251 17.305151 24.914062 17.208984 C 25.274526 14.513708 24.434879 11.684879 22.375 9.625 z M 16 13 C 14.355 13 13 14.355 13 16 C 13 17.645 14.355 19 16 19 C 17.645 19 19 17.645 19 16 C 19 14.355 17.645 13 16 13 z M 16 15 C 16.5641 15 17 15.4359 17 16 C 17 16.5641 16.5641 17 16 17 C 15.4359 17 15 16.5641 15 16 C 15 15.4359 15.4359 15 16 15 z " 
-                              Fill="{Binding Foreground, ElementName=ContentPresenter, Mode=OneWay}"  />
-
-                        <Path Data="M 26.050781 20.101562 C 22.770574 20.101562 20.101562 22.770574 20.101562 26.050781 C 20.101562 29.331007 22.770574 32 26.050781 32 C 29.331007 32 32 29.331007 32 26.050781 C 32 22.770574 29.331007 20.101562 26.050781 20.101562 z M 28.345703 22.664062 L 29.326172 23.654297 L 26.996094 25.96875 L 29.425781 28.390625 L 28.447266 29.347656 L 26.042969 26.955078 L 23.662109 29.306641 L 22.664062 28.318359 L 25.044922 25.964844 L 22.779297 23.689453 L 23.748047 22.730469 L 26.001953 24.984375 L 28.345703 22.664062 z " 
-                              Fill="#ff0000"  />
-                    </Canvas>
-                </Canvas>
-            </Viewbox>
-        </DataTemplate>
-
+        <!-- Converters -->
+        <conv:IntToObjectConverter x:Key="IntToObjectConverter" />
+        <conv:NullToBooleanConverter x:Key="NullToBooleanConverter"/>
 
         <DataTemplate x:Key="SerialTemplate">
             <Viewbox Height="32" Width="32"  >
@@ -146,7 +125,7 @@
                                     </VisualState>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
-                            
+
                             <Rectangle x:Name="PressedBackground" Fill="Transparent" Control.IsTemplateFocusTarget="True"/>
                             <StackPanel Orientation="Horizontal" 
                                         Margin="{TemplateBinding Padding}"
@@ -166,30 +145,312 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="HeaderButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="{ThemeResource ContrastColorBrush}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+            <Setter Property="UseSystemFocusVisuals" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootGrid" Background="{TemplateBinding Background}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CustomColorLightAlphaBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CustomColorDarkBrush}"  />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CustomColorLightAlphaBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseLowBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ContentPresenter x:Name="ContentPresenter" 
+                    		                AutomationProperties.AccessibilityView="Raw" 
+                                            Background ="{TemplateBinding Background}"
+                    		                BorderBrush="{TemplateBinding BorderBrush}" 
+                    		                BorderThickness="1"
+                    		                Content="{TemplateBinding Content}"
+                    		                ContentTemplate="{TemplateBinding ContentTemplate}" 
+                    		                ContentTransitions="{TemplateBinding ContentTransitions}"                                                                                             
+                    		                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    		                Padding="{TemplateBinding Padding}" 
+                    		                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="PingButtonStyle" TargetType="Button" BasedOn="{StaticResource HeaderButtonStyle}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootGrid" Background="{TemplateBinding Background}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CustomColorLightAlphaBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CustomColorDarkBrush}"  />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CustomColorLightAlphaBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseLowBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="PingStates">
+                                    <VisualState x:Name="PingOkState">
+                                        <VisualState.StateTriggers>
+                                            <StateTrigger IsActive="{Binding Path=ConnectionResultOk}"/>
+                                        </VisualState.StateTriggers>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="PingOk">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:2" Value="1"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="0"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="PingNormal">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:2" Value="0"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="1"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PingErrorState">
+                                        <VisualState.StateTriggers>
+                                            <StateTrigger IsActive="{Binding Path=ConnectionResultError}"/>
+                                        </VisualState.StateTriggers>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="PingError">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:2" Value="1"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="0"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="PingNormal">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:2" Value="0"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="1"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ContentPresenter x:Name="ContentPresenter" 
+        						AutomationProperties.AccessibilityView="Raw" 
+        						Background ="{TemplateBinding Background}"
+                                Foreground="{TemplateBinding Foreground}"
+        						BorderBrush="{TemplateBinding BorderBrush}" 
+        						BorderThickness="1"        						       						
+        						ContentTransitions="{TemplateBinding ContentTransitions}"                                                                                             
+        						HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+        						Padding="{TemplateBinding Padding}" 
+        						VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <Viewbox Height="32" Width="32"  >
+                                    <Canvas Height="32" Width="32"  >
+                                        <Canvas x:Name="PingNormal" Height="32" Width="32"  >
+                                            <Path Data="M 5.40625 5.40625 C -0.442952 11.2555 -0.442952 20.7445 5.40625 26.5938 L 6.8125 25.1875 C 1.7277 20.1027 1.7277 11.8973 6.8125 6.8125 L 5.40625 5.40625 Z M 26.5938 5.40625 L 25.1875 6.8125 C 30.2723 11.8973 30.2723 20.1027 25.1875 25.1875 L 26.5938 26.5938 C 32.443 20.7445 32.443 11.2555 26.5938 5.40625 Z M 9.625 9.625 C 6.11878 13.1312 6.11878 18.8688 9.625 22.375 L 11.0625 20.9375 C 8.32072 18.1957 8.32072 13.8043 11.0625 11.0625 L 9.625 9.625 Z M 22.375 9.625 L 20.9375 11.0625 C 23.6793 13.8043 23.6793 18.1957 20.9375 20.9375 L 22.375 22.375 C 25.8812 18.8688 25.8812 13.1312 22.375 9.625 Z M 16 13 C 14.355 13 13 14.355 13 16 C 13 17.645 14.355 19 16 19 C 17.645 19 19 17.645 19 16 C 19 14.355 17.645 13 16 13 Z M 16 15 C 16.5641 15 17 15.4359 17 16 C 17 16.5641 16.5641 17 16 17 C 15.4359 17 15 16.5641 15 16 C 15 15.4359 15.4359 15 16 15 Z" 
+                                                  Fill="{Binding Foreground, ElementName=ContentPresenter, Mode=OneWay}"  />
+                                        </Canvas>
+                                        <Canvas x:Name="PingOk" Height="32" Width="32" Opacity="0"  >
+                                            <Path Data="M 5.40625 5.40625 C -0.442952 11.2555 -0.442952 20.74445 5.40625 26.59375 L 6.8125 25.1875 C 1.7277 20.1027 1.7277 11.8973 6.8125 6.8125 L 5.40625 5.40625 z M 26.59375 5.40625 L 25.1875 6.8125 C 28.204726 9.8297259 29.425511 13.944717 28.861328 17.855469 C 29.522523 18.080184 30.139287 18.397321 30.699219 18.792969 C 31.59146 14.090115 30.232782 9.0453134 26.59375 5.40625 z M 9.625 9.625 C 6.11878 13.1312 6.11878 18.8688 9.625 22.375 L 11.0625 20.9375 C 8.32072 18.1957 8.32072 13.8043 11.0625 11.0625 L 9.625 9.625 z M 22.375 9.625 L 20.9375 11.0625 C 23.041084 13.166084 23.520273 16.236273 22.394531 18.791016 C 23.121542 18.277907 23.946376 17.896846 24.835938 17.679688 C 25.370047 14.846756 24.555862 11.805862 22.375 9.625 z M 16 13 C 14.355 13 13 14.355 13 16 C 13 17.645 14.355 19 16 19 C 17.645 19 19 17.645 19 16 C 19 14.355 17.645 13 16 13 z M 16 15 C 16.5641 15 17 15.4359 17 16 C 17 16.5641 16.5641 17 16 17 C 15.4359 17 15 16.5641 15 16 C 15 15.4359 15.4359 15 16 15 z " 
+                                                          Fill="{Binding Foreground, ElementName=ContentPresenter, Mode=OneWay}"   />
+
+                                            <Path Data="M 26.03125 20.0625 C 22.740237 20.0625 20.0625 22.740237 20.0625 26.03125 C 20.0625 29.322281 22.740237 32 26.03125 32 C 29.322281 32 32 29.322281 32 26.03125 C 32 22.740237 29.322281 20.0625 26.03125 20.0625 z M 28.603516 23.53125 L 29.630859 24.529297 L 25.957031 28.185547 L 25.583984 28.546875 L 25.242188 28.197266 L 22.947266 25.902344 L 23.916016 24.902344 L 25.572266 26.550781 L 28.603516 23.53125 z " 
+                                                          Fill="#00c100"  />
+                                            <Path Data="M 28.603516 23.53125 L 25.572266 26.550781 L 23.916016 24.902344 L 22.947266 25.902344 L 25.242188 28.197266 L 25.583984 28.546875 L 25.957031 28.185547 L 29.630859 24.529297 L 28.603516 23.53125 z " 
+                                                  Fill="#ffffff"  />
+                                        </Canvas>
+                                        <Canvas x:Name="PingError" Height="32" Width="32" Opacity="0"  >
+                                            <Path Data="M 5.40625 5.40625 C -0.442952 11.2555 -0.442952 20.74445 5.40625 26.59375 L 6.8125 25.1875 C 1.7277 20.1027 1.7277 11.8973 6.8125 6.8125 L 5.40625 5.40625 z M 26.59375 5.40625 L 25.1875 6.8125 C 28.139062 9.7640622 29.365636 13.765801 28.890625 17.599609 C 29.552661 17.822748 30.179009 18.120198 30.761719 18.484375 C 31.533848 13.870025 30.152831 8.9653615 26.59375 5.40625 z M 9.625 9.625 C 6.11878 13.1312 6.11878 18.8688 9.625 22.375 L 11.0625 20.9375 C 8.32072 18.1957 8.32072 13.8043 11.0625 11.0625 L 9.625 9.625 z M 22.375 9.625 L 20.9375 11.0625 C 22.764644 12.889644 23.367851 15.447757 22.759766 17.763672 C 23.440704 17.492277 24.163251 17.305151 24.914062 17.208984 C 25.274526 14.513708 24.434879 11.684879 22.375 9.625 z M 16 13 C 14.355 13 13 14.355 13 16 C 13 17.645 14.355 19 16 19 C 17.645 19 19 17.645 19 16 C 19 14.355 17.645 13 16 13 z M 16 15 C 16.5641 15 17 15.4359 17 16 C 17 16.5641 16.5641 17 16 17 C 15.4359 17 15 16.5641 15 16 C 15 15.4359 15.4359 15 16 15 z " 
+                                                          Fill="{Binding Foreground, ElementName=ContentPresenter, Mode=OneWay}"  />
+
+                                            <Path Data="M 26.050781 20.101562 C 22.770574 20.101562 20.101562 22.770574 20.101562 26.050781 C 20.101562 29.331007 22.770574 32 26.050781 32 C 29.331007 32 32 29.331007 32 26.050781 C 32 22.770574 29.331007 20.101562 26.050781 20.101562 z M 28.345703 22.664062 L 29.326172 23.654297 L 26.996094 25.96875 L 29.425781 28.390625 L 28.447266 29.347656 L 26.042969 26.955078 L 23.662109 29.306641 L 22.664062 28.318359 L 25.044922 25.964844 L 22.779297 23.689453 L 23.748047 22.730469 L 26.001953 24.984375 L 28.345703 22.664062 z " 
+                                                  Fill="#ff0000"  />
+                                            <Path Data="M 28.345703 22.664062 L 26.001953 24.984375 L 23.748047 22.730469 L 22.779297 23.689453 L 25.044922 25.964844 L 22.664062 28.318359 L 23.662109 29.306641 L 26.042969 26.955078 L 28.447266 29.347656 L 29.425781 28.390625 L 26.996094 25.96875 L 29.326172 23.654297 L 28.345703 22.664062 z " 
+                                                  Fill="#ffffff"  />
+                                        </Canvas>
+                                    </Canvas>
+                                </Viewbox>
+                            </ContentPresenter>
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         
-        <!-- Converters -->
-        <conv:IntToObjectConverter x:Key="IntToObjectConverter" />
-        
+        <Style x:Key="ConnectDisconnectButtonStyle" TargetType="Button" BasedOn="{StaticResource HeaderButtonStyle}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootGrid" Background="{TemplateBinding Background}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CustomColorLightAlphaBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CustomColorDarkBrush}"  />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource CustomColorLightAlphaBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseLowBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="CommandStates">
+                                    <VisualState x:Name="ConnectState">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Connect">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="1"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Disconnect">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="0"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="DisconnectState">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Connect">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="0"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Disconnect">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="1"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ContentPresenter x:Name="ContentPresenter" 
+        						AutomationProperties.AccessibilityView="Raw" 
+        						Background ="{TemplateBinding Background}"
+                                Foreground="{TemplateBinding Foreground}"
+        						BorderBrush="{TemplateBinding BorderBrush}" 
+        						BorderThickness="1"        						
+        						ContentTransitions="{TemplateBinding ContentTransitions}"                                                                                             
+        						HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+        						Padding="{TemplateBinding Padding}" 
+        						VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <Viewbox Height="32" Width="32"  >
+                                    <Canvas x:Name="canvas"  Height="32" Width="32"  >
+                                        <Canvas x:Name="Connect" Height="32" Width="32"  >
+                                            <Path Data="M 24.7813 5.78125 L 22.125 8.4375 L 21.6875 7.96875 C 20.7154 6.99664 19.438 6.5 18.1563 6.5 C 16.8745 6.5 15.5971 6.99664 14.625 7.96875 L 13.9063 8.65625 L 13 9.5625 L 12.2188 8.78125 L 10.7813 10.2188 L 21.7813 21.2188 L 23.2188 19.7813 L 22.4375 19 L 24.0313 17.375 C 25.9755 15.4308 25.9755 12.2567 24.0313 10.3125 L 23.5625 9.875 L 26.2188 7.21875 L 24.7813 5.78125 Z M 18.1563 8.5 C 18.9238 8.5 19.6914 8.78511 20.2813 9.375 L 22.625 11.7188 C 23.8048 12.8985 23.8048 14.789 22.625 15.9688 L 21 17.5625 L 14.4375 11 L 16.0313 9.375 C 16.6211 8.78511 17.3887 8.5 18.1563 8.5 Z M 10.2188 10.7813 L 8.78125 12.2188 L 9.5625 13 L 8.65625 13.9063 L 7.96875 14.625 C 6.02453 16.5692 6.02453 19.7433 7.96875 21.6875 L 8.40625 22.1563 L 5.78125 24.7813 L 7.21875 26.2188 L 9.84375 23.5938 L 10.3125 24.0313 C 12.2567 25.9755 15.4308 25.9755 17.375 24.0313 L 19 22.4375 L 19.7813 23.2188 L 21.2188 21.7813 L 10.2188 10.7813 Z M 11 14.4375 L 17.5625 21 L 15.9688 22.625 C 14.789 23.8048 12.8985 23.8048 11.7188 22.625 L 9.375 20.2813 C 8.19522 19.1015 8.19522 17.211 9.375 16.0313 L 11 14.4375 Z" 
+                                                      Fill="{Binding Foreground, ElementName=ContentPresenter, Mode=OneWay}"  />
+                                        </Canvas>
+                                        <Canvas x:Name="Disconnect" Height="32" Width="32" Opacity="0"  >
+                                            <Path Data="M 27.2813 3.28125 L 24.625 5.9375 L 24.1875 5.46875 C 23.2154 4.49664 21.938 4 20.6563 4 C 19.3745 4 18.0971 4.49664 17.125 5.46875 L 16.4063 6.15625 L 15.5 7.0625 L 14.7188 6.28125 L 13.2813 7.71875 L 16.0625 10.5 L 13.2813 13.2813 L 14.7188 14.7188 L 17.5 11.9375 L 20.0625 14.5 L 17.2813 17.2813 L 18.7188 18.7188 L 21.5 15.9375 L 24.2813 18.7188 L 25.7188 17.2813 L 24.9375 16.5 L 26.5313 14.875 C 28.4755 12.9308 28.4755 9.75672 26.5313 7.8125 L 26.0625 7.375 L 28.7188 4.71875 L 27.2813 3.28125 Z M 20.6563 6 C 21.4238 6 22.1914 6.28511 22.7813 6.875 L 25.125 9.21875 C 26.3048 10.3985 26.3048 12.289 25.125 13.4688 L 24.875 13.6875 L 23.5 15.0625 L 16.9375 8.5 L 18.5313 6.875 C 19.1211 6.28511 19.8887 6 20.6563 6 Z M 7.71875 13.2813 L 6.28125 14.7188 L 7.0625 15.5 L 5.46875 17.125 C 3.52453 19.0692 3.52453 22.2433 5.46875 24.1875 L 5.90625 24.6563 L 3.28125 27.2813 L 4.71875 28.7188 L 7.34375 26.0938 L 7.8125 26.5313 C 9.75672 28.4755 12.9308 28.4755 14.875 26.5313 L 16.5 24.9375 L 17.2813 25.7188 L 18.7188 24.2813 L 7.71875 13.2813 Z M 8.5 16.9375 L 15.0625 23.5 L 13.4688 25.125 C 12.289 26.3048 10.3985 26.3048 9.21875 25.125 L 9 24.875 L 6.875 22.7813 C 5.69522 21.6015 5.69522 19.711 6.875 18.5313 L 8.5 16.9375 Z" 
+                                                      Fill="{Binding Foreground, ElementName=ContentPresenter, Mode=OneWay}"  />
+                                        </Canvas>
+                                    </Canvas>
+                                </Viewbox>
+                            </ContentPresenter>
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>        </Style>
+
     </UserControl.Resources>
 
     <UserControl.DataContext>
         <Binding Mode="OneWay" Path="MainViewModel" Source="{StaticResource Locator}"/>
     </UserControl.DataContext>
 
-    <Grid Padding="0">
+    <Grid Padding="0" Background="{StaticResource CustomColorBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <!--<Button x:Name="PingButton" ContentTemplate="{StaticResource PingTemplate}" Style="{StaticResource HeaderButtonStyle}" Height="40" Width="40"/>-->
-        </StackPanel>
-        
-        <Button x:Name="TransportTypeButton" Grid.Column="1"  Margin="10,0,10,0"                 
+        <Button x:Name="PingButton" Style="{StaticResource PingButtonStyle}" Height="40" Width="40" Grid.Column="1" Margin="5,0" 
+                Tapped="{x:Bind ViewModel.SelectedDevicePing, Mode=OneWay}"
+                />
+        <!-- IsEnabled="{Binding SelectedDevice, Converter={StaticResource NullToBooleanConverter}}" -->
+        <Button x:Name="ConnectDisconnectButton" Style="{StaticResource ConnectDisconnectButtonStyle}" Height="40" Width="40" Grid.Column="2" Margin="5,0,20,0"
+                IsEnabled="{Binding SelectedDevice, Converter={StaticResource NullToBooleanConverter}}" />
+
+        <Button x:Name="TransportTypeButton" Grid.Column="3"  Margin="10,0"                 
 			    Content="{x:Bind ViewModel.SelectedTransportType, Mode=OneWay}" ContentTemplateSelector="{StaticResource TransportTypeTemplateSelector}" 
                 Style="{StaticResource HeaderButtonStyle}" Height="40" Width="40" >
             <Button.Flyout>
