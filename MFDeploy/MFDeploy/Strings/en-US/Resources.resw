@@ -133,6 +133,9 @@
     <value>Deploy</value>
     <comment>DP = Deploy</comment>
   </data>
+  <data name="H_Pinging" xml:space="preserve">
+    <value>pinging...</value>
+  </data>
   <data name="MP_PageHeader" xml:space="preserve">
     <value>Main Page</value>
     <comment>MP = Main Page</comment>

@@ -10,6 +10,8 @@ using Windows.UI.Xaml.Data;
 using MFDeploy.Views.Config;
 using Microsoft.NetMicroFramework.Tools.UsbDebug;
 using System.Diagnostics;
+using MFDeploy.Services.NetMicroFrameworkService;
+using GalaSoft.MvvmLight.Ioc;
 
 namespace MFDeploy
 {
@@ -23,6 +25,9 @@ namespace MFDeploy
         {
             InitializeComponent();
             SplashFactory = (e) => new Views.Splash(e);
+
+            var usbClient = CreateUSBDebugClient();
+            SimpleIoc.Default.Register<INetMFUsbDebugClientService>(() => usbClient);
 
             #region App settings
 
@@ -53,10 +58,17 @@ namespace MFDeploy
                     ModalContent = new Views.Busy(),
                 };
 
+                
+
             }
             await Task.CompletedTask;
         }
-
+        private  INetMFUsbDebugClientService CreateUSBDebugClient()
+        {
+            // TODO: check app lifecycle
+            var usbDebugClient = new UsbDebugClient(App.Current);
+            return new NetMFUsbDebugClientService(usbDebugClient);
+        }
 
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {

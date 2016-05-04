@@ -30,14 +30,25 @@ namespace MFDeploy.Controls
 
      
 
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void AvailableTransportTypesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {            
             this.TransportTypeButton.Flyout.SetValue(Views.AttachProp.IsOpenProperty, false);
         }
 
-        private void flyout_Opened(object sender, object e)
+        private void AvailableTransportTypesFlyout_Opened(object sender, object e)
         {
             this.TransportTypeButton.Flyout.SetValue(Views.AttachProp.IsOpenProperty, true);
+        }
+
+
+        private void AvailableDevicesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.AvailableDevicesFlyout.SetValue(Views.AttachProp.IsOpenProperty, false);
+        }
+
+        private void AvailableDevicesFlyout_Opened(object sender, object e)
+        {
+            this.AvailableDevicesFlyout.SetValue(Views.AttachProp.IsOpenProperty, true);
         }
     }
 }

@@ -27,14 +27,15 @@ namespace MFDeploy.ViewModels
             SimpleIoc.Default.Register<DeployViewModel>();
             SimpleIoc.Default.Register<DeviceCapabilitiesViewModel>();
             #endregion
-
+            
 
             #region services
             SimpleIoc.Default.Register<IBusyService, BusyService>();
             SimpleIoc.Default.Register<IMyDialogService, MyDialogService>();
 
-            var usbClient = CreateUSBDebugClient();
-            SimpleIoc.Default.Register<INetMFUsbDebugClientService>( () => usbClient);
+            //var usbClient = CreateUSBDebugClient();
+            //SimpleIoc.Default.Register<INetMFUsbDebugClientService>(() => usbClient);
+            
             #endregion
         }
 
@@ -43,7 +44,7 @@ namespace MFDeploy.ViewModels
         private static INetMFUsbDebugClientService CreateUSBDebugClient()
         {
             // TODO: check app lifecycle
-            var usbDebugClient = new UsbDebugClient(App.Current);            
+            var usbDebugClient = new UsbDebugClient(App.Current);
             return new NetMFUsbDebugClientService(usbDebugClient);
         }
         #endregion

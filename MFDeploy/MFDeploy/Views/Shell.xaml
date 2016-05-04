@@ -122,7 +122,7 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock x:Name="PageHeaderText" Text="{x:Bind ViewModel.PageHeader, Mode=OneWay}" VerticalAlignment="Center"/>
-                    <ctrls:HeaderControl  Grid.Column="1"/>
+                    <ctrls:HeaderControl  Grid.Column="1" />
                 </Grid>
             </Controls:PageHeader.Content>
         </Controls:PageHeader>

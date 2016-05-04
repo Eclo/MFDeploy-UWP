@@ -30,6 +30,8 @@
             <Color x:Key="ContrastColor">White</Color>
             <SolidColorBrush x:Key="ContrastColorBrush" Color="White" />
 
+            <SolidColorBrush x:Key="ContrastColorAlphaBrush" Color="#0AFFFFFF" />
+
             <SolidColorBrush x:Key="FlyoutForegroundBrush" Color="White" />
             <SolidColorBrush x:Key="FlyoutBackgroundBrush" Color="#003333" />
             <SolidColorBrush x:Key="FlyoutListOverBrush" Color="#B0696969" />

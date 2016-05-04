@@ -4,20 +4,55 @@
     xmlns:local="using:MFDeploy.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:conv10="using:Template10.Converters"
     xmlns:utils="using:MFDeploy.Utilities"
-    xmlns:conv="using:MFDeploy.Converters"
     xmlns:views="using:MFDeploy.Views"
+    xmlns:triggers="using:MFDeploy.StateTriggers"
     x:Class="MFDeploy.Controls.HeaderControl"
     mc:Ignorable="d"
-    d:DesignHeight="40"
-    d:DesignWidth="400"
-    
+    d:DesignHeight="48"
+    d:DesignWidth="800"    
     >
 
     <UserControl.Resources>
         <!-- Converters -->
-        <conv:IntToObjectConverter x:Key="IntToObjectConverter" />
-        <conv:NullToBooleanConverter x:Key="NullToBooleanConverter"/>
+        <conv10:ValueWhenConverter x:Key="BooleanToVisibilityConverter">
+            <conv10:ValueWhenConverter.When>
+                <x:Boolean>True</x:Boolean>
+            </conv10:ValueWhenConverter.When>
+            <conv10:ValueWhenConverter.Value>
+                <Visibility>Visible</Visibility>
+            </conv10:ValueWhenConverter.Value>
+            <conv10:ValueWhenConverter.Otherwise>
+                <Visibility>Collapsed</Visibility>
+            </conv10:ValueWhenConverter.Otherwise>
+            <conv10:ValueWhenConverter.OtherwiseValueBack>
+                <x:Boolean>False</x:Boolean>
+            </conv10:ValueWhenConverter.OtherwiseValueBack>
+        </conv10:ValueWhenConverter>
+
+        <conv10:ValueWhenConverter x:Key="TrueWhenNotNullConverter" When="{x:Null}">
+            <conv10:ValueWhenConverter.Value>
+                <x:Boolean>False</x:Boolean>
+            </conv10:ValueWhenConverter.Value>
+            <conv10:ValueWhenConverter.Otherwise>
+                <x:Boolean>True</x:Boolean>
+            </conv10:ValueWhenConverter.Otherwise>
+        </conv10:ValueWhenConverter>
+
+        <conv10:ValueWhenConverter x:Key="BooleanInverterConverter">
+            <conv10:ValueWhenConverter.When>
+                <x:Boolean>True</x:Boolean>
+            </conv10:ValueWhenConverter.When>
+            <conv10:ValueWhenConverter.Value>
+                <x:Boolean>False</x:Boolean>
+            </conv10:ValueWhenConverter.Value>
+            <conv10:ValueWhenConverter.Otherwise>
+                <x:Boolean>True</x:Boolean>
+            </conv10:ValueWhenConverter.Otherwise>
+        </conv10:ValueWhenConverter>
+
+        <conv10:ChangeTypeConverter x:Key="ChangeTypeConverter" />
 
         <DataTemplate x:Key="SerialTemplate">
             <Viewbox Height="32" Width="32"  >
@@ -154,6 +189,8 @@
             <Setter Property="Padding" Value="0"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
             <Setter Property="FontWeight" Value="Normal"/>
             <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
@@ -213,6 +250,10 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
+
+        <Style x:Key="HeaderButtonHighlightedStyle" TargetType="Button" BasedOn="{StaticResource HeaderButtonStyle}">
+            <Setter Property="Background" Value="{StaticResource ContrastColorAlphaBrush}" />
         </Style>
 
         <Style x:Key="PingButtonStyle" TargetType="Button" BasedOn="{StaticResource HeaderButtonStyle}">
@@ -289,18 +330,37 @@
                                             </DoubleAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
+                                    <VisualState x:Name="PingBusyState">
+                                        <VisualState.StateTriggers>
+                                            <StateTrigger IsActive="{Binding Path=Pinging}"/>
+                                        </VisualState.StateTriggers>
+                                        <VisualState.Setters>
+                                            <Setter Target="PingNormal.(UIElement.Opacity)" Value="0" />
+                                            <Setter Target="PingBusy.(UIElement.Opacity)" Value="1" />
+                                        </VisualState.Setters>
+                                        <Storyboard RepeatBehavior="Forever">
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="refreshPath">
+                                                <LinearDoubleKeyFrame  KeyTime="0" Value="0"/>
+                                                <LinearDoubleKeyFrame  KeyTime="0:0:0.5" Value="90"/>
+                                                <LinearDoubleKeyFrame  KeyTime="0:0:1" Value="180"/>
+                                                <LinearDoubleKeyFrame  KeyTime="0:0:1.5" Value="270"/>
+                                                <LinearDoubleKeyFrame  KeyTime="0:0:2" Value="360"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                          
+                                        </Storyboard>
+                                    </VisualState>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
                             <ContentPresenter x:Name="ContentPresenter" 
-        						AutomationProperties.AccessibilityView="Raw" 
-        						Background ="{TemplateBinding Background}"
-                                Foreground="{TemplateBinding Foreground}"
-        						BorderBrush="{TemplateBinding BorderBrush}" 
-        						BorderThickness="1"        						       						
-        						ContentTransitions="{TemplateBinding ContentTransitions}"                                                                                             
-        						HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
-        						Padding="{TemplateBinding Padding}" 
-        						VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+        						            AutomationProperties.AccessibilityView="Raw" 
+        						            Background ="{TemplateBinding Background}"
+                                            Foreground="{TemplateBinding Foreground}"
+        						            BorderBrush="{TemplateBinding BorderBrush}" 
+        						            BorderThickness="1"        						       						
+        						            ContentTransitions="{TemplateBinding ContentTransitions}"                                                                                             
+        						            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+        						            Padding="{TemplateBinding Padding}" 
+        						            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
                                 <Viewbox Height="32" Width="32"  >
                                     <Canvas Height="32" Width="32"  >
                                         <Canvas x:Name="PingNormal" Height="32" Width="32"  >
@@ -325,16 +385,25 @@
                                             <Path Data="M 28.345703 22.664062 L 26.001953 24.984375 L 23.748047 22.730469 L 22.779297 23.689453 L 25.044922 25.964844 L 22.664062 28.318359 L 23.662109 29.306641 L 26.042969 26.955078 L 28.447266 29.347656 L 29.425781 28.390625 L 26.996094 25.96875 L 29.326172 23.654297 L 28.345703 22.664062 z " 
                                                   Fill="#ffffff"  />
                                         </Canvas>
+                                        <Canvas x:Name="PingBusy" Height="32" Width="32"  Opacity="0">
+                                            <Path Data="M 5.40625 5.40625 C -0.442952 11.2555 -0.442952 20.7445 5.40625 26.5938 L 6.8125 25.1875 C 1.7277 20.1027 1.7277 11.8973 6.8125 6.8125 L 5.40625 5.40625 Z M 26.5938 5.40625 L 25.1875 6.8125 C 30.2723 11.8973 30.2723 20.1027 25.1875 25.1875 L 26.5938 26.5938 C 32.443 20.7445 32.443 11.2555 26.5938 5.40625 Z M 9.625 9.625 C 6.11878 13.1312 6.11878 18.8688 9.625 22.375 L 11.0625 20.9375 C 8.32072 18.1957 8.32072 13.8043 11.0625 11.0625 L 9.625 9.625 Z M 22.375 9.625 L 20.9375 11.0625 C 23.6793 13.8043 23.6793 18.1957 20.9375 20.9375 L 22.375 22.375 C 25.8812 18.8688 25.8812 13.1312 22.375 9.625 Z M 16 13 C 14.355 13 13 14.355 13 16 C 13 17.645 14.355 19 16 19 C 17.645 19 19 17.645 19 16 C 19 14.355 17.645 13 16 13 Z M 16 15 C 16.5641 15 17 15.4359 17 16 C 17 16.5641 16.5641 17 16 17 C 15.4359 17 15 16.5641 15 16 C 15 15.4359 15.4359 15 16 15 Z" 
+                                                  Fill="{ThemeResource SystemControlDisabledBaseLowBrush}" />
+                                            <Path x:Name="refreshPath" Data="M 26.4375 20 C 23.88185 20 21.746005 21.580545 20.875 23.8125 L 21.796875 24.1875 C 22.52587 22.319455 24.29315 21 26.4375 21 C 28.0577 21 29.5043 21.79478 30.40625 23 L 28.4375 23 L 28.4375 24 L 31.4375 24 L 31.9375 24 L 31.9375 23.5 L 31.9375 20.5 L 30.9375 20.5 L 30.9375 22.046875 C 29.8425 20.790415 28.22295 20 26.4375 20 z M 31.078125 27.8125 C 30.349125 29.68055 28.58185 31 26.4375 31 C 24.79925 31 23.359215 30.19415 22.453125 29 L 24.4375 29 L 24.4375 28 L 21.4375 28 L 20.9375 28 L 20.9375 28.5 L 20.9375 31.5 L 21.9375 31.5 L 21.9375 29.953125 C 23.03179 31.192725 24.6348 32 26.4375 32 C 28.99315 32 31.129 30.41945 32 28.1875 L 31.078125 27.8125 z " 
+                                                  Fill="White"   >
+                                                <Path.RenderTransform>
+                                                    <CompositeTransform CenterX="26" CenterY="26"/>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Canvas>
                                     </Canvas>
                                 </Viewbox>
                             </ContentPresenter>
-
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <Style x:Key="ConnectDisconnectButtonStyle" TargetType="Button" BasedOn="{StaticResource HeaderButtonStyle}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -376,6 +445,9 @@
                                 </VisualStateGroup>
                                 <VisualStateGroup x:Name="CommandStates">
                                     <VisualState x:Name="ConnectState">
+                                        <VisualState.StateTriggers>
+                                            <StateTrigger IsActive="{Binding Path=ConnectAvailable}"/>
+                                        </VisualState.StateTriggers>
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Connect">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="1"/>
@@ -386,6 +458,9 @@
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="DisconnectState">
+                                        <VisualState.StateTriggers>
+                                            <triggers:IsFalseTrigger Value="{Binding ConnectAvailable, Mode=OneWay}" />
+                                        </VisualState.StateTriggers>
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Connect">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="0"/>
@@ -398,15 +473,15 @@
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
                             <ContentPresenter x:Name="ContentPresenter" 
-        						AutomationProperties.AccessibilityView="Raw" 
-        						Background ="{TemplateBinding Background}"
-                                Foreground="{TemplateBinding Foreground}"
-        						BorderBrush="{TemplateBinding BorderBrush}" 
-        						BorderThickness="1"        						
-        						ContentTransitions="{TemplateBinding ContentTransitions}"                                                                                             
-        						HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
-        						Padding="{TemplateBinding Padding}" 
-        						VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+        						              AutomationProperties.AccessibilityView="Raw" 
+        						              Background ="{TemplateBinding Background}"
+                                              Foreground="{TemplateBinding Foreground}"
+        						              BorderBrush="{TemplateBinding BorderBrush}" 
+        						              BorderThickness="1"        						
+        						              ContentTransitions="{TemplateBinding ContentTransitions}"                                                                                             
+        						              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+        						              Padding="{TemplateBinding Padding}" 
+        						              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
                                 <Viewbox Height="32" Width="32"  >
                                     <Canvas x:Name="canvas"  Height="32" Width="32"  >
                                         <Canvas x:Name="Connect" Height="32" Width="32"  >
@@ -424,7 +499,8 @@
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
-            </Setter>        </Style>
+            </Setter>
+        </Style>
 
     </UserControl.Resources>
 
@@ -436,38 +512,60 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Button x:Name="PingButton" Style="{StaticResource PingButtonStyle}" Height="40" Width="40" Grid.Column="1" Margin="5,0" 
-                Tapped="{x:Bind ViewModel.SelectedDevicePing, Mode=OneWay}"
-                />
-        <!-- IsEnabled="{Binding SelectedDevice, Converter={StaticResource NullToBooleanConverter}}" -->
-        <Button x:Name="ConnectDisconnectButton" Style="{StaticResource ConnectDisconnectButtonStyle}" Height="40" Width="40" Grid.Column="2" Margin="5,0,20,0"
-                IsEnabled="{Binding SelectedDevice, Converter={StaticResource NullToBooleanConverter}}" />
-
-        <Button x:Name="TransportTypeButton" Grid.Column="3"  Margin="10,0"                 
-			    Content="{x:Bind ViewModel.SelectedTransportType, Mode=OneWay}" ContentTemplateSelector="{StaticResource TransportTypeTemplateSelector}" 
-                Style="{StaticResource HeaderButtonStyle}" Height="40" Width="40" >
+        <Button x:Name="AvailableDevicesButton" Grid.Row="0" Grid.Column="0"
+                Style="{StaticResource HeaderButtonHighlightedStyle}" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="250"
+                Content="{x:Bind ViewModel.SelectedDevice.Description, Mode=OneWay}" Margin="0,0,5,0" Height="40"
+                IsEnabled="{x:Bind ViewModel.IsBusyHeader, Converter={StaticResource BooleanInverterConverter}}">
             <Button.Flyout>
-                <Flyout x:Name="flyout" Placement="Bottom" views:AttachProp.IsOpen="False" Opened="flyout_Opened" >
+                <Flyout x:Name="AvailableDevicesFlyout" Placement="Bottom" views:AttachProp.IsOpen="False" Opened="AvailableDevicesFlyout_Opened">
                     <Flyout.FlyoutPresenterStyle>
                         <Style TargetType="FlyoutPresenter">
                             <Setter Property="Padding" Value="0" />
                         </Style>
                     </Flyout.FlyoutPresenterStyle>
-
-                    <ListBox ItemsSource="{x:Bind ViewModel.AvailableTransportTypes}" 
-                             Background="{StaticResource FlyoutBackgroundBrush}" Foreground="{StaticResource FlyoutForegroundBrush}"
-						     ItemTemplateSelector="{StaticResource TransportTypeTemplateSelector}" 
-						     SelectedItem="{x:Bind ViewModel.SelectedTransportType, Converter={StaticResource IntToObjectConverter}, Mode=TwoWay}"
-                             SelectionChanged="ListBox_SelectionChanged" ItemContainerStyle="{StaticResource FlyoutLisBoxItemStyle}"/>
+                    <ListBox x:Name="AvailableDevicesListBox" 
+                             ItemsSource="{x:Bind ViewModel.AvailableDevices}" DisplayMemberPath="Description"
+                             SelectedItem="{x:Bind ViewModel.SelectedDevice, Mode=TwoWay, Converter={StaticResource ChangeTypeConverter}}" SelectionChanged="AvailableDevicesListBox_SelectionChanged"
+                             Background="{StaticResource FlyoutBackgroundBrush}" Foreground="{StaticResource FlyoutForegroundBrush}" 
+                             Width="250"  />
                 </Flyout>
             </Button.Flyout>
         </Button>
+
+        <ContentControl Grid.Row="0" Grid.Column="1" IsEnabled="{x:Bind ViewModel.IsBusyHeader, Converter={StaticResource BooleanInverterConverter}}" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="PingButton" Style="{StaticResource PingButtonStyle}" Height="40" Width="40" Margin="5,0" 
+                        IsEnabled="{Binding SelectedDevice, Converter={StaticResource TrueWhenNotNullConverter}}"
+                        Tapped="{x:Bind ViewModel.SelectedDevicePing, Mode=OneWay}" />
+                <!-- IsEnabled="{Binding SelectedDevice, Converter={StaticResource TrueWhenNotNullConverter}}" -->
+                <Button x:Name="ConnectDisconnectButton" Style="{StaticResource ConnectDisconnectButtonStyle}" Height="40" Width="40" Margin="5,0,20,0"
+                        IsEnabled="{Binding SelectedDevice, Converter={StaticResource TrueWhenNotNullConverter}}" />
+
+                <Button x:Name="TransportTypeButton" Margin="10,0"  Style="{StaticResource HeaderButtonStyle}" Height="40" Width="40"               
+			            Content="{x:Bind ViewModel.SelectedTransportType, Mode=OneWay}" ContentTemplateSelector="{StaticResource TransportTypeTemplateSelector}" >
+                    <Button.Flyout>
+                        <Flyout x:Name="AvailableTransportTypesFlyout" Placement="Bottom" views:AttachProp.IsOpen="False" Opened="AvailableTransportTypesFlyout_Opened" >
+                            <Flyout.FlyoutPresenterStyle>
+                                <Style TargetType="FlyoutPresenter">
+                                    <Setter Property="Padding" Value="0" />
+                                </Style>
+                            </Flyout.FlyoutPresenterStyle>
+
+                            <ListBox x:Name="AvailableTransportTypesListBox"
+                                 ItemsSource="{x:Bind ViewModel.AvailableTransportTypes}" 
+                                 Background="{StaticResource FlyoutBackgroundBrush}" Foreground="{StaticResource FlyoutForegroundBrush}"
+						         ItemTemplateSelector="{StaticResource TransportTypeTemplateSelector}" 
+						         SelectedItem="{x:Bind ViewModel.SelectedTransportType, Converter={StaticResource ChangeTypeConverter}, Mode=TwoWay}"
+                                 SelectionChanged="AvailableTransportTypesListBox_SelectionChanged" ItemContainerStyle="{StaticResource FlyoutLisBoxItemStyle}"/>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+            </StackPanel>
+        </ContentControl>
     </Grid>
 </UserControl>
