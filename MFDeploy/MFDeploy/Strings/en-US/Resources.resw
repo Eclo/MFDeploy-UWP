@@ -121,9 +121,60 @@
     <value>Network Configuration</value>
     <comment>CN = Config Network</comment>
   </data>
+  <data name="CU_AuthenticationComboBox.Header" xml:space="preserve">
+    <value>Authentication</value>
+  </data>
+  <data name="CU_ConfigurationUpdated" xml:space="preserve">
+    <value>Configuration updated.</value>
+  </data>
+  <data name="CU_DefaultGatewayTextBox.Header" xml:space="preserve">
+    <value>Default Gateway</value>
+  </data>
+  <data name="CU_DhcpEnableCheckBox.Content" xml:space="preserve">
+    <value>Enable DHCP</value>
+  </data>
+  <data name="CU_DnsPrimaryAdrressTextBox.Header" xml:space="preserve">
+    <value>DNS Primary Address</value>
+  </data>
+  <data name="CU_DnsSecondaryAdrressTextBox.Header" xml:space="preserve">
+    <value>DNS Secondary Address</value>
+  </data>
+  <data name="CU_EncryptConfigDataCheckBox.Content" xml:space="preserve">
+    <value>Encrypt Config Data</value>
+  </data>
+  <data name="CU_EncryptionComboBox.Header" xml:space="preserve">
+    <value>Encryption</value>
+  </data>
+  <data name="CU_FailToUpdateConfiguration" xml:space="preserve">
+    <value>Fail to update configuration!</value>
+  </data>
+  <data name="CU_MacAdrressTextBox.Header" xml:space="preserve">
+    <value>MAC Address</value>
+  </data>
+  <data name="CU_NetworkKeyComboBox.Header" xml:space="preserve">
+    <value>Network Key</value>
+  </data>
   <data name="CU_PageHeader" xml:space="preserve">
     <value>USB Configuration</value>
     <comment>CU = Config USB</comment>
+  </data>
+  <data name="CU_PassPhraseTextBox.Header" xml:space="preserve">
+    <value>Pass Phrase</value>
+  </data>
+  <data name="CU_RadioTextBlock.Text" xml:space="preserve">
+    <value>Radio</value>
+  </data>
+  <data name="CU_ReKeyInternalTextBox.Header" xml:space="preserve">
+    <value>ReKey Internal</value>
+  </data>
+  <data name="CU_StaticIPAdrressTextBox.Header" xml:space="preserve">
+    <value>Static IP Address</value>
+  </data>
+  <data name="CU_SubnetMaskTextBox.Header" xml:space="preserve">
+    <value>Subnet Mask</value>
+  </data>
+  <data name="CU_updateAppBarButton.Label" xml:space="preserve">
+    <value>Update</value>
   </data>
   <data name="DC_PageHeader" xml:space="preserve">
     <value>Device Capabilities</value>
@@ -133,8 +184,11 @@
     <value>Deploy</value>
     <comment>DP = Deploy</comment>
   </data>
-  <data name="H_Pinging" xml:space="preserve">
-    <value>pinging...</value>
+  <data name="invalidIPAddressMsg" xml:space="preserve">
+    <value>Invalid IP address format!</value>
+  </data>
+  <data name="invalidMACAddressMsg" xml:space="preserve">
+    <value>Invalid MAC address format!</value>
   </data>
   <data name="MP_PageHeader" xml:space="preserve">
     <value>Main Page</value>
