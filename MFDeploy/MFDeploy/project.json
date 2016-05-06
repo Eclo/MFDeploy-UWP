@@ -3,7 +3,7 @@
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
     "Microsoft.NetMicroFramework.Tools.UsbDebugClient": "0.1.0-alpha03",
     "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0",
-    "MvvmLight": "5.2.0",
+    "MvvmLight": "5.3.0",
     "Newtonsoft.Json": "8.0.3",
     "PropertyChanged.Fody": "1.51.0",
     "Template10": "1.1.11-preview-160428"
