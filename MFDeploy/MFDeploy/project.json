@@ -6,7 +6,7 @@
     "MvvmLight": "5.2.0",
     "Newtonsoft.Json": "8.0.3",
     "PropertyChanged.Fody": "1.51.0",
-    "Template10": "1.1.10"
+    "Template10": "1.1.11-preview-160428"
   },
   "frameworks": {
     "uap10.0": {}
