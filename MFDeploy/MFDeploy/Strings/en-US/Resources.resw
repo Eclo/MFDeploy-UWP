@@ -214,4 +214,22 @@
     <value>Settings</value>
     <comment>ST = Settings</comment>
   </data>
+  <data name="CU_PickFilesbutton.Label" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="DP_DeployAppBarButton.Label" xml:space="preserve">
+    <value>Deploy</value>
+  </data>
+  <data name="DP_FailToDeployFile" xml:space="preserve">
+    <value>Fail to deploy file!</value>
+  </data>
+  <data name="DP_FailToDeployFiles" xml:space="preserve">
+    <value>Fail to deploy files!</value>
+  </data>
+  <data name="DP_FileDeployed" xml:space="preserve">
+    <value>File deployed</value>
+  </data>
+  <data name="DP_FilesDeployed" xml:space="preserve">
+    <value>Files deployed</value>
+  </data>
 </root>

@@ -6,9 +6,36 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Template10.Controls"
-    mc:Ignorable="d"
+    xmlns:vm="using:MFDeploy.ViewModels" mc:Ignorable="d"
     DataContext="{Binding DeployViewModel, Mode=OneWay, Source={StaticResource Locator}}">
 
+    <Page.Resources>
+        <!--#region DataTemplate-->
+        <DataTemplate x:Key="ImageOverlayFileDataTemplate">
+            <Grid Background="#FF939598" Height="150" Width="150">
+                <Image Source="/SampleImage.png"  Stretch="UniformToFill"/>
+                <StackPanel Orientation="Vertical" Height="75" VerticalAlignment="Bottom">
+                    <TextBlock Text="{Binding FileName}" Margin="10,3,0,0" Width="150"
+                       TextWrapping="NoWrap" HorizontalAlignment="Left" Foreground="White"/>
+                    <TextBlock Text="{Binding FileTimeStamp}" Margin="10,3,0,0" Width="150"
+                       TextWrapping="NoWrap" HorizontalAlignment="Left" Foreground="White"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding FileBaseAddress}" TextWrapping="NoWrap" Grid.Column="0" 
+                                   Margin="10,3,0,10" Width="75" Foreground="White"/>
+                        <TextBlock Text="{Binding FileSize}" TextWrapping="NoWrap" Grid.Column="1" 
+                                   Margin="10,3,0,10" Width="75" Foreground="White"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+        <!--#endregion-->
+
+    </Page.Resources>
+    
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <VisualStateManager.VisualStateGroups>
@@ -43,17 +70,20 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <ScrollViewer x:Name="pageContent"  Padding="12" VerticalScrollBarVisibility="Auto"
-                      RelativePanel.AlignBottomWithPanel="True"
-                      RelativePanel.AlignTopWithPanel="True"
-                      RelativePanel.AlignLeftWithPanel="True"
-                      RelativePanel.AlignRightWithPanel="True"
-                      >
-            <Grid>
+        <GridView x:Name="filesListView" Margin="30,58,0,0" ItemsSource="{x:Bind ViewModel.FilesList, Mode=OneWay}"
+                  HorizontalAlignment="Left" VerticalAlignment="Top" ItemTemplate="{StaticResource ImageOverlayFileDataTemplate}" 
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollMode="Auto" SelectionMode="Multiple"
+                  SelectionChanged="filesListView_SelectionChanged">
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid MaximumRowsOrColumns="6"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+        </GridView>
 
-            </Grid>
-
-        </ScrollViewer>
-
+        <CommandBar x:Name="cmdBar" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+            <AppBarButton x:Name="deployAppBarButton" x:Uid="DP_DeployAppBarButton" Label="Deploy" Icon="Upload" Tapped="{x:Bind ViewModel.DeployFile, Mode=OneWay}" IsEnabled="{x:Bind ViewModel.AnyFileSelected, Mode=OneWay}"/>
+            <AppBarButton x:Name="browseAppBarButton" x:Uid="DP_BrowseAppBarButton" Label="Browse" Icon="OpenLocal" Tapped="{x:Bind ViewModel.OpenDeployFiles, Mode=OneWay}"/>
+        </CommandBar>
     </RelativePanel>
 </Page>

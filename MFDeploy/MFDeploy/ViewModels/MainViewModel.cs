@@ -26,7 +26,7 @@ namespace MFDeploy.ViewModels
             this.UsbDebugService = usbService;
 
             AvailableTransportTypes = EnumHelper.ListOf<TransportType>();
-            AvailableDevices = new ObservableCollection<MFDevice>();
+            AvailableDevices = new ObservableCollection<MFDeviceBase>();
             SelectedTransportType = TransportType.Usb;
             SelectedDevice = null;
             SelectedDeviceConnectionResult = PingConnectionResult.None;
@@ -49,7 +49,7 @@ namespace MFDeploy.ViewModels
         #endregion
 
 
-        public ObservableCollection<MFDevice> AvailableDevices { get; set; }
+        public ObservableCollection<MFDeviceBase> AvailableDevices { get; set; }
 
         private void UpdateAvailableDevices()
         {            
@@ -63,7 +63,7 @@ namespace MFDeploy.ViewModels
                 case TransportType.Usb:
                     // need to implement type conversion from MFDevices to MFDeviceBase to be able to copy reference,
                     // so changes in UsbDebugService.UsbDebugClient.MFDevices get reflected in AvailableDevices
-                    AvailableDevices = new ObservableCollection<MFDevice>(UsbDebugService.UsbDebugClient.MFDevices);
+                    AvailableDevices = new ObservableCollection<MFDeviceBase>(UsbDebugService.UsbDebugClient.MFDevices);
                     break;
                 case TransportType.TcpIp:
                     // TODO
@@ -74,7 +74,7 @@ namespace MFDeploy.ViewModels
             }
         }
 
-        public MFDevice SelectedDevice { get; set; }
+        public MFDeviceBase SelectedDevice { get; set; }
 
         public bool ConnectAvailable { get; set; }
 
@@ -101,8 +101,8 @@ namespace MFDeploy.ViewModels
             SelectedDeviceConnectionResult = PingConnectionResult.Busy;
             try
             {
-                //PingConnectionType connection = await SelectedDevice.Ping();
-                //SelectedDeviceConnectionResult = (connection != PingConnectionType.NoConnection) ? PingConnectionResult.Ok : PingConnectionResult.Error;
+                PingConnectionType connection = await SelectedDevice.PingAsync();
+                SelectedDeviceConnectionResult = (connection != PingConnectionType.NoConnection) ? PingConnectionResult.Ok : PingConnectionResult.Error;
             }
             catch
             {
