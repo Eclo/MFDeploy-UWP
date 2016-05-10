@@ -162,7 +162,7 @@ namespace MFDeploy.ViewModels
         private void SelectedDeviceDisconnect()
         {
             ConnectionStateResult = ConnectionState.Disconnecting;
-            SelectedDevice.DisconnectDevice();
+            SelectedDevice.DebugEngine.Disconnect();
             ConnectionStateResult = ConnectionState.ConnectAvailable;
         }
 
