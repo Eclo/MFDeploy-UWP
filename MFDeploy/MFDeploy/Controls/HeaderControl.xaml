@@ -466,7 +466,7 @@
                                     </VisualState>
                                     <VisualState x:Name="DisconnectState">
                                         <VisualState.StateTriggers>
-                                            <triggers:IsFalseTrigger Value="{Binding ConnectAvailable, Mode=OneWay}" />
+                                            <StateTrigger IsActive="{Binding Path=DisconnectAvailable, Mode=OneWay}"/>
                                         </VisualState.StateTriggers>
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Connect">
@@ -477,9 +477,6 @@
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
-                                </VisualStateGroup>
-                                <VisualStateGroup x:Name="BusyStates">
-                                    <!--<VisualState x:Name="NotBusyState" />-->
                                     <VisualState x:Name="ConnectBusyState">
                                         <VisualState.StateTriggers>
                                             <StateTrigger IsActive="{Binding Path=Connecting, Mode=OneWay}"/>
@@ -503,7 +500,7 @@
                                             <StateTrigger IsActive="{Binding Path=Disconnecting, Mode=OneWay}"/>
                                         </VisualState.StateTriggers>
                                         <VisualState.Setters>
-                                            <Setter Target="Disconnect.(UIElement.Opacity)" Value="0" />
+                                            <Setter Target="Connect.(UIElement.Opacity)" Value="0" />
                                             <Setter Target="DisconnectBusy.(UIElement.Opacity)" Value="1" />
                                         </VisualState.Setters>
                                         <Storyboard RepeatBehavior="Forever">
@@ -517,6 +514,7 @@
                                         </Storyboard>
                                     </VisualState>
                                 </VisualStateGroup>
+
                             </VisualStateManager.VisualStateGroups>
                             <ContentPresenter x:Name="ContentPresenter" 
         						              AutomationProperties.AccessibilityView="Raw" 
@@ -608,11 +606,9 @@
                 <Button x:Name="PingButton" Style="{StaticResource PingButtonStyle}" Height="40" Width="40" Margin="5,0" 
                         IsEnabled="{Binding SelectedDevice, Converter={StaticResource TrueWhenNotNullConverter}}"
                         Tapped="{x:Bind ViewModel.SelectedDevicePing, Mode=OneWay}" />
-                <!-- IsEnabled="{Binding SelectedDevice, Converter={StaticResource TrueWhenNotNullConverter}}" -->
                 <Button x:Name="ConnectDisconnectButton" Style="{StaticResource ConnectDisconnectButtonStyle}" Height="40" Width="40" Margin="5,0,20,0"
                         IsEnabled="{Binding SelectedDevice, Converter={StaticResource TrueWhenNotNullConverter}}"
                         Tapped="{x:Bind ViewModel.ConnectDisconnect, Mode=OneWay}"/>
-
                 <Button x:Name="TransportTypeButton" Margin="10,0"  Style="{StaticResource HeaderButtonStyle}" Height="40" Width="40"               
 			            Content="{x:Bind ViewModel.SelectedTransportType, Mode=OneWay}" ContentTemplateSelector="{StaticResource TransportTypeTemplateSelector}" >
                     <Button.Flyout>

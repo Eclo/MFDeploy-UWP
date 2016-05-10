@@ -33,8 +33,8 @@ namespace MFDeploy
             var _settings = SettingsService.Instance;
             RequestedTheme = _settings.AppTheme;
             CacheMaxDuration = _settings.CacheMaxDuration;
-            ShowShellBackButton = _settings.UseShellBackButton;
-
+            //ShowShellBackButton = _settings.UseShellBackButton;
+            ShowShellBackButton = false;
             #endregion
         }
 
@@ -52,7 +52,7 @@ namespace MFDeploy
                 // create modal root
                 Window.Current.Content = new ModalDialog
                 {
-                    DisableBackButtonWhenModal = true,
+                    DisableBackButtonWhenModal = true,                    
                     Content = new Views.Shell(nav),
                     ModalContent = new Views.Busy(),
                 };

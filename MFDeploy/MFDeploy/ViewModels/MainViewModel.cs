@@ -76,13 +76,12 @@ namespace MFDeploy.ViewModels
 
         public MFDeviceBase SelectedDevice { get; set; }
 
-        public void OnSelectedDeviceChanged()
+        public async void OnSelectedDeviceChanged()
         {
-            // TODO
             SelectedDeviceConnectionResult = PingConnectionResult.None;
-            // try to connect
 
-            // set ConnectAvailable
+            // try to connect
+            await SelectedDeviceConnect();
 
         }
 
@@ -125,17 +124,18 @@ namespace MFDeploy.ViewModels
         #endregion
 
         #region connect / disconnect
-        public bool ConnectAvailable { get; set; }
-        public bool IsConnectBusy { get; set; }
-        public bool Connecting { get { return (ConnectAvailable && IsConnectBusy); } }
-        public bool Disconnecting { get { return (!ConnectAvailable && IsConnectBusy); } }
+        public ConnectionState ConnectionStateResult { get; set; } = ConnectionState.None;
+
+        public bool ConnectAvailable { get { return (ConnectionStateResult == ConnectionState.ConnectAvailable); } }
+        public bool DisconnectAvailable { get { return (ConnectionStateResult == ConnectionState.DisconnectAvailable); } }
+        public bool Connecting { get { return (ConnectionStateResult == ConnectionState.Connecting); } }
+        public bool Disconnecting { get { return (ConnectionStateResult == ConnectionState.Disconnecting); } }
 
         public async void ConnectDisconnect()
         {
-            IsConnectBusy = true;
             IsBusyHeader = true;
-
-            if (ConnectAvailable)
+            
+            if (ConnectionStateResult == ConnectionState.ConnectAvailable)
             {
                 await SelectedDeviceConnect();
             }
@@ -144,18 +144,26 @@ namespace MFDeploy.ViewModels
                 await SelectedDeviceDisconnect();
             }
 
-            IsConnectBusy = false;
             IsBusyHeader = false;
         }
 
         private async Task SelectedDeviceConnect()
         {
+            ConnectionStateResult = ConnectionState.Connecting;
             // TODO:
+
+            // TODO: set this according to connection result. Assuming connection went ok for now
+            ConnectionStateResult = ConnectionState.DisconnectAvailable;
         }
 
         private async Task SelectedDeviceDisconnect()
         {
-            // TODO:
+
+            ConnectionStateResult = ConnectionState.Disconnecting;
+            // TODO
+
+            // TODO: set this according to connection result. Assuming disconnection went ok for now
+            ConnectionStateResult = ConnectionState.ConnectAvailable;
         }
 
 
