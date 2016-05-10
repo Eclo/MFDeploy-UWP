@@ -232,4 +232,9 @@
   <data name="DP_FilesDeployed" xml:space="preserve">
     <value>Files deployed</value>
   </data>
+  <data name="HC_ConnectionError" xml:space="preserve">
+    <value>Couldn't connect to device!
+Please try again.</value>
+    <comment>HC = Header Control</comment>
+  </data>
 </root>

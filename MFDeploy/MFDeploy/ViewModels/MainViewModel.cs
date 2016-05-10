@@ -141,31 +141,30 @@ namespace MFDeploy.ViewModels
             }
             else
             {
-                await SelectedDeviceDisconnect();
+                SelectedDeviceDisconnect();
             }
 
             IsBusyHeader = false;
         }
 
         private async Task SelectedDeviceConnect()
-        {
+        {            
             ConnectionStateResult = ConnectionState.Connecting;
-            // TODO:
+            bool connectOk = await SelectedDevice.DebugEngine.ConnectAsync(3, 1000);
 
-            // TODO: set this according to connection result. Assuming connection went ok for now
-            ConnectionStateResult = ConnectionState.DisconnectAvailable;
+            ConnectionStateResult = connectOk ? ConnectionState.DisconnectAvailable : ConnectionState.ConnectAvailable;
+            if (!connectOk)
+            {
+                await DialogSrv.ShowMessageAsync(Res.GetString("HC_ConnectionError"));
+            }
         }
 
-        private async Task SelectedDeviceDisconnect()
+        private void SelectedDeviceDisconnect()
         {
-
             ConnectionStateResult = ConnectionState.Disconnecting;
-            // TODO
-
-            // TODO: set this according to connection result. Assuming disconnection went ok for now
+            SelectedDevice.DisconnectDevice();
             ConnectionStateResult = ConnectionState.ConnectAvailable;
         }
-
 
         #endregion
     }
