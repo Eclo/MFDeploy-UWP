@@ -32,22 +32,11 @@ namespace MFDeploy.ViewModels
             #region services
             SimpleIoc.Default.Register<IBusyService, BusyService>();
             SimpleIoc.Default.Register<IMyDialogService, MyDialogService>();
-
-            //var usbClient = CreateUSBDebugClient();
-            //SimpleIoc.Default.Register<INetMFUsbDebugClientService>(() => usbClient);
-            
+                       
             #endregion
         }
 
 
-        #region services configuration
-        private static INetMFUsbDebugClientService CreateUSBDebugClient()
-        {
-            // TODO: check app lifecycle
-            var usbDebugClient = new UsbDebugClient(App.Current);
-            return new NetMFUsbDebugClientService(usbDebugClient);
-        }
-        #endregion
         #region view model properties        
         public MainViewModel MainViewModel { get { return ServiceLocator.Current.GetInstance<MainViewModel>(); } }
         public MainPageViewModel MainPageViewModel { get { return ServiceLocator.Current.GetInstance<MainPageViewModel>(); } }

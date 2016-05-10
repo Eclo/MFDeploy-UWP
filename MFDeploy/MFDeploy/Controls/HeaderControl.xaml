@@ -131,11 +131,18 @@
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Fill">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource NavButtonPressedBackgroundBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
                                     <VisualState x:Name="SelectedUnfocused">
                                         <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Glyph" Storyboard.TargetProperty="Opacity">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="1" />
-                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Glyph" Storyboard.TargetProperty="Opacity">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                                            </DoubleAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="SelectedPointerOver">
@@ -143,9 +150,9 @@
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Fill">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource NavButtonHoverBackgroundBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Glyph" Storyboard.TargetProperty="Opacity">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="1" />
-                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Glyph" Storyboard.TargetProperty="Opacity">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                                            </DoubleAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="SelectedPressed">
@@ -153,9 +160,9 @@
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Fill">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource NavButtonPressedBackgroundBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Glyph" Storyboard.TargetProperty="Opacity">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="1" />
-                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Glyph" Storyboard.TargetProperty="Opacity">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                                            </DoubleAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
                                 </VisualStateGroup>
@@ -254,6 +261,7 @@
 
         <Style x:Key="HeaderButtonHighlightedStyle" TargetType="Button" BasedOn="{StaticResource HeaderButtonStyle}">
             <Setter Property="Background" Value="{StaticResource ContrastColorAlphaBrush}" />
+            <Setter Property="Padding" Value="5,2" />
         </Style>
 
         <Style x:Key="PingButtonStyle" TargetType="Button" BasedOn="{StaticResource HeaderButtonStyle}">
@@ -346,7 +354,6 @@
                                                 <LinearDoubleKeyFrame  KeyTime="0:0:1.5" Value="270"/>
                                                 <LinearDoubleKeyFrame  KeyTime="0:0:2" Value="360"/>
                                             </DoubleAnimationUsingKeyFrames>
-                                          
                                         </Storyboard>
                                     </VisualState>
                                 </VisualStateGroup>
@@ -446,7 +453,7 @@
                                 <VisualStateGroup x:Name="CommandStates">
                                     <VisualState x:Name="ConnectState">
                                         <VisualState.StateTriggers>
-                                            <StateTrigger IsActive="{Binding Path=ConnectAvailable}"/>
+                                            <StateTrigger IsActive="{Binding Path=ConnectAvailable, Mode=OneWay}"/>
                                         </VisualState.StateTriggers>
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Connect">
@@ -471,6 +478,45 @@
                                         </Storyboard>
                                     </VisualState>
                                 </VisualStateGroup>
+                                <VisualStateGroup x:Name="BusyStates">
+                                    <!--<VisualState x:Name="NotBusyState" />-->
+                                    <VisualState x:Name="ConnectBusyState">
+                                        <VisualState.StateTriggers>
+                                            <StateTrigger IsActive="{Binding Path=Connecting, Mode=OneWay}"/>
+                                        </VisualState.StateTriggers>
+                                        <VisualState.Setters>
+                                            <Setter Target="Connect.(UIElement.Opacity)" Value="0" />
+                                            <Setter Target="ConnectBusy.(UIElement.Opacity)" Value="1" />
+                                        </VisualState.Setters>
+                                        <Storyboard RepeatBehavior="Forever">
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="ConnectRefreshPath">
+                                                <LinearDoubleKeyFrame  KeyTime="0" Value="0"/>
+                                                <LinearDoubleKeyFrame  KeyTime="0:0:0.5" Value="90"/>
+                                                <LinearDoubleKeyFrame  KeyTime="0:0:1" Value="180"/>
+                                                <LinearDoubleKeyFrame  KeyTime="0:0:1.5" Value="270"/>
+                                                <LinearDoubleKeyFrame  KeyTime="0:0:2" Value="360"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="DisconnectBusyState">
+                                        <VisualState.StateTriggers>
+                                            <StateTrigger IsActive="{Binding Path=Disconnecting, Mode=OneWay}"/>
+                                        </VisualState.StateTriggers>
+                                        <VisualState.Setters>
+                                            <Setter Target="Disconnect.(UIElement.Opacity)" Value="0" />
+                                            <Setter Target="DisconnectBusy.(UIElement.Opacity)" Value="1" />
+                                        </VisualState.Setters>
+                                        <Storyboard RepeatBehavior="Forever">
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="DisconnectRefreshPath">
+                                                <LinearDoubleKeyFrame  KeyTime="0" Value="0"/>
+                                                <LinearDoubleKeyFrame  KeyTime="0:0:0.5" Value="90"/>
+                                                <LinearDoubleKeyFrame  KeyTime="0:0:1" Value="180"/>
+                                                <LinearDoubleKeyFrame  KeyTime="0:0:1.5" Value="270"/>
+                                                <LinearDoubleKeyFrame  KeyTime="0:0:2" Value="360"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
                             <ContentPresenter x:Name="ContentPresenter" 
         						              AutomationProperties.AccessibilityView="Raw" 
@@ -488,9 +534,29 @@
                                             <Path Data="M 24.7813 5.78125 L 22.125 8.4375 L 21.6875 7.96875 C 20.7154 6.99664 19.438 6.5 18.1563 6.5 C 16.8745 6.5 15.5971 6.99664 14.625 7.96875 L 13.9063 8.65625 L 13 9.5625 L 12.2188 8.78125 L 10.7813 10.2188 L 21.7813 21.2188 L 23.2188 19.7813 L 22.4375 19 L 24.0313 17.375 C 25.9755 15.4308 25.9755 12.2567 24.0313 10.3125 L 23.5625 9.875 L 26.2188 7.21875 L 24.7813 5.78125 Z M 18.1563 8.5 C 18.9238 8.5 19.6914 8.78511 20.2813 9.375 L 22.625 11.7188 C 23.8048 12.8985 23.8048 14.789 22.625 15.9688 L 21 17.5625 L 14.4375 11 L 16.0313 9.375 C 16.6211 8.78511 17.3887 8.5 18.1563 8.5 Z M 10.2188 10.7813 L 8.78125 12.2188 L 9.5625 13 L 8.65625 13.9063 L 7.96875 14.625 C 6.02453 16.5692 6.02453 19.7433 7.96875 21.6875 L 8.40625 22.1563 L 5.78125 24.7813 L 7.21875 26.2188 L 9.84375 23.5938 L 10.3125 24.0313 C 12.2567 25.9755 15.4308 25.9755 17.375 24.0313 L 19 22.4375 L 19.7813 23.2188 L 21.2188 21.7813 L 10.2188 10.7813 Z M 11 14.4375 L 17.5625 21 L 15.9688 22.625 C 14.789 23.8048 12.8985 23.8048 11.7188 22.625 L 9.375 20.2813 C 8.19522 19.1015 8.19522 17.211 9.375 16.0313 L 11 14.4375 Z" 
                                                       Fill="{Binding Foreground, ElementName=ContentPresenter, Mode=OneWay}"  />
                                         </Canvas>
+                                        <Canvas x:Name="ConnectBusy" Height="32" Width="32"  Opacity="0">
+                                            <Path Data="M 24.7813 5.78125 L 22.125 8.4375 L 21.6875 7.96875 C 20.7154 6.99664 19.438 6.5 18.1563 6.5 C 16.8745 6.5 15.5971 6.99664 14.625 7.96875 L 13.9063 8.65625 L 13 9.5625 L 12.2188 8.78125 L 10.7813 10.2188 L 21.7813 21.2188 L 23.2188 19.7813 L 22.4375 19 L 24.0313 17.375 C 25.9755 15.4308 25.9755 12.2567 24.0313 10.3125 L 23.5625 9.875 L 26.2188 7.21875 L 24.7813 5.78125 Z M 18.1563 8.5 C 18.9238 8.5 19.6914 8.78511 20.2813 9.375 L 22.625 11.7188 C 23.8048 12.8985 23.8048 14.789 22.625 15.9688 L 21 17.5625 L 14.4375 11 L 16.0313 9.375 C 16.6211 8.78511 17.3887 8.5 18.1563 8.5 Z M 10.2188 10.7813 L 8.78125 12.2188 L 9.5625 13 L 8.65625 13.9063 L 7.96875 14.625 C 6.02453 16.5692 6.02453 19.7433 7.96875 21.6875 L 8.40625 22.1563 L 5.78125 24.7813 L 7.21875 26.2188 L 9.84375 23.5938 L 10.3125 24.0313 C 12.2567 25.9755 15.4308 25.9755 17.375 24.0313 L 19 22.4375 L 19.7813 23.2188 L 21.2188 21.7813 L 10.2188 10.7813 Z M 11 14.4375 L 17.5625 21 L 15.9688 22.625 C 14.789 23.8048 12.8985 23.8048 11.7188 22.625 L 9.375 20.2813 C 8.19522 19.1015 8.19522 17.211 9.375 16.0313 L 11 14.4375 Z" 
+                                                  Fill="{ThemeResource SystemControlDisabledBaseLowBrush}"  />
+                                            <Path x:Name="ConnectRefreshPath" Data="M 26.4375 20 C 23.88185 20 21.746005 21.580545 20.875 23.8125 L 21.796875 24.1875 C 22.52587 22.319455 24.29315 21 26.4375 21 C 28.0577 21 29.5043 21.79478 30.40625 23 L 28.4375 23 L 28.4375 24 L 31.4375 24 L 31.9375 24 L 31.9375 23.5 L 31.9375 20.5 L 30.9375 20.5 L 30.9375 22.046875 C 29.8425 20.790415 28.22295 20 26.4375 20 z M 31.078125 27.8125 C 30.349125 29.68055 28.58185 31 26.4375 31 C 24.79925 31 23.359215 30.19415 22.453125 29 L 24.4375 29 L 24.4375 28 L 21.4375 28 L 20.9375 28 L 20.9375 28.5 L 20.9375 31.5 L 21.9375 31.5 L 21.9375 29.953125 C 23.03179 31.192725 24.6348 32 26.4375 32 C 28.99315 32 31.129 30.41945 32 28.1875 L 31.078125 27.8125 z " 
+                                                  Fill="White"   >
+                                                <Path.RenderTransform>
+                                                    <CompositeTransform CenterX="26" CenterY="26"/>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Canvas>
                                         <Canvas x:Name="Disconnect" Height="32" Width="32" Opacity="0"  >
                                             <Path Data="M 27.2813 3.28125 L 24.625 5.9375 L 24.1875 5.46875 C 23.2154 4.49664 21.938 4 20.6563 4 C 19.3745 4 18.0971 4.49664 17.125 5.46875 L 16.4063 6.15625 L 15.5 7.0625 L 14.7188 6.28125 L 13.2813 7.71875 L 16.0625 10.5 L 13.2813 13.2813 L 14.7188 14.7188 L 17.5 11.9375 L 20.0625 14.5 L 17.2813 17.2813 L 18.7188 18.7188 L 21.5 15.9375 L 24.2813 18.7188 L 25.7188 17.2813 L 24.9375 16.5 L 26.5313 14.875 C 28.4755 12.9308 28.4755 9.75672 26.5313 7.8125 L 26.0625 7.375 L 28.7188 4.71875 L 27.2813 3.28125 Z M 20.6563 6 C 21.4238 6 22.1914 6.28511 22.7813 6.875 L 25.125 9.21875 C 26.3048 10.3985 26.3048 12.289 25.125 13.4688 L 24.875 13.6875 L 23.5 15.0625 L 16.9375 8.5 L 18.5313 6.875 C 19.1211 6.28511 19.8887 6 20.6563 6 Z M 7.71875 13.2813 L 6.28125 14.7188 L 7.0625 15.5 L 5.46875 17.125 C 3.52453 19.0692 3.52453 22.2433 5.46875 24.1875 L 5.90625 24.6563 L 3.28125 27.2813 L 4.71875 28.7188 L 7.34375 26.0938 L 7.8125 26.5313 C 9.75672 28.4755 12.9308 28.4755 14.875 26.5313 L 16.5 24.9375 L 17.2813 25.7188 L 18.7188 24.2813 L 7.71875 13.2813 Z M 8.5 16.9375 L 15.0625 23.5 L 13.4688 25.125 C 12.289 26.3048 10.3985 26.3048 9.21875 25.125 L 9 24.875 L 6.875 22.7813 C 5.69522 21.6015 5.69522 19.711 6.875 18.5313 L 8.5 16.9375 Z" 
                                                       Fill="{Binding Foreground, ElementName=ContentPresenter, Mode=OneWay}"  />
+                                        </Canvas>
+                                        <Canvas x:Name="DisconnectBusy" Height="32" Width="32"  Opacity="0">
+                                            <Path Data="M 27.2813 3.28125 L 24.625 5.9375 L 24.1875 5.46875 C 23.2154 4.49664 21.938 4 20.6563 4 C 19.3745 4 18.0971 4.49664 17.125 5.46875 L 16.4063 6.15625 L 15.5 7.0625 L 14.7188 6.28125 L 13.2813 7.71875 L 16.0625 10.5 L 13.2813 13.2813 L 14.7188 14.7188 L 17.5 11.9375 L 20.0625 14.5 L 17.2813 17.2813 L 18.7188 18.7188 L 21.5 15.9375 L 24.2813 18.7188 L 25.7188 17.2813 L 24.9375 16.5 L 26.5313 14.875 C 28.4755 12.9308 28.4755 9.75672 26.5313 7.8125 L 26.0625 7.375 L 28.7188 4.71875 L 27.2813 3.28125 Z M 20.6563 6 C 21.4238 6 22.1914 6.28511 22.7813 6.875 L 25.125 9.21875 C 26.3048 10.3985 26.3048 12.289 25.125 13.4688 L 24.875 13.6875 L 23.5 15.0625 L 16.9375 8.5 L 18.5313 6.875 C 19.1211 6.28511 19.8887 6 20.6563 6 Z M 7.71875 13.2813 L 6.28125 14.7188 L 7.0625 15.5 L 5.46875 17.125 C 3.52453 19.0692 3.52453 22.2433 5.46875 24.1875 L 5.90625 24.6563 L 3.28125 27.2813 L 4.71875 28.7188 L 7.34375 26.0938 L 7.8125 26.5313 C 9.75672 28.4755 12.9308 28.4755 14.875 26.5313 L 16.5 24.9375 L 17.2813 25.7188 L 18.7188 24.2813 L 7.71875 13.2813 Z M 8.5 16.9375 L 15.0625 23.5 L 13.4688 25.125 C 12.289 26.3048 10.3985 26.3048 9.21875 25.125 L 9 24.875 L 6.875 22.7813 C 5.69522 21.6015 5.69522 19.711 6.875 18.5313 L 8.5 16.9375 Z" 
+                                                  Fill="{ThemeResource SystemControlDisabledBaseLowBrush}"  />
+                                            <Path x:Name="DisconnectRefreshPath" Data="M 26.4375 20 C 23.88185 20 21.746005 21.580545 20.875 23.8125 L 21.796875 24.1875 C 22.52587 22.319455 24.29315 21 26.4375 21 C 28.0577 21 29.5043 21.79478 30.40625 23 L 28.4375 23 L 28.4375 24 L 31.4375 24 L 31.9375 24 L 31.9375 23.5 L 31.9375 20.5 L 30.9375 20.5 L 30.9375 22.046875 C 29.8425 20.790415 28.22295 20 26.4375 20 z M 31.078125 27.8125 C 30.349125 29.68055 28.58185 31 26.4375 31 C 24.79925 31 23.359215 30.19415 22.453125 29 L 24.4375 29 L 24.4375 28 L 21.4375 28 L 20.9375 28 L 20.9375 28.5 L 20.9375 31.5 L 21.9375 31.5 L 21.9375 29.953125 C 23.03179 31.192725 24.6348 32 26.4375 32 C 28.99315 32 31.129 30.41945 32 28.1875 L 31.078125 27.8125 z " 
+                                                  Fill="White"   >
+                                                <Path.RenderTransform>
+                                                    <CompositeTransform CenterX="26" CenterY="26"/>
+                                                </Path.RenderTransform>
+                                            </Path>
                                         </Canvas>
                                     </Canvas>
                                 </Viewbox>
@@ -530,9 +596,9 @@
                     </Flyout.FlyoutPresenterStyle>
                     <ListBox x:Name="AvailableDevicesListBox" 
                              ItemsSource="{x:Bind ViewModel.AvailableDevices}" DisplayMemberPath="Description"
-                             SelectedItem="{x:Bind ViewModel.SelectedDevice, Mode=TwoWay, Converter={StaticResource ChangeTypeConverter}}" SelectionChanged="AvailableDevicesListBox_SelectionChanged"
+                             SelectedItem="{Binding SelectedDevice, Mode=TwoWay}" SelectionChanged="AvailableDevicesListBox_SelectionChanged"
                              Background="{StaticResource FlyoutBackgroundBrush}" Foreground="{StaticResource FlyoutForegroundBrush}" 
-                             Width="250"  />
+                             ItemContainerStyle="{StaticResource FlyoutLisBoxItemStyle}" Width="250"  />
                 </Flyout>
             </Button.Flyout>
         </Button>
@@ -544,7 +610,8 @@
                         Tapped="{x:Bind ViewModel.SelectedDevicePing, Mode=OneWay}" />
                 <!-- IsEnabled="{Binding SelectedDevice, Converter={StaticResource TrueWhenNotNullConverter}}" -->
                 <Button x:Name="ConnectDisconnectButton" Style="{StaticResource ConnectDisconnectButtonStyle}" Height="40" Width="40" Margin="5,0,20,0"
-                        IsEnabled="{Binding SelectedDevice, Converter={StaticResource TrueWhenNotNullConverter}}" />
+                        IsEnabled="{Binding SelectedDevice, Converter={StaticResource TrueWhenNotNullConverter}}"
+                        Tapped="{x:Bind ViewModel.ConnectDisconnect, Mode=OneWay}"/>
 
                 <Button x:Name="TransportTypeButton" Margin="10,0"  Style="{StaticResource HeaderButtonStyle}" Height="40" Width="40"               
 			            Content="{x:Bind ViewModel.SelectedTransportType, Mode=OneWay}" ContentTemplateSelector="{StaticResource TransportTypeTemplateSelector}" >
@@ -561,7 +628,7 @@
                                  Background="{StaticResource FlyoutBackgroundBrush}" Foreground="{StaticResource FlyoutForegroundBrush}"
 						         ItemTemplateSelector="{StaticResource TransportTypeTemplateSelector}" 
 						         SelectedItem="{x:Bind ViewModel.SelectedTransportType, Converter={StaticResource ChangeTypeConverter}, Mode=TwoWay}"
-                                 SelectionChanged="AvailableTransportTypesListBox_SelectionChanged" ItemContainerStyle="{StaticResource FlyoutLisBoxItemStyle}"/>
+                                 SelectionChanged="AvailableTransportTypesListBox_SelectionChanged" ItemContainerStyle="{StaticResource FlyoutLisBoxItemStyle}"  />
                         </Flyout>
                     </Button.Flyout>
                 </Button>

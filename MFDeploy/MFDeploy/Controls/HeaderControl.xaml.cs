@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using MFDeploy.ViewModels;
 using Microsoft.NetMicroFramework.Tools.MFDeployTool.Engine;
+using Microsoft.SPOT.Debugger.WireProtocol;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -26,9 +27,15 @@ namespace MFDeploy.Controls
         public HeaderControl()
         {
             this.InitializeComponent();
+            AvailableTransportTypesListBox.DataContextChanged += AvailableTransportTypesListBox_DataContextChanged;
         }
 
-     
+        private void AvailableTransportTypesListBox_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+        {
+            // this is needed because when property is set in vm, ui is not available yet and so selection is not visible
+            AvailableTransportTypesListBox.DataContextChanged -= AvailableTransportTypesListBox_DataContextChanged;
+            AvailableTransportTypesListBox.SelectedItem = ViewModel.SelectedTransportType;
+        }
 
         private void AvailableTransportTypesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {            
@@ -50,5 +57,7 @@ namespace MFDeploy.Controls
         {
             this.AvailableDevicesFlyout.SetValue(Views.AttachProp.IsOpenProperty, true);
         }
+
+        
     }
 }

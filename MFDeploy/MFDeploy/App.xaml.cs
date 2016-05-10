@@ -12,6 +12,8 @@ using Microsoft.NetMicroFramework.Tools.UsbDebug;
 using System.Diagnostics;
 using MFDeploy.Services.NetMicroFrameworkService;
 using GalaSoft.MvvmLight.Ioc;
+using MFDeploy.ViewModels;
+using Microsoft.Practices.ServiceLocation;
 
 namespace MFDeploy
 {
@@ -25,9 +27,6 @@ namespace MFDeploy
         {
             InitializeComponent();
             SplashFactory = (e) => new Views.Splash(e);
-
-            var usbClient = CreateUSBDebugClient();
-            SimpleIoc.Default.Register<INetMFUsbDebugClientService>(() => usbClient);
 
             #region App settings
 
@@ -58,8 +57,8 @@ namespace MFDeploy
                     ModalContent = new Views.Busy(),
                 };
 
-                
-
+                var usbClient = CreateUSBDebugClient();
+                ServiceLocator.Current.GetInstance<MainViewModel>().UsbDebugService = usbClient;
             }
             await Task.CompletedTask;
         }

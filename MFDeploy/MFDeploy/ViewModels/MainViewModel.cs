@@ -17,38 +17,38 @@ namespace MFDeploy.ViewModels
 {
     public class MainViewModel : MyViewModelBase
     {
-        private INetMFUsbDebugClientService UsbDebugService;
 
-        public MainViewModel(IMyDialogService dlg, IBusyService busy, INetMFUsbDebugClientService usbService)
+        public MainViewModel(IMyDialogService dlg, IBusyService busy)
         {
             this.DialogSrv = dlg;
             this.BusySrv = busy;
-            this.UsbDebugService = usbService;
 
-            AvailableTransportTypes = EnumHelper.ListOf<TransportType>();
+            AvailableTransportTypes = EnumHelper.ListOf<TransportType>();           
             AvailableDevices = new ObservableCollection<MFDeviceBase>();
-            SelectedTransportType = TransportType.Usb;
+
             SelectedDevice = null;
             SelectedDeviceConnectionResult = PingConnectionResult.None;
             IsBusyHeader = false;
 
         }
+        public INetMFUsbDebugClientService UsbDebugService { get; set; } = null;
+        public void OnUsbDebugServiceChanged()
+        {
+            if (UsbDebugService != null)
+            {
+                UsbDebugService.UsbDebugClient.DeviceEnumerationCompleted += UsbDebugClient_DeviceEnumerationCompleted;                
+            }
+        }
 
+        private void UsbDebugClient_DeviceEnumerationCompleted(object sender, EventArgs e)
+        {
+            UsbDebugService.UsbDebugClient.DeviceEnumerationCompleted -= UsbDebugClient_DeviceEnumerationCompleted;
+            SelectedTransportType = TransportType.Usb;
+        }
 
         public string PageHeader { get; set; }
         public bool IsBusyHeader { get; set; }
       
-        #region Transport
-        public List<TransportType> AvailableTransportTypes { get; set; }
-        public TransportType SelectedTransportType { get; set; }
-
-        public void OnSelectedTransportTypeChanged()
-        {
-            UpdateAvailableDevices();
-        }       
-        #endregion
-
-
         public ObservableCollection<MFDeviceBase> AvailableDevices { get; set; }
 
         private void UpdateAvailableDevices()
@@ -76,8 +76,6 @@ namespace MFDeploy.ViewModels
 
         public MFDeviceBase SelectedDevice { get; set; }
 
-        public bool ConnectAvailable { get; set; }
-
         public void OnSelectedDeviceChanged()
         {
             // TODO
@@ -87,6 +85,16 @@ namespace MFDeploy.ViewModels
             // set ConnectAvailable
 
         }
+
+        #region Transport
+        public List<TransportType> AvailableTransportTypes { get; set; }
+        public TransportType SelectedTransportType { get; set; }
+
+        public void OnSelectedTransportTypeChanged()
+        {
+            UpdateAvailableDevices();
+        }
+        #endregion
 
         #region ping
         public PingConnectionResult SelectedDeviceConnectionResult { get; set; }
@@ -116,7 +124,42 @@ namespace MFDeploy.ViewModels
 
         #endregion
 
+        #region connect / disconnect
+        public bool ConnectAvailable { get; set; }
+        public bool IsConnectBusy { get; set; }
+        public bool Connecting { get { return (ConnectAvailable && IsConnectBusy); } }
+        public bool Disconnecting { get { return (!ConnectAvailable && IsConnectBusy); } }
 
+        public async void ConnectDisconnect()
+        {
+            IsConnectBusy = true;
+            IsBusyHeader = true;
+
+            if (ConnectAvailable)
+            {
+                await SelectedDeviceConnect();
+            }
+            else
+            {
+                await SelectedDeviceDisconnect();
+            }
+
+            IsConnectBusy = false;
+            IsBusyHeader = false;
+        }
+
+        private async Task SelectedDeviceConnect()
+        {
+            // TODO:
+        }
+
+        private async Task SelectedDeviceDisconnect()
+        {
+            // TODO:
+        }
+
+
+        #endregion
     }
 
 }

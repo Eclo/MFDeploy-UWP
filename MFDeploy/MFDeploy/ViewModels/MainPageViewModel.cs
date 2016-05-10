@@ -18,7 +18,7 @@ namespace MFDeploy.ViewModels
         //private instance of Main to get general stuff
         private MainViewModel MainVM { get { return ServiceLocator.Current.GetInstance<MainViewModel>(); } }
 
-        public MainPageViewModel(IMyDialogService dlg, IBusyService busy, INetMFUsbDebugClientService usbService)
+        public MainPageViewModel(IMyDialogService dlg, IBusyService busy)
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {

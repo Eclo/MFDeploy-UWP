@@ -234,3 +234,11 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+/MFDeploy/MFDeploy/Controls/HeaderControl.xaml.bak
+/MFDeploy/MFDeploy/Controls/HeaderControl.xaml.cs.bak
+/MFDeploy/MFDeploy/ViewModels/MainPageViewModel.cs.bak
+/MFDeploy/MFDeploy/ViewModels/MainViewModel.cs.bak
+/MFDeploy/MFDeploy/ViewModels/ViewModelLocator.cs.bak
+/MFDeploy/MFDeploy/Views/ConfigNetworkPage.xaml.cs.bak
+/MFDeploy/MFDeploy/Views/ConfigNetworkPage.xaml.bak
+/MFDeploy/MFDeploy/App.xaml.cs.bak
