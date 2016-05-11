@@ -7,9 +7,9 @@ namespace MFDeploy.Models
     public enum ConnectionState
     {
         None = 0,
-        ConnectAvailable,
+        Connected,
         Connecting,
-        DisconnectAvailable,
+        Disconnected,
         Disconnecting
     }
 }

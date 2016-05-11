@@ -451,9 +451,9 @@
                                     </VisualState>
                                 </VisualStateGroup>
                                 <VisualStateGroup x:Name="CommandStates">
-                                    <VisualState x:Name="ConnectState">
+                                    <VisualState x:Name="ConnectedState">
                                         <VisualState.StateTriggers>
-                                            <StateTrigger IsActive="{Binding Path=ConnectAvailable, Mode=OneWay}"/>
+                                            <StateTrigger IsActive="{Binding Path=Connected, Mode=OneWay}"/>
                                         </VisualState.StateTriggers>
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Connect">
@@ -464,9 +464,9 @@
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
-                                    <VisualState x:Name="DisconnectState">
+                                    <VisualState x:Name="DisconnectedState">
                                         <VisualState.StateTriggers>
-                                            <StateTrigger IsActive="{Binding Path=DisconnectAvailable, Mode=OneWay}"/>
+                                            <StateTrigger IsActive="{Binding Path=Disconnected, Mode=OneWay}"/>
                                         </VisualState.StateTriggers>
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Connect">
@@ -477,7 +477,7 @@
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
-                                    <VisualState x:Name="ConnectBusyState">
+                                    <VisualState x:Name="ConnectingState">
                                         <VisualState.StateTriggers>
                                             <StateTrigger IsActive="{Binding Path=Connecting, Mode=OneWay}"/>
                                         </VisualState.StateTriggers>
@@ -495,7 +495,7 @@
                                             </DoubleAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
-                                    <VisualState x:Name="DisconnectBusyState">
+                                    <VisualState x:Name="DisconnectingState">
                                         <VisualState.StateTriggers>
                                             <StateTrigger IsActive="{Binding Path=Disconnecting, Mode=OneWay}"/>
                                         </VisualState.StateTriggers>

@@ -139,8 +139,8 @@ namespace MFDeploy.ViewModels
         #region connect / disconnect
         public ConnectionState ConnectionStateResult { get; set; } = ConnectionState.None;
 
-        public bool ConnectAvailable { get { return (ConnectionStateResult == ConnectionState.ConnectAvailable); } }
-        public bool DisconnectAvailable { get { return (ConnectionStateResult == ConnectionState.DisconnectAvailable); } }
+        public bool Connected { get { return (ConnectionStateResult == ConnectionState.Connected); } }
+        public bool Disconnected { get { return (ConnectionStateResult == ConnectionState.Disconnected); } }
         public bool Connecting { get { return (ConnectionStateResult == ConnectionState.Connecting); } }
         public bool Disconnecting { get { return (ConnectionStateResult == ConnectionState.Disconnecting); } }
 
@@ -148,13 +148,13 @@ namespace MFDeploy.ViewModels
         {
             IsBusyHeader = true;
             
-            if (ConnectionStateResult == ConnectionState.ConnectAvailable)
+            if (ConnectionStateResult == ConnectionState.Connected)
             {
-                await SelectedDeviceConnect();
+                SelectedDeviceDisconnect();
             }
             else
             {
-                SelectedDeviceDisconnect();
+                await SelectedDeviceConnect();               
             }
 
             IsBusyHeader = false;
@@ -165,7 +165,7 @@ namespace MFDeploy.ViewModels
             ConnectionStateResult = ConnectionState.Connecting;
             bool connectOk = await SelectedDevice.DebugEngine.ConnectAsync(3, 1000);
 
-            ConnectionStateResult = connectOk ? ConnectionState.DisconnectAvailable : ConnectionState.ConnectAvailable;
+            ConnectionStateResult = connectOk ?  ConnectionState.Connected : ConnectionState.Disconnected;
             if (!connectOk)
             {
                 await DialogSrv.ShowMessageAsync(Res.GetString("HC_ConnectionError"));
@@ -176,7 +176,7 @@ namespace MFDeploy.ViewModels
         {
             ConnectionStateResult = ConnectionState.Disconnecting;
             SelectedDevice.DebugEngine.Disconnect();
-            ConnectionStateResult = ConnectionState.ConnectAvailable;
+            ConnectionStateResult = ConnectionState.Disconnected;
         }
 
         #endregion
