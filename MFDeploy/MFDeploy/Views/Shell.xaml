@@ -33,7 +33,7 @@
                 </Controls:HamburgerButtonInfo>
 
                 <Controls:HamburgerButtonInfo x:Name="DeployMenu" ClearHistory="False" PageType="local:DeployPage" 
-                                              IsEnabled="{x:Bind ViewModel.DisconnectAvailable, Mode=OneWay}" >
+                                              IsEnabled="{x:Bind ViewModel.Connected, Mode=OneWay}" >
                     <Controls:HamburgerButtonInfo.Content >
                         <StackPanel Orientation="Horizontal">
                             <Viewbox Height="24" Width="24" Margin="12" >
@@ -47,7 +47,7 @@
                     </Controls:HamburgerButtonInfo.Content>
                 </Controls:HamburgerButtonInfo>
                 <!-- Config USB -->
-                <Controls:HamburgerButtonInfo x:Name="ConfigUSBMenu" ClearHistory="False" PageType="local:ConfigUSBPage" IsEnabled="{x:Bind ViewModel.DisconnectAvailable, Mode=OneWay}">
+                <Controls:HamburgerButtonInfo x:Name="ConfigUSBMenu" ClearHistory="False" PageType="local:ConfigUSBPage" IsEnabled="{x:Bind ViewModel.Connected, Mode=OneWay}">
                     <StackPanel Orientation="Horizontal">
                         <Viewbox Height="24" Width="24" Margin="12" >
                             <Canvas Width="32" Height="32" >
@@ -63,7 +63,7 @@
                     </StackPanel>
                 </Controls:HamburgerButtonInfo>
                 <!-- Config Network -->
-                <Controls:HamburgerButtonInfo x:Name="ConfigNetworkMenu" ClearHistory="False" PageType="local:ConfigNetworkPage" IsEnabled="{x:Bind ViewModel.DisconnectAvailable, Mode=OneWay}">
+                <Controls:HamburgerButtonInfo x:Name="ConfigNetworkMenu" ClearHistory="False" PageType="local:ConfigNetworkPage" IsEnabled="{x:Bind ViewModel.Connected, Mode=OneWay}">
                     <StackPanel Orientation="Horizontal">
                         <Viewbox Height="24" Width="24" Margin="12" >
                             <Canvas Width="32" Height="32" >
@@ -79,7 +79,7 @@
                     </StackPanel>
                 </Controls:HamburgerButtonInfo>
                 <!-- Device capabilities -->
-                <Controls:HamburgerButtonInfo x:Name="DeviceCapabilitiesMenu" ClearHistory="False" PageType="local:DeviceCapabilitiesPage" IsEnabled="{x:Bind ViewModel.DisconnectAvailable, Mode=OneWay}">
+                <Controls:HamburgerButtonInfo x:Name="DeviceCapabilitiesMenu" ClearHistory="False" PageType="local:DeviceCapabilitiesPage" IsEnabled="{x:Bind ViewModel.Connected, Mode=OneWay}">
                     <StackPanel Orientation="Horizontal">
                         <Viewbox Height="24" Width="24" Margin="12" >
                             <Canvas Width="32" Height="32" >
