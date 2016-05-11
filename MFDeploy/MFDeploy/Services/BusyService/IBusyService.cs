@@ -8,5 +8,6 @@ namespace MFDeploy.Services.BusyService
     {
         void ShowBusy(string busyText = null);
         void HideBusy();
+        void ChangeBusyText(string newBusyText);
     }
 }

@@ -24,7 +24,14 @@ namespace MFDeploy.Services.BusyService
             {
                 Views.Busy.SetBusy(false);
             });
+        }
 
+        public void ChangeBusyText(string newBusyText)
+        {
+            WindowWrapper.Current().Dispatcher.Dispatch(() =>
+            {
+                Views.Busy.ChangeBusyText(newBusyText);
+            });
         }
     }
 }

@@ -38,10 +38,27 @@ namespace MFDeploy.Views
             {
                 var modal = Window.Current.Content as ModalDialog;
                 var view = modal.ModalContent as Busy;
+
                 if (view == null)
+                {
                     modal.ModalContent = view = new Busy();
+                }
                 modal.IsModal = view.IsBusy = busy;
                 view.BusyText = text;
+            });
+        }
+
+        public static void ChangeBusyText(string text)
+        {
+            WindowWrapper.Current().Dispatcher.Dispatch(() =>
+            {
+                var modal = Window.Current.Content as ModalDialog;
+                var view = modal.ModalContent as Busy;
+                if (view != null)
+                {
+                    view.BusyText = text;
+                }
+               
             });
         }
     }
