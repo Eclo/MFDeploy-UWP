@@ -273,4 +273,10 @@ Please try again.</value>
   <data name="GettingDeviceInfoBusy" xml:space="preserve">
     <value>Getting device info...</value>
   </data>
+  <data name="MP_clearOutputAppBarButton.Label" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="MP_OutputHeader.Text" xml:space="preserve">
+    <value>Output</value>
+  </data>
 </root>

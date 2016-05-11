@@ -4,10 +4,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GalaSoft.MvvmLight.Messaging;
 using MFDeploy.Models;
 using MFDeploy.Services.BusyService;
 using MFDeploy.Services.Dialog;
 using MFDeploy.Services.NetMicroFrameworkService;
+using MFDeploy.Services.SettingsServices;
 using MFDeploy.Utilities;
 using Microsoft.NetMicroFramework.Tools;
 using Microsoft.NetMicroFramework.Tools.MFDeployTool.Engine;
@@ -18,11 +20,15 @@ namespace MFDeploy.ViewModels
 {
     public class MainViewModel : MyViewModelBase
     {
+        // messaging tokens
+        public const int WRITE_TO_OUTPUT_TOKEN = 1;
 
-        public MainViewModel(IMyDialogService dlg, IBusyService busy)
+        private IAppSettingsService settingsSrv;
+        public MainViewModel(IMyDialogService dlg, IBusyService busy, IAppSettingsService settings)
         {
             this.DialogSrv = dlg;
             this.BusySrv = busy;
+            this.settingsSrv = settings;
 
             AvailableTransportTypes = EnumHelper.ListOf<TransportType>();           
             AvailableDevices = new ObservableCollection<MFDeviceBase>();
@@ -32,6 +38,8 @@ namespace MFDeploy.ViewModels
             IsBusyHeader = false;
 
         }
+
+
         public INetMFUsbDebugClientService UsbDebugService { get; set; } = null;
         public void OnUsbDebugServiceChanged()
         {
@@ -93,9 +101,21 @@ namespace MFDeploy.ViewModels
         {
             SelectedDeviceConnectionResult = PingConnectionResult.None;
 
+            if (SelectedDevice != null)
+            {
+                SelectedDevice.DebugEngine.SpuriousCharactersReceived -= DebugEngine_SpuriousCharactersReceived;
+                SelectedDevice.DebugEngine.SpuriousCharactersReceived += DebugEngine_SpuriousCharactersReceived;
+            }
             // try to connect
             await SelectedDeviceConnect();
 
+           
+        }
+
+        private void DebugEngine_SpuriousCharactersReceived(object sender, Microsoft.SPOT.Debugger.StringEventArgs e)
+        {
+            string textToSend = settingsSrv.AddTimestampToOutput ? $"[{DateTime.Now.ToString()}] {e.EventText}" : e.EventText;
+            this.MessengerInstance.Send<NotificationMessage>(new NotificationMessage(textToSend), WRITE_TO_OUTPUT_TOKEN);
         }
 
         #region Transport
