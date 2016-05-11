@@ -42,18 +42,48 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-       
-        <ScrollViewer x:Name="pageContent"  Padding="12" VerticalScrollBarVisibility="Auto"
-                      RelativePanel.AlignBottomWithPanel="True"
-                      RelativePanel.AlignTopWithPanel="True"
-                      RelativePanel.AlignLeftWithPanel="True"
-                      RelativePanel.AlignRightWithPanel="True"
-                      >
-            <Grid>
 
-            </Grid>
+        <Pivot x:Name="mainPivot" Padding="0,48,0,0" SelectedIndex="{x:Bind ViewModel.CurrentPivot, Mode=OneWay}">
 
-        </ScrollViewer>
+            <!-- system -->
+            <PivotItem x:Name="systemPivotItem" x:Uid="DC_SystemPivotItem" Header="System">
+                <RichTextBlock x:Name="systemRichTextBlock" IsTextSelectionEnabled="True">
+                    <Paragraph>
+                        <Run Text="{x:Bind ViewModel.DeviceSystemInfo, Mode=OneWay}" FontFamily="Courier New"/>
+                    </Paragraph>
+                </RichTextBlock>
+            </PivotItem>
 
+            <!-- memory -->
+            <PivotItem x:Name="memoryPivotItem" x:Uid="DC_MemoryMapPivotItem" Header="Maps">
+
+                <RichTextBlock x:Name="memoryRichTextBlock" IsTextSelectionEnabled="True">
+                    <Paragraph Margin="10,20,0,0">
+                        <Run x:Uid="DC_DeviceMemoryMapTitle" Text="Memory Map" FontWeight="SemiBold"/>
+                    </Paragraph>
+                    <Paragraph Margin="10,5,0,0">
+                        <Run Text="{x:Bind ViewModel.DeviceMemoryMap, Mode=OneWay}" FontFamily="Courier New"/>
+                    </Paragraph>
+                    <Paragraph Margin="10,20,0,0">
+                        <Run x:Uid="DC_DeviceFlashSectorMapTitle" Text="Flash Sector Map" FontWeight="SemiBold"/>
+                    </Paragraph>
+                    <Paragraph Margin="10,5,0,0">
+                        <Run Text="{x:Bind ViewModel.DeviceFlashSectorMap, Mode=OneWay}" FontFamily="Courier New"/>
+                    </Paragraph>
+                    <Paragraph Margin="10,20,0,0">
+                        <Run x:Uid="DC_DeviceDeploymentMapTitle" Text="Deployment Map" FontWeight="SemiBold"/>
+                    </Paragraph>
+                    <Paragraph Margin="10,5,0,0">
+                        <Run Text="{x:Bind ViewModel.DeviceDeploymentMap, Mode=OneWay}" FontFamily="Courier New"/>
+                    </Paragraph>
+                </RichTextBlock>
+            </PivotItem>
+            
+        </Pivot>
+
+        <CommandBar RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+            <AppBarButton x:Name="copyAppBarButton" x:Uid="DC_CopyAppBarButton" Label="Copy All" Icon="Copy" Tapped="{x:Bind ViewModel.CopyAllInfo, Mode=OneWay}"/>
+            <AppBarButton x:Name="copyCurrentAppBarButton" x:Uid="DC_CopyCurrentAppBarButton" Label="Copy Current" Icon="Page2" Tapped="{x:Bind ViewModel.CopyCurrentInfo, Mode=OneWay}"/>
+        </CommandBar>
     </RelativePanel>
 </Page>

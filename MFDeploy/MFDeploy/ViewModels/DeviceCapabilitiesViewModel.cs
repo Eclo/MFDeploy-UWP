@@ -1,13 +1,15 @@
-﻿using System;
+﻿using MFDeploy.Services.BusyService;
+using MFDeploy.Services.Dialog;
+using MFDeploy.Utilities;
+using Microsoft.Practices.ServiceLocation;
+using Microsoft.SPOT.Debugger;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MFDeploy.Services.BusyService;
-using MFDeploy.Services.Dialog;
-using MFDeploy.Utilities;
-using Microsoft.Practices.ServiceLocation;
 using Template10.Services.NavigationService;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml.Navigation;
 
 namespace MFDeploy.ViewModels
@@ -34,6 +36,9 @@ namespace MFDeploy.ViewModels
             await Task.CompletedTask;
 
             MainVM.PageHeader = Res.GetString("DC_PageHeader");
+
+            // load device info
+            LoadDeviceInfo();
         }
 
         public override async Task OnNavigatedFromAsync(IDictionary<string, object> suspensionState, bool suspending)
@@ -52,5 +57,102 @@ namespace MFDeploy.ViewModels
         }
 
         #endregion    }
+
+        public StringBuilder DeviceDeploymentMap { get; set; }
+
+        public StringBuilder DeviceFlashSectorMap { get; set; }
+
+        public StringBuilder DeviceMemoryMap { get; set; }
+
+        public StringBuilder DeviceSystemInfo { get; set; }
+
+        public int LastDeviceHash { get; set; }
+
+        private async void LoadDeviceInfo()
+        {
+            // sanity check
+            if (MainVM.SelectedDevice == null)
+                return;
+
+            // if same device nothing to do here, exit
+            if (MainVM.SelectedDevice.Description.GetHashCode() == LastDeviceHash)
+                return;
+
+            // keep device description hash code to avoid get info twice
+            LastDeviceHash = MainVM.SelectedDevice.Description.GetHashCode();
+
+            // launch busy indicator
+            MainVM.BusySrv.ShowBusy(Res.GetString("GettingDeviceInfoBusy"));
+
+            try
+            {
+                // get device info
+                var di = await MainVM.SelectedDevice.GetDeviceInfoAsync();
+                var mm = await MainVM.SelectedDevice.DebugEngine.GetMemoryMapAsync();
+                var fm = await MainVM.SelectedDevice.DebugEngine.GetFlashSectorMapAsync();
+                var dm = await MainVM.SelectedDevice.DebugEngine.GetDeploymentMapAsync();
+
+                // load properties for maps
+                DeviceMemoryMap = new StringBuilder(mm?.ToStringForOutput() ?? "");
+                DeviceFlashSectorMap = new StringBuilder(fm?.ToStringForOutput() ?? "");
+                DeviceDeploymentMap = new StringBuilder(dm?.ToStringForOutput() ?? "");
+                // and system
+                DeviceSystemInfo = new StringBuilder(di.ToString());
+            }
+            catch
+            {
+                // reset prop to force a new get on next time we navigate into this page
+                LastDeviceHash = 0;
+            }
+
+            // stop busy
+            MainVM.BusySrv.HideBusy();
+        }
+
+        /// <summary>
+        /// Copy all info from all pivots to clipboard
+        /// </summary>
+        public void CopyAllInfo()
+        {
+            StringBuilder st = new StringBuilder();
+
+            // get all info from available pivots
+            st.AppendLine(DeviceSystemInfo.ToString());
+            st.AppendLine(""); // only to give it an extra line between infos
+            st.AppendLine(Res.GetString("DC_DeviceMemoryMapTitle/Text"));
+            st.AppendLine(DeviceMemoryMap.ToString());
+            st.AppendLine(Res.GetString("DC_DeviceFlashSectorMapTitle/Text"));
+            st.AppendLine(DeviceFlashSectorMap.ToString());
+            st.AppendLine(Res.GetString("DC_DeviceDeploymentMapTitle/Text"));
+            st.AppendLine(DeviceDeploymentMap.ToString());
+
+            // prepare data package for clipboard
+            DataPackage dp = new DataPackage();
+            dp.SetText(st.ToString());
+            // load it to clipboard
+            Clipboard.SetContent(dp);
+        }
+
+        public int CurrentPivot { get; set; }
+
+        /// <summary>
+        /// Copy info from active pivot to clipboard
+        /// </summary>
+        public void CopyCurrentInfo()
+        {
+            // prepare data package for clipboard
+            DataPackage dp = new DataPackage();
+            switch (CurrentPivot)
+            {
+                case 0: // System
+                    dp.SetText(DeviceSystemInfo.ToString());
+                    break;
+                case 1: // Memory
+                    dp.SetText(Res.GetString("DC_DeviceMemoryMapTitle/Text") + Environment.NewLine + DeviceMemoryMap + Environment.NewLine + Res.GetString("DC_DeviceFlashSectorMapTitle/Text") + Environment.NewLine + DeviceFlashSectorMap + Res.GetString("DC_DeviceDeploymentMapTitle/Text") + Environment.NewLine + DeviceDeploymentMap);
+                    break;
+            }
+            // load it to clipboard
+            Clipboard.SetContent(dp);
+        }
     }
 }
