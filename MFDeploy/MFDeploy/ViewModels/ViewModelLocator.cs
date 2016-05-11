@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Ioc;
 using MFDeploy.Services.BusyService;
 using MFDeploy.Services.Dialog;
-using MFDeploy.Services.NetMicroFrameworkService;
-using Microsoft.NetMicroFramework.Tools.UsbDebug;
+using MFDeploy.Services.SettingsServices;
 using Microsoft.Practices.ServiceLocation;
+using Template10.Services.SettingsService;
 
 namespace MFDeploy.ViewModels
 {
@@ -32,11 +30,15 @@ namespace MFDeploy.ViewModels
             #region services
             SimpleIoc.Default.Register<IBusyService, BusyService>();
             SimpleIoc.Default.Register<IMyDialogService, MyDialogService>();
-                       
+            SimpleIoc.Default.Register<IAppSettingsService, AppSettingsService>();
+
+            // Template 10
+            SimpleIoc.Default.Register<ISettingsHelper, SettingsHelper>();
+
             #endregion
         }
 
-
+     
         #region view model properties        
         public MainViewModel MainViewModel { get { return ServiceLocator.Current.GetInstance<MainViewModel>(); } }
         public MainPageViewModel MainPageViewModel { get { return ServiceLocator.Current.GetInstance<MainPageViewModel>(); } }

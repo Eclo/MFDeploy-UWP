@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MFDeploy.Services.BusyService;
 using MFDeploy.Services.Dialog;
+using MFDeploy.Services.SettingsServices;
 using MFDeploy.Utilities;
 using Microsoft.Practices.ServiceLocation;
 using Template10.Mvvm;
@@ -19,9 +20,9 @@ namespace MFDeploy.ViewModels
         //private instance of Main to get general stuff
         private MainViewModel MainVM { get { return ServiceLocator.Current.GetInstance<MainViewModel>(); } }
 
-        public SettingsPageViewModel(IMyDialogService dlg, IBusyService busy)
+        public SettingsPageViewModel(IMyDialogService dlg, IBusyService busy, IAppSettingsService _appSettings)
         {
-            SettingsPartViewModel  = new SettingsPartViewModel(dlg, busy);
+            SettingsPartViewModel  = new SettingsPartViewModel(dlg, busy, _appSettings);
             AboutPartViewModel = new AboutPartViewModel(dlg, busy);
         }
         public SettingsPartViewModel SettingsPartViewModel { get; }
@@ -60,53 +61,21 @@ namespace MFDeploy.ViewModels
 
     public class SettingsPartViewModel : MyViewModelBase
     {
-        Services.SettingsServices.SettingsService _settings;
+        IAppSettingsService _settings;
 
-        public SettingsPartViewModel(IMyDialogService dlg, IBusyService busy)
+        public SettingsPartViewModel(IMyDialogService dlg, IBusyService busy, IAppSettingsService _appSettings)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                // designtime
-            }
-            else
-            {
-                _settings = Services.SettingsServices.SettingsService.Instance;
-            }
             this.DialogSrv = dlg;
             this.BusySrv = busy;
+            this._settings = _appSettings;
         }
 
-        public bool UseShellBackButton
+        public bool AddTimestampToOutputButton
         {
-            get { return _settings.UseShellBackButton; }
-            set { _settings.UseShellBackButton = value; base.RaisePropertyChanged(); }
+            get { return _settings.AddTimestampToOutput; }
+            set { _settings.AddTimestampToOutput = value; }
         }
 
-        public bool UseLightThemeButton
-        {
-            get { return _settings.AppTheme.Equals(ApplicationTheme.Light); }
-            set { _settings.AppTheme = value ? ApplicationTheme.Light : ApplicationTheme.Dark; base.RaisePropertyChanged(); }
-        }
-
-        private string _BusyText = "Please wait...";
-        public string BusyText
-        {
-            get { return _BusyText; }
-            set
-            {
-                Set(ref _BusyText, value);
-                _ShowBusyCommand.RaiseCanExecuteChanged();
-            }
-        }
-
-        DelegateCommand _ShowBusyCommand;
-        public DelegateCommand ShowBusyCommand
-            => _ShowBusyCommand ?? (_ShowBusyCommand = new DelegateCommand(async () =>
-            {
-                BusySrv.ShowBusy(_BusyText);
-                await Task.Delay(5000);
-                BusySrv.HideBusy();
-            }, () => !string.IsNullOrEmpty(BusyText)));
     }
 
     public class AboutPartViewModel : MyViewModelBase

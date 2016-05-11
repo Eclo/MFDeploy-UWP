@@ -116,7 +116,8 @@
     <Compile Include="Services\NetMicroFrameworkService\INetMFUsbDebugClientService.cs" />
     <Compile Include="Services\NetMicroFrameworkService\INetMFSerialDebugClientService.cs" />
     <Compile Include="Services\NetMicroFrameworkService\NetMFUsbDebugClientService.cs" />
-    <Compile Include="Services\SettingsServices\SettingsService.cs" />
+    <Compile Include="Services\SettingsServices\IAppSettingsService.cs" />
+    <Compile Include="Services\SettingsServices\AppSettingsService.cs" />
     <Compile Include="StateTriggers\IsFalseTrigger.cs" />
     <Compile Include="StateTriggers\ITriggerValue.cs" />
     <Compile Include="Utilities\EnumHelper.cs" />

@@ -237,4 +237,13 @@
 Please try again.</value>
     <comment>HC = Header Control</comment>
   </data>
+  <data name="ST_AddTimestampToOutputToggleSwitch.Header" xml:space="preserve">
+    <value>Add timestamp to output</value>
+  </data>
+  <data name="ST_AddTimestampToOutputToggleSwitch.OffContent" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="ST_AddTimestampToOutputToggleSwitch.OnContent" xml:space="preserve">
+    <value>On</value>
+  </data>
 </root>

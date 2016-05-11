@@ -30,9 +30,9 @@ namespace MFDeploy
 
             #region App settings
 
-            var _settings = SettingsService.Instance;
-            RequestedTheme = _settings.AppTheme;
-            CacheMaxDuration = _settings.CacheMaxDuration;
+            //var _settings = SettingsService.Instance;
+            //RequestedTheme = _settings.AppTheme;
+            //CacheMaxDuration = _settings.CacheMaxDuration;
             //ShowShellBackButton = _settings.UseShellBackButton;
             ShowShellBackButton = false;
             #endregion
