@@ -246,4 +246,31 @@ Please try again.</value>
   <data name="ST_AddTimestampToOutputToggleSwitch.OnContent" xml:space="preserve">
     <value>On</value>
   </data>
+  <data name="DC_CopyAppBarButton.Label" xml:space="preserve">
+    <value>Copy All</value>
+  </data>
+  <data name="DC_CopyCurrentAppBarButton.Label" xml:space="preserve">
+    <value>Copy Current</value>
+  </data>
+  <data name="DC_HardwarePivotItem.Header" xml:space="preserve">
+    <value>Hardware</value>
+  </data>
+  <data name="DC_MemoryMapPivotItem.Header" xml:space="preserve">
+    <value>Maps</value>
+  </data>
+  <data name="DC_SystemPivotItem.Header" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="DC_DeviceFlashSectorMapTitle.Text" xml:space="preserve">
+    <value>Flash Sector Map</value>
+  </data>
+  <data name="DC_DeviceMemoryMapTitle.Text" xml:space="preserve">
+    <value>Memory Map</value>
+  </data>
+  <data name="DC_DeviceDeploymentMapTitle.Text" xml:space="preserve">
+    <value>Deployment Map</value>
+  </data>
+  <data name="GettingDeviceInfoBusy" xml:space="preserve">
+    <value>Getting device info...</value>
+  </data>
 </root>
