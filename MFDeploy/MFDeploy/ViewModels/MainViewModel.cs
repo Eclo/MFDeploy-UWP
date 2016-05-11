@@ -12,6 +12,7 @@ using MFDeploy.Utilities;
 using Microsoft.NetMicroFramework.Tools;
 using Microsoft.NetMicroFramework.Tools.MFDeployTool.Engine;
 using Microsoft.SPOT.Debugger.WireProtocol;
+using Windows.UI.Core;
 
 namespace MFDeploy.ViewModels
 {
@@ -40,10 +41,16 @@ namespace MFDeploy.ViewModels
             }
         }
 
-        private void UsbDebugClient_DeviceEnumerationCompleted(object sender, EventArgs e)
+        private async void UsbDebugClient_DeviceEnumerationCompleted(object sender, EventArgs e)
         {
             UsbDebugService.UsbDebugClient.DeviceEnumerationCompleted -= UsbDebugClient_DeviceEnumerationCompleted;
-            SelectedTransportType = TransportType.Usb;
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+            () =>
+            {
+                // Your UI update code goes here!
+                SelectedTransportType = TransportType.Usb;
+            }
+            );
         }
 
         public string PageHeader { get; set; }
@@ -51,7 +58,7 @@ namespace MFDeploy.ViewModels
       
         public ObservableCollection<MFDeviceBase> AvailableDevices { get; set; }
 
-        private void UpdateAvailableDevices()
+        private async void UpdateAvailableDevices()
         {            
             switch (SelectedTransportType)
             {
@@ -63,7 +70,13 @@ namespace MFDeploy.ViewModels
                 case TransportType.Usb:
                     // need to implement type conversion from MFDevices to MFDeviceBase to be able to copy reference,
                     // so changes in UsbDebugService.UsbDebugClient.MFDevices get reflected in AvailableDevices
-                    AvailableDevices = new ObservableCollection<MFDeviceBase>(UsbDebugService.UsbDebugClient.MFDevices);
+                    await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                    () =>
+                    {
+                        // Your UI update code goes here!
+                        AvailableDevices = new ObservableCollection<MFDeviceBase>(UsbDebugService.UsbDebugClient.MFDevices);
+                    }
+                    );
                     break;
                 case TransportType.TcpIp:
                     // TODO
