@@ -593,7 +593,7 @@
                         </Style>
                     </Flyout.FlyoutPresenterStyle>
                     <ListBox x:Name="AvailableDevicesListBox" 
-                             ItemsSource="{x:Bind ViewModel.AvailableDevices}" DisplayMemberPath="Description"
+                             ItemsSource="{x:Bind ViewModel.AvailableDevices, Mode=OneWay}" DisplayMemberPath="Description"
                              SelectedItem="{Binding SelectedDevice, Mode=TwoWay}" SelectionChanged="AvailableDevicesListBox_SelectionChanged"
                              Background="{StaticResource FlyoutBackgroundBrush}" Foreground="{StaticResource FlyoutForegroundBrush}" 
                              ItemContainerStyle="{StaticResource FlyoutLisBoxItemStyle}" Width="250"  />
