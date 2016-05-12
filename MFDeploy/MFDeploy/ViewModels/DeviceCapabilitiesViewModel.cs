@@ -93,11 +93,11 @@ namespace MFDeploy.ViewModels
                 var dm = await MainVM.SelectedDevice.DebugEngine.GetDeploymentMapAsync();
 
                 // load properties for maps
-                DeviceMemoryMap = new StringBuilder(mm?.ToStringForOutput() ?? "");
-                DeviceFlashSectorMap = new StringBuilder(fm?.ToStringForOutput() ?? "");
-                DeviceDeploymentMap = new StringBuilder(dm?.ToStringForOutput() ?? "");
+                DeviceMemoryMap = new StringBuilder(mm?.ToStringForOutput() ?? "Empty");
+                DeviceFlashSectorMap = new StringBuilder(fm?.ToStringForOutput() ?? "Empty");
+                DeviceDeploymentMap = new StringBuilder(dm?.ToStringForOutput() ?? "Empty");
                 // and system
-                DeviceSystemInfo = new StringBuilder(di.ToString());
+                DeviceSystemInfo = new StringBuilder(di?.ToString() ?? "Empty");
             }
             catch
             {
