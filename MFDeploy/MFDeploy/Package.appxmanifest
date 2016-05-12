@@ -4,7 +4,7 @@
   <mp:PhoneIdentity PhoneProductId="8b460a8e-57ea-440c-8014-34e9ea87ebcf" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>MFDeploy</DisplayName>
-    <PublisherDisplayName>AlineAlmeida</PublisherDisplayName>
+    <PublisherDisplayName>Eclo Solutions</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>

@@ -44,7 +44,7 @@
         </VisualStateManager.VisualStateGroups>
        
         <!--  content  -->
-        <Pivot x:Name="MyPivot" Grid.Row="1" SelectedIndex="1"
+        <Pivot x:Name="MyPivot" Grid.Row="1" SelectedIndex="0"
                RelativePanel.AlignBottomWithPanel="True"
                RelativePanel.AlignTopWithPanel="True"
                RelativePanel.AlignLeftWithPanel="True"
