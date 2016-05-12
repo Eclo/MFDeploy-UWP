@@ -34,9 +34,13 @@ namespace MFDeploy.Views
             Messenger.Default.Unregister(this);
         }
 
-        private void AddTextToOutput(string text)
+        private async void AddTextToOutput(string text)
         {
-            this.Output.Text += (Environment.NewLine + text);
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
+            () =>
+            {
+                this.Output.Text += (Environment.NewLine + text);
+            });
         }
 
         private void clearOutputAppBarButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
