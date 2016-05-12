@@ -279,4 +279,7 @@ Please try again.</value>
   <data name="MP_OutputHeader.Text" xml:space="preserve">
     <value>Output</value>
   </data>
+  <data name="ST_PrivacyPolicy.Text" xml:space="preserve">
+    <value>This application doesn't collect any personal, system or hardware information, at any time.</value>
+  </data>
 </root>
