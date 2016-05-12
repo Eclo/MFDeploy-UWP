@@ -62,7 +62,7 @@
                     </Controls:HamburgerButtonInfo.Content>
                 </Controls:HamburgerButtonInfo>
                 <!-- Config USB -->
-                <Controls:HamburgerButtonInfo x:Name="ConfigUSBMenu" ClearHistory="False" PageType="local:ConfigUSBPage" PropertyChanged="ConfigUSBMenu_PropertyChanged" 
+                <Controls:HamburgerButtonInfo x:Name="ConfigUSBMenu" ClearHistory="False" PageType="local:ConfigUSBPage"
                                               IsEnabled="{x:Bind ViewModel.Connected, Mode=OneWay}" >
                     <StackPanel Orientation="Horizontal">
                         <Viewbox Height="24" Width="24" Margin="12" >
