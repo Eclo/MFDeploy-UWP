@@ -1,10 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity
-    Name="8b460a8e-57ea-440c-8014-34e9ea87ebcf"
-    Publisher = "CN=AlineAlmeida"
-    Version = "1.0.0.0" /> 
-  <mp:PhoneIdentity PhoneProductId="8b460a8e-57ea-440c-8014-34e9ea87ebcf" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <Identity Name="8b460a8e-57ea-440c-8014-34e9ea87ebcf" Publisher="CN=AlineAlmeida" Version="1.0.0.0" />
+  <mp:PhoneIdentity PhoneProductId="8b460a8e-57ea-440c-8014-34e9ea87ebcf" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>MFDeploy</DisplayName>
     <PublisherDisplayName>AlineAlmeida</PublisherDisplayName>
@@ -18,10 +15,14 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="MFDeploy.App">
-      <uap:VisualElements DisplayName="MFDeploy.App" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Sample" BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
+      <uap:VisualElements DisplayName="MFDeploy.App" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Sample" BackgroundColor="#4682B4">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\Square71x71Logo.png" Square310x310Logo="Assets\Square310x310Logo.png" ShortName="MFDeploy">
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="square150x150Logo" />
+            <uap:ShowOn Tile="square310x310Logo" />
+          </uap:ShowNameOnTiles>
         </uap:DefaultTile>
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#4682B4" />
       </uap:VisualElements>
     </Application>
   </Applications>
@@ -29,7 +30,7 @@
     <Capability Name="internetClient" />
     <DeviceCapability Name="usb">
       <Device Id="vidpid:0483 A08f">
-        <Function Type="name:vendorSpecific"/>
+        <Function Type="name:vendorSpecific" />
       </Device>
     </DeviceCapability>
   </Capabilities>
