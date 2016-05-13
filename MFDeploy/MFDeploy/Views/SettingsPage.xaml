@@ -12,7 +12,7 @@
       DataContext="{Binding SettingsPageViewModel, Mode=OneWay, Source={StaticResource Locator}}">
 
 
-    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="20,68,12,12">
+    <RelativePanel Padding="0,48,0,0" Background="{ThemeResource LigtherAreaBrush}">
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
@@ -45,55 +45,48 @@
        
         <!--  content  -->
         <Pivot x:Name="MyPivot" Grid.Row="1" SelectedIndex="0"
-               RelativePanel.AlignBottomWithPanel="True"
-               RelativePanel.AlignTopWithPanel="True"
-               RelativePanel.AlignLeftWithPanel="True"
-               RelativePanel.AlignRightWithPanel="True"
-               >
+               RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True"
+               RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
+               HeaderTemplate="{StaticResource PivotItemHeaderTemplate}" >
 
             <!--  settings  -->
-            <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Settings">
-                <ScrollViewer Margin="0,12,-12,0" HorizontalContentAlignment="Left"
-                              VerticalScrollBarVisibility="Auto">
-                    <RelativePanel HorizontalAlignment="Left">
-                        <StackPanel>
-                            <ToggleSwitch x:Name="AddTimestampToOutputToggleSwitch" x:Uid="ST_AddTimestampToOutputToggleSwitch"
-                                      Header="Add timestamp to output"
-                                      IsOn="{Binding AddTimestampToOutputButton, Mode=TwoWay}"
-                                      RelativePanel.AlignLeftWithPanel="True"
-                                      RelativePanel.AlignTopWithPanel="True"                                      
-                                      />
+            <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Settings" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="-12,0,0,0">
+                <ScrollViewer HorizontalContentAlignment="Left" VerticalScrollBarVisibility="Auto" Padding="24,24,24,0">
+                    <RelativePanel >
 
-                            <Grid Margin="4,5,0,0" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignTopWithPanel="True">
+                        <ToggleSwitch x:Name="AddTimestampToOutputToggleSwitch" x:Uid="ST_AddTimestampToOutputToggleSwitch"
+                                    Header="Add timestamp to output" IsOn="{Binding AddTimestampToOutputButton, Mode=TwoWay}"
+                                    RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignTopWithPanel="True" />
+
+                        <Grid RelativePanel.AlignLeftWithPanel="True" RelativePanel.Below="AddTimestampToOutputToggleSwitch" Margin="0,20,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBox Grid.Column="0" x:Name="deployFolderTextBox" x:Uid="ST_DeployFolderTextBox"
                                          Text="{x:Bind ViewModel.DeployFolderPath, Mode=OneWay}" Margin="0,0,5,0" 
-                                         IsReadOnly="True" />
+                                         IsReadOnly="True" Width="500" Style="{StaticResource AppTextBoxStyle}" />
                                 <Button Grid.Column="1" x:Name="deployFolderButton" Content="..." Tapped="{x:Bind ViewModel.PickDeployFolder, Mode=OneWay}"
-                                        VerticalAlignment="Bottom"/>
-                            </Grid>
-                        </StackPanel>
+                                        VerticalAlignment="Bottom" Width="32" Height="32" Style="{StaticResource AppButtonStyle}"/>
+                        </Grid>
+                       
                     </RelativePanel>
  
                 </ScrollViewer>
             </PivotItem>
 
             <!--  privacy  -->
-            <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Privacy statement" Padding="0">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Privacy statement" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="-12,0,0,0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="30,30,0,0">
                     <TextBlock x:Uid="ST_PrivacyPolicy" Margin="0,12,24,12" LineHeight="24" TextWrapping="Wrap" Text="This application doesn't collect any personal, system or hardware information, at any time." />
                 </ScrollViewer>
             </PivotItem>
 
             <!--  about  -->
-            <PivotItem Header="About">
-                <RelativePanel DataContext="{Binding AboutPartViewModel}" Padding="20">
+            <PivotItem Header="About" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="-12,0,0,0">
+                <RelativePanel DataContext="{Binding AboutPartViewModel}" Padding="30,30,0,0">
                     <Border x:Name="LogoImage" HorizontalAlignment="Right"
-                            VerticalAlignment="Top" 
-                            BorderThickness="0" IsHitTestVisible="False"
+                            VerticalAlignment="Top" BorderThickness="0" IsHitTestVisible="False"
                             RelativePanel.AlignLeftWithPanel="True"
                             RelativePanel.AlignTopWithPanel="True">
 
