@@ -14,6 +14,7 @@ using MFDeploy.Services.NetMicroFrameworkService;
 using GalaSoft.MvvmLight.Ioc;
 using MFDeploy.ViewModels;
 using Microsoft.Practices.ServiceLocation;
+using Microsoft.SPOT.Debugger;
 
 namespace MFDeploy
 {
@@ -65,7 +66,8 @@ namespace MFDeploy
         private  INetMFUsbDebugClientService CreateUSBDebugClient()
         {
             // TODO: check app lifecycle
-            var usbDebugClient = new UsbDebugClient(App.Current);
+            var usbDebugClient = PortBase.CreateInstanceForUsb("", App.Current);
+
             return new NetMFUsbDebugClientService(usbDebugClient);
         }
 

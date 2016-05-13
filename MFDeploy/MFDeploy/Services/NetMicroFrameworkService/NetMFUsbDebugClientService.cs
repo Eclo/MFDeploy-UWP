@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.NetMicroFramework.Tools.UsbDebug;
+using Microsoft.SPOT.Debugger;
 
 namespace MFDeploy.Services.NetMicroFrameworkService
 {
     public class NetMFUsbDebugClientService : INetMFUsbDebugClientService
     {
-        public UsbDebugClient UsbDebugClient { get; private set; }
+        public PortBase UsbDebugClient { get; private set; }
 
-        public NetMFUsbDebugClientService(UsbDebugClient client)
+        public NetMFUsbDebugClientService(PortBase client)
         {
             this.UsbDebugClient = client;
         }
