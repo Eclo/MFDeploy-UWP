@@ -1,24 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MFDeploy.Models;
 using MFDeploy.Services.BusyService;
 using MFDeploy.Services.Dialog;
+using MFDeploy.Services.StorageService;
 using MFDeploy.Utilities;
-using Microsoft.Practices.ServiceLocation;
-using Template10.Services.NavigationService;
-using Windows.UI.Xaml.Navigation;
-using Windows.Storage.Pickers;
-using Windows.Storage;
-using MFDeploy.Models;
-using System.Collections.ObjectModel;
-using Template10.Controls;
-using System.IO;
-using Microsoft.NetMicroFramework.Tools.MFDeployTool.Engine;
-using System.Threading;
-using Template10.Common;
+using MFDeploy.Views.Config;
 using Microsoft.NetMicroFramework.Tools;
+using Microsoft.NetMicroFramework.Tools.MFDeployTool.Engine;
+using Microsoft.Practices.ServiceLocation;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Template10.Common;
+using Template10.Services.NavigationService;
+using Windows.Storage;
+using Windows.Storage.AccessCache;
+using Windows.Storage.Pickers;
+using Windows.UI.Xaml.Navigation;
 
 namespace MFDeploy.ViewModels
 {
@@ -27,10 +28,11 @@ namespace MFDeploy.ViewModels
         //private instance of Main to get general stuff
         private MainViewModel MainVM { get { return ServiceLocator.Current.GetInstance<MainViewModel>(); } }
 
-        public DeployViewModel(IMyDialogService dlg, IBusyService busy)
+        public DeployViewModel(IMyDialogService dlg, IBusyService busy, IStorageInterfaceService _storageInterfaceService)
         {
             this.DialogSrv = dlg;
             this.BusySrv = busy;
+            StorageInterface = _storageInterfaceService;
         }
 
         #region Navigation
@@ -76,51 +78,65 @@ namespace MFDeploy.ViewModels
         /// </summary>
         public async void OpenDeployFiles()
         {
-            FileOpenPicker openPicker = new FileOpenPicker();
-            openPicker.ViewMode = PickerViewMode.List;
-            openPicker.SuggestedStartLocation = PickerLocationId.ComputerFolder;
-            openPicker.FileTypeFilter.Add("*");
-            openPicker.FileTypeFilter.Add(".nmf");
-            openPicker.FileTypeFilter.Add(".hex");
-
-            IReadOnlyList<StorageFile> files = await openPicker.PickMultipleFilesAsync();
-
-            if (files.Count > 0)
+            // check if user has a worker folder
+            if (StorageInterface.IsDeployFolderAvailable)
             {
-                // new list
-                FilesList = new ObservableCollection<DeployFile>();
-
-                // get each file and add it to collection
-                foreach(StorageFile file in files)
+                // get worker folder
+                StorageFolder folder = await StorageInterface.GetDeployFolder();
+                // get files from worker folder
+                IReadOnlyList<StorageFile> files = await StorageInterface.GetDeployFiles();
+                // handle each file
+                if (files?.Count > 0)
                 {
-                    // check for allowed extensions
-                    if (Path.GetExtension(file.Path).ToLower() == ".sig")
+                    // new list
+                    FilesList = new ObservableCollection<DeployFile>();
+
+                    // get each file and add it to collection
+                    foreach (StorageFile file in files)
                     {
-                        // this type of file will be use latter, not now
-                        continue;
-                    }
-                    else if (Path.GetExtension(file.Path).ToLower() != ".nmf" &&
-                        Path.GetExtension(file.Path).ToLower() != ".hex")
-                    {
-                        // file as different or no extension
-                        // allowed files without extension are ER_FLASH, ER_RAM, ER_CONFIG, ER_DAT, ER_ResetVector
-                        if (file.DisplayName != "ER_FLASH" && file.DisplayName != "ER_RAM" && file.DisplayName != "ER_CONFIG" &&
-                            file.DisplayName != "ER_DAT" && file.DisplayName != "ER_ResetVector")
+                        // check for allowed extensions
+                        if (Path.GetExtension(file.Path).ToLower() == ".sig")
                         {
-                            // file not allowed
+                            // this type of file will be use latter, not now
                             continue;
                         }
+                        else if (Path.GetExtension(file.Path).ToLower() != ".nmf" &&
+                            Path.GetExtension(file.Path).ToLower() != ".hex")
+                        {
+                            // file as different or no extension
+                            // allowed files without extension are ER_FLASH, ER_RAM, ER_CONFIG, ER_DAT, ER_ResetVector
+                            if (file.DisplayName != "ER_FLASH" && file.DisplayName != "ER_RAM" && file.DisplayName != "ER_CONFIG" &&
+                                file.DisplayName != "ER_DAT" && file.DisplayName != "ER_ResetVector")
+                            {
+                                // file not allowed
+                                continue;
+                            }
+                        }
+                        // add new files
+                        FilesList.Add(new DeployFile(file));
                     }
-                    // add new files
-                    FilesList.Add(new DeployFile(file));
+                    // any file
+                    if (FilesList.Count == 0)
+                    {
+                        var dummy = await DialogSrv.ShowMessageAsync(Res.GetString("DP_NoValidFiles"));
+                        return;
+                    }
+                    FilesListLoaded?.Invoke(this, EventArgs.Empty);
                 }
-                // any file
-                if(FilesList.Count == 0)
+                else
                 {
-                    var dummy = await DialogSrv.ShowMessageAsync(String.Format("Invalid file(s)"));
-                    return;
+                    var dummy = await DialogSrv.ShowMessageAsync(Res.GetString("DP_NoFiles"));
                 }
-                FilesListLoaded?.Invoke(this, EventArgs.Empty);
+            }
+            else
+            {
+                // user haven't pick a folder yet, notify him
+                List<Tuple<string, Action>> buttons = new List<Tuple<string, Action>>
+                {
+                    new Tuple<string, Action>(Res.GetString("DP_GoToSettings"), () => NavigationService.Navigate(Pages.SettingsPage, 0)),
+                    new Tuple<string, Action>(Res.GetString("DP_Close"), null)
+                };
+                await DialogSrv.ShowMessageWithActionsAsync(Res.GetString("DP_NoWorkerFolder"), "", buttons, 0, 1);
             }
         }
 
@@ -150,7 +166,7 @@ namespace MFDeploy.ViewModels
                     if (!file.DFile.IsAvailable)
                     {
                         BusySrv.HideBusy();
-                        var dummy = await DialogSrv.ShowMessageAsync(String.Format("file {0} could not be opened", file.DFile.DisplayName));
+                        var dummy = await DialogSrv.ShowMessageAsync(String.Format(Res.GetString("DP_CantOpenFile"), file.DFile.DisplayName));
                         return;
                     }
 
@@ -158,7 +174,7 @@ namespace MFDeploy.ViewModels
                     var sigFile = await GetSignatureFileName(file.DFile);
                     if (sigFile == null)
                     {
-                        var dummy = await DialogSrv.ShowMessageAsync(String.Format("file {0}.sig could not be opened", file.DFile.DisplayName));
+                        var dummy = await DialogSrv.ShowMessageAsync(String.Format(Res.GetString("DP_CanOpenSigFile"), file.DFile.DisplayName));
                         return;
                     }
                     sigfiles.Add(sigFile);
@@ -195,7 +211,7 @@ namespace MFDeploy.ViewModels
                         ))
                         {
                             // fail
-                            var dummy = await DialogSrv.ShowMessageAsync(String.Format("file {0} could not be deployed", file.DFile.DisplayName));
+                            var dummy = await DialogSrv.ShowMessageAsync(String.Format(Res.GetString("DP_CantDeploy"), file.DFile.DisplayName));
                             return;
                         }
                     }
@@ -212,7 +228,7 @@ namespace MFDeploy.ViewModels
                         if (!tpl.Item2)
                         {
                             // fail
-                            var dummy = await DialogSrv.ShowMessageAsync(String.Format("file {0} could not be deployed", file.DFile.DisplayName));
+                            var dummy = await DialogSrv.ShowMessageAsync(String.Format(Res.GetString("DP_CantDeploy"), file.DFile.DisplayName));
                             return;
                         }
                         if (tpl.Item1 != 0)
@@ -236,7 +252,7 @@ namespace MFDeploy.ViewModels
                 }
 
                 // update busy message according to deployment progress
-                BusySrv.ChangeBusyText("Executing Application");
+                BusySrv.ChangeBusyText(Res.GetString("DP_ExecutingApp"));
 
                 foreach (uint addr in executionPoints)
                 {

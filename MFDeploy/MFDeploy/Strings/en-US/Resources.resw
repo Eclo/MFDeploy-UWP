@@ -300,4 +300,31 @@ Please try again.</value>
   <data name="HC_SelectADevice" xml:space="preserve">
     <value>&lt; select a device &gt;</value>
   </data>
+<data name="DP_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="DP_GoToSettings" xml:space="preserve">
+    <value>Go to settings...</value>
+  </data>
+  <data name="DP_CanOpenSigFile" xml:space="preserve">
+    <value>file {0}.sig could not be opened</value>
+  </data>
+  <data name="DP_CantDeploy" xml:space="preserve">
+    <value>file {0} could not be deployed</value>
+  </data>
+  <data name="DP_CantOpenFile" xml:space="preserve">
+    <value>file {0} could not be opened</value>
+  </data>
+  <data name="DP_ExecutingApp" xml:space="preserve">
+    <value>Executing Application...</value>
+  </data>
+  <data name="DP_NoFiles" xml:space="preserve">
+    <value>No files to deploy.</value>
+  </data>
+  <data name="DP_NoValidFiles" xml:space="preserve">
+    <value>No valid file(s) to deploy.</value>
+  </data>
+  <data name="DP_NoWorkerFolder" xml:space="preserve">
+    <value>Oops! You haven't defined the default folder for deploy files. Please choose a folder on Settings page.</value>
+  </data>
 </root>
