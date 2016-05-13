@@ -118,6 +118,8 @@
     <Compile Include="Services\NetMicroFrameworkService\NetMFUsbDebugClientService.cs" />
     <Compile Include="Services\SettingsServices\IAppSettingsService.cs" />
     <Compile Include="Services\SettingsServices\AppSettingsService.cs" />
+    <Compile Include="Services\StorageService\IStorageInterfaceService.cs" />
+    <Compile Include="Services\StorageService\StorageInterfaceService.cs" />
     <Compile Include="StateTriggers\IsFalseTrigger.cs" />
     <Compile Include="StateTriggers\ITriggerValue.cs" />
     <Compile Include="Utilities\EnumHelper.cs" />
