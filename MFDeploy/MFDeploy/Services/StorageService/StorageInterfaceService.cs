@@ -43,36 +43,17 @@ namespace MFDeploy.Services.StorageService
 
         public async Task<IReadOnlyList<StorageFile>> GetDeployFiles()
         {
-            try
+            if (IsDeployFolderAvailable)
             {
-                if (IsDeployFolderAvailable)
-                {
-                    StorageFolder deployfolder = await Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.GetFolderAsync(DeployFolderToken);
+                StorageFolder deployfolder = await Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.GetFolderAsync(DeployFolderToken);
 
-                    // dummy filter 
-                    List<string> fileTypeFilter = new List<string>();
-                    fileTypeFilter.Add("*");
+                // get files from default folder
+                IReadOnlyList<StorageFile> fileList = await deployfolder.GetFilesAsync();
 
-                    Windows.Storage.Search.QueryOptions queryOptions = new Windows.Storage.Search.QueryOptions(Windows.Storage.Search.CommonFileQuery.OrderByName, fileTypeFilter);
-                    Windows.Storage.Search.StorageFileQueryResult queryResult = deployfolder.CreateFileQueryWithOptions(queryOptions);
-
-                    // get files from default folder
-                    IReadOnlyList<StorageFile> fileList = await queryResult.GetFilesAsync();
-
-                    return fileList;
-                }
-
-                //Messenger.Default.Send(new NotificationMessage(""), GlobalNotificationMessages.UpdateProgramPageMissionTemplateListToken);
-                return null;
+                return fileList;
             }
-            catch (Exception ex)
-            {
-                // notify user
-                //Messenger.Default.Send(new NotificationMessage(ex.Message), GlobalNotificationMessages.ShowErrorWarningToken);
-                ////send telemetry
-                //var properties = new Dictionary<string, string> { { "MissionTemplates", "LocalStorageInterface.GetMissionTemplates" } };
-                return null;
-            }
+
+            return null;
         }
     }
 }
