@@ -46,7 +46,7 @@
                RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" 
                HeaderTemplate="{StaticResource PivotItemHeaderTemplate}" >
             <PivotItem x:Uid="MP_Output" Header="Output" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="-12,0,0,0">
-                <ScrollViewer >
+                <ScrollViewer Padding="24,0,0,0">
                     <TextBlock x:Name="Output" TextWrapping="Wrap"  ScrollViewer.VerticalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
                 </ScrollViewer>
             </PivotItem>

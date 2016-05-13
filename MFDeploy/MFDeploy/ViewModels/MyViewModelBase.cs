@@ -19,13 +19,18 @@ namespace MFDeploy.ViewModels
     {
         [JsonIgnore]
         public IDispatcherWrapper Dispatcher { get; set; }
+
         [JsonIgnore]
         public INavigationService NavigationService { get; set; }
         [JsonIgnore]
         public IStateItems SessionState { get; set; }
 
         public virtual Task OnNavigatedFromAsync(IDictionary<string, object> pageState, bool suspending) { return Task.FromResult<object>(null); }
-        public virtual Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state) { return Task.FromResult<object>(null); }
+        public virtual Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
+        {
+            Dispatcher = WindowWrapper.Current(NavigationService)?.Dispatcher;
+            return Task.FromResult<object>(null);
+        }
         public virtual Task OnNavigatingFromAsync(NavigatingEventArgs args) { return Task.FromResult<object>(null); }
 
 

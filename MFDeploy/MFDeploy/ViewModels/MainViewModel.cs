@@ -14,7 +14,9 @@ using MFDeploy.Utilities;
 using Microsoft.NetMicroFramework.Tools;
 using Microsoft.NetMicroFramework.Tools.MFDeployTool.Engine;
 using Microsoft.SPOT.Debugger.WireProtocol;
+using Template10.Common;
 using Windows.UI.Core;
+using Windows.UI.Xaml.Navigation;
 
 namespace MFDeploy.ViewModels
 {
@@ -98,7 +100,7 @@ namespace MFDeploy.ViewModels
 
         public MFDeviceBase SelectedDevice { get; set; }
 
-        public async void OnSelectedDeviceChanged()
+        public void OnSelectedDeviceChanged()
         {
             SelectedDeviceConnectionResult = PingConnectionResult.None;
 
@@ -108,7 +110,7 @@ namespace MFDeploy.ViewModels
                 SelectedDevice.DebugEngine.SpuriousCharactersReceived += DebugEngine_SpuriousCharactersReceived;
             }
             // try to connect
-            await SelectedDeviceConnect();           
+           SelectedDeviceConnect();           
         }
 
         private void DebugEngine_SpuriousCharactersReceived(object sender, Microsoft.SPOT.Debugger.StringEventArgs e)
@@ -172,7 +174,7 @@ namespace MFDeploy.ViewModels
         public bool Connecting { get { return (ConnectionStateResult == ConnectionState.Connecting); } }
         public bool Disconnecting { get { return (ConnectionStateResult == ConnectionState.Disconnecting); } }
 
-        public async void ConnectDisconnect()
+        public void ConnectDisconnect()
         {                        
             if (ConnectionStateResult == ConnectionState.Connected)
             {
@@ -180,34 +182,47 @@ namespace MFDeploy.ViewModels
             }
             else
             {
-                await SelectedDeviceConnect();               
+                SelectedDeviceConnect();               
             }
         }
 
-        private async Task SelectedDeviceConnect()
-        {
-            IsBusyHeader = true;
-            ConnectionStateResult = ConnectionState.Connecting;
-            bool connectOk = await SelectedDevice.DebugEngine.ConnectAsync(3, 1000);
+        private async void SelectedDeviceConnect()
+        {            
+            await WindowWrapper.Current().Dispatcher.DispatchAsync(() => {
+                IsBusyHeader = true;
+                ConnectionStateResult = ConnectionState.Connecting;
+            });
 
-            ConnectionStateResult = connectOk ?  ConnectionState.Connected : ConnectionState.Disconnected;
+            bool connectOk = await SelectedDevice.DebugEngine.ConnectAsync(3, 1000);
+                       
+            await WindowWrapper.Current().Dispatcher.DispatchAsync(() => {
+                ConnectionStateResult = connectOk ? ConnectionState.Connected : ConnectionState.Disconnected;
+                IsBusyHeader = false;
+            });
             if (!connectOk)
             {
                 await DialogSrv.ShowMessageAsync(Res.GetString("HC_ConnectionError"));
             }
-            IsBusyHeader = false;
         }
 
         private void SelectedDeviceDisconnect()
-        {
-            IsBusyHeader = true;
-            ConnectionStateResult = ConnectionState.Disconnecting;
+        {            
+            WindowWrapper.Current().Dispatcher.Dispatch(() => {
+                IsBusyHeader = true;
+                ConnectionStateResult = ConnectionState.Disconnecting;
+            });
             SelectedDevice.DebugEngine.Disconnect();
-            ConnectionStateResult = ConnectionState.Disconnected;
-            IsBusyHeader = false;
+            WindowWrapper.Current().Dispatcher.Dispatch( () => {
+                ConnectionStateResult = ConnectionState.Disconnected;
+                IsBusyHeader = false;
+            });
+            
+           
         }
 
         #endregion
+
+
     }
 
 }
