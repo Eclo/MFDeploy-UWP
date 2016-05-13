@@ -37,7 +37,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         
-        <Controls:HamburgerMenu x:Name="MyHamburgerMenu" Grid.Row="0" Grid.RowSpan="2"  Grid.Column="0" Grid.ColumnSpan="2" DisplayMode="CompactOverlay">
+        <Controls:HamburgerMenu x:Name="MyHamburgerMenu" Grid.Row="0" Grid.RowSpan="2"  Grid.Column="0" Grid.ColumnSpan="2" >
             <Controls:HamburgerMenu.PrimaryButtons>
                 <!--  mainpage button  -->
                 <Controls:HamburgerButtonInfo x:Name="HomeMenu" ClearHistory="True" PageType="local:MainPage" >
@@ -79,7 +79,8 @@
                     </StackPanel>
                 </Controls:HamburgerButtonInfo>
                 <!-- Config Network -->
-                <Controls:HamburgerButtonInfo x:Name="ConfigNetworkMenu" ClearHistory="False" PageType="local:ConfigNetworkPage" IsEnabled="{x:Bind ViewModel.Connected, Mode=OneWay}">
+                <Controls:HamburgerButtonInfo x:Name="ConfigNetworkMenu" ClearHistory="False" PageType="local:ConfigNetworkPage" 
+                                              IsEnabled="{x:Bind ViewModel.Connected, Mode=OneWay}">
                     <StackPanel Orientation="Horizontal">
                         <Viewbox Height="24" Width="24" Margin="12" >
                             <Canvas Width="32" Height="32" >
@@ -128,7 +129,7 @@
 
         </Controls:HamburgerMenu>
 
-        <Controls:PageHeader x:Name="pageHeader"  Grid.Row="0" Grid.Column="1"
+        <Controls:PageHeader x:Name="pageHeader"  Grid.Row="0" Grid.Column="1" Background="{ThemeResource LigtherAreaBrush}" Foreground="{ThemeResource AppTextColorBrush}"
                              RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" 
                              HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"  >
             <Controls:PageHeader.Content>
@@ -137,7 +138,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock x:Name="PageHeaderText" Text="{x:Bind ViewModel.PageHeader, Mode=OneWay}" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="PageHeaderText" Text="{x:Bind ViewModel.PageHeader, Mode=OneWay}" VerticalAlignment="Center" Style="{StaticResource BaseAltTextBlockStyle}"/>
                     <ctrls:HeaderControl  Grid.Column="1" />
                 </Grid>
             </Controls:PageHeader.Content>

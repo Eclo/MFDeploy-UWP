@@ -35,8 +35,8 @@
         <!--#endregion-->
 
     </Page.Resources>
-    
-    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <RelativePanel Padding="0,48,0,0" Background="{ThemeResource LigtherAreaBrush}">
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
@@ -69,19 +69,25 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-
-        <GridView x:Name="filesListView" Margin="30,58,0,0" ItemsSource="{x:Bind ViewModel.FilesList, Mode=OneWay}"
-                  HorizontalAlignment="Left" VerticalAlignment="Top" ItemTemplate="{StaticResource ImageOverlayFileDataTemplate}" 
-                  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollMode="Auto" SelectionMode="Multiple"
-                  SelectionChanged="filesListView_SelectionChanged">
-            <GridView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <ItemsWrapGrid MaximumRowsOrColumns="6"/>
-                </ItemsPanelTemplate>
-            </GridView.ItemsPanel>
-        </GridView>
-
-        <CommandBar x:Name="cmdBar" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+        <Pivot x:Name="MyPivot"  SelectedIndex="0"
+               RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True"
+               RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" 
+               HeaderTemplate="{StaticResource PivotItemHeaderTemplate}" >
+            <PivotItem x:Uid="DP_Pivot" Header="Files" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="-12,0,0,0">
+                <GridView x:Name="filesListView" Margin="30,20,0,0" ItemsSource="{x:Bind ViewModel.FilesList, Mode=OneWay}"
+                          HorizontalAlignment="Left" VerticalAlignment="Top" ItemTemplate="{StaticResource ImageOverlayFileDataTemplate}" 
+                          ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollMode="Auto" SelectionMode="Multiple"
+                          SelectionChanged="filesListView_SelectionChanged">    
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid MaximumRowsOrColumns="6"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                </GridView>
+            </PivotItem>
+        </Pivot>
+        <CommandBar x:Name="cmdBar" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" 
+                    Background="{ThemeResource LigtherAreaBrush}">
             <AppBarButton x:Name="deployAppBarButton" x:Uid="DP_DeployAppBarButton" Label="Deploy" Icon="Upload" Tapped="{x:Bind ViewModel.DeployFile, Mode=OneWay}" IsEnabled="{x:Bind ViewModel.AnyFileSelected, Mode=OneWay}"/>
             <AppBarButton x:Name="browseAppBarButton" x:Uid="DP_BrowseAppBarButton" Label="Browse" Icon="OpenLocal" Tapped="{x:Bind ViewModel.OpenDeployFiles, Mode=OneWay}"/>
         </CommandBar>

@@ -4,39 +4,62 @@
 
     <x:Double x:Key="NarrowMinWidth">0</x:Double>
     <x:Double x:Key="NormalMinWidth">521</x:Double>
-    <x:Double x:Key="WideMinWidth">1200</x:Double>
+    <x:Double x:Key="WideMinWidth">2000</x:Double>
+    
+    <Color x:Key="SystemAccentColor">#FF10893E</Color>
 
-    <!--<Color x:Key="SystemAccentColor">SteelBlue</Color>-->
-  
+    <Style x:Key="BaseAltTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="TextTrimming" Value="None"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="LineStackingStrategy" Value="MaxHeight"/>
+        <Setter Property="TextLineBounds" Value="Full"/>
+    </Style>
+    
+
+    <DataTemplate x:Key="PivotItemHeaderTemplate">
+        <TextBlock Text="{Binding}" Style="{StaticResource BaseTextBlockStyle}"/>
+    </DataTemplate>
+
     <ResourceDictionary.ThemeDictionaries>
 
         <ResourceDictionary x:Key="Light">
-            <SolidColorBrush x:Key="ExtendedSplashBackground" Color="SteelBlue" />
+            <Color x:Key="AppTextColor">#CA000000</Color>
+            <SolidColorBrush x:Key="AppTextColorBrush" Color="#CA000000" />
+
+            <SolidColorBrush x:Key="ExtendedSplashBackground" Color="#FF10893E" />
             <SolidColorBrush x:Key="ExtendedSplashForeground" Color="White" />
 
-            <Color x:Key="CustomColor">SteelBlue</Color>
-            <SolidColorBrush x:Key="CustomColorBrush" Color="SteelBlue" />
-            
-            <Color x:Key="CustomColorAlpha">#7F4682B4</Color>
-            <SolidColorBrush x:Key="CustomColorAlphaBrush" Color="#7F4682B4" />
-            
-            <Color x:Key="CustomColorDarkColor">#30597C</Color>
-            <SolidColorBrush x:Key="CustomColorDarkBrush" Color="#30597C" />
+            <Color x:Key="CustomColor">#FF10893E</Color>
+            <SolidColorBrush x:Key="CustomColorBrush" Color="#FF10893E" />
 
-            <SolidColorBrush x:Key="CustomColorLightBrush" Color="#4B8CC2" />
-            <SolidColorBrush x:Key="CustomColorLightAlphaBrush" Color="#D85299D4" />
+            <Color x:Key="ApplicationPageBackgroundThemeColor">#e6e6e6</Color>
+            <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="#e6e6e6" />
+            <SolidColorBrush x:Key="ButtonHeaderOverBrush" Color="#80BFBFBF" />
+            <SolidColorBrush x:Key="ButtonHeaderBusyBrush" Color="Black" />
+            <SolidColorBrush x:Key="LigtherAreaBrush" Color="#f2f2f2" />
+            
+            <Color x:Key="CustomColorAlpha">#8010893E</Color>
+            <SolidColorBrush x:Key="CustomColorAlphaBrush" Color="#8010893E" />
 
+            <Color x:Key="CustomColorDarkColor">#0a5626</Color>
+            <SolidColorBrush x:Key="CustomColorDarkBrush" Color="#0a5626" />
+
+            <SolidColorBrush x:Key="CustomColorLightBrush" Color="#5CAC7A" />
+            <SolidColorBrush x:Key="CustomColorLightAlphaBrush" Color="#355CAC7A" />
 
             <Color x:Key="ContrastColor">White</Color>
             <SolidColorBrush x:Key="ContrastColorBrush" Color="White" />
 
             <SolidColorBrush x:Key="ContrastColorAlphaBrush" Color="#0AFFFFFF" />
 
-            <SolidColorBrush x:Key="FlyoutForegroundBrush" Color="White" />
-            <SolidColorBrush x:Key="FlyoutBackgroundBrush" Color="#003333" />
-            <SolidColorBrush x:Key="FlyoutListOverBrush" Color="#B0696969" />
+            <SolidColorBrush x:Key="FlyoutForegroundBrush" Color="{StaticResource AppTextColor}" />
+            <SolidColorBrush x:Key="FlyoutBackgroundBrush" Color="{StaticResource ApplicationPageBackgroundThemeColor}" />
+            <SolidColorBrush x:Key="FlyoutListOverBrush" Color="{StaticResource CustomColorAlpha}" />
 
-            <SolidColorBrush x:Key="HamburgerBackgroundBrush" Color="{ThemeResource SystemAccentColor}" />
+            <SolidColorBrush x:Key="HamburgerBackgroundBrush" Color="{StaticResource CustomColor}" />
             <SolidColorBrush x:Key="HamburgerForegroundBrush" Color="White" />
             <SolidColorBrush x:Key="NavAreaBackgroundBrush" Color="#FF2C2C2C" />
             <SolidColorBrush x:Key="NavButtonForegroundBrush" Color="White" />
@@ -46,11 +69,10 @@
             <SolidColorBrush x:Key="NavButtonPressedForegroundBrush" Color="White" />
             <SolidColorBrush x:Key="NavButtonPressedBackgroundBrush" Color="#FF848484" />
             <SolidColorBrush x:Key="NavButtonCheckedForegroundBrush" Color="White" />
-            <SolidColorBrush x:Key="NavButtonCheckedBackgroundBrush" Color="#FF2A4E6C" />
+            <SolidColorBrush x:Key="NavButtonCheckedBackgroundBrush" Color="#0A5626" />
             <SolidColorBrush x:Key="NavButtonCheckedIndicatorBrush" Color="Transparent" />
 
             <Style TargetType="controls:HamburgerMenu">
-                <!--<Setter Property="AccentColor" Value="{StaticResource CustomColor}" />-->
                 <Setter Property="HamburgerBackground" Value="{StaticResource HamburgerBackgroundBrush}" />
                 <Setter Property="HamburgerForeground" Value="{StaticResource HamburgerForegroundBrush}" />
                 <Setter Property="NavAreaBackground" Value="{StaticResource NavAreaBackgroundBrush}" />

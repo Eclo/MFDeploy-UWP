@@ -9,7 +9,7 @@
     xmlns:controls="using:Template10.Controls"
     DataContext="{Binding DeviceCapabilitiesViewModel, Mode=OneWay, Source={StaticResource Locator}}">
 
-    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <RelativePanel Padding="0,48,0,0" Background="{ThemeResource LigtherAreaBrush}">
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
@@ -43,10 +43,14 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <Pivot x:Name="mainPivot" Padding="0,48,0,0" SelectedIndex="{x:Bind ViewModel.CurrentPivot, Mode=OneWay}">
+        <Pivot x:Name="mainPivot" SelectedIndex="{x:Bind ViewModel.CurrentPivot, Mode=OneWay}"
+               RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True"
+               RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" 
+               HeaderTemplate="{StaticResource PivotItemHeaderTemplate}">
 
             <!-- system -->
-            <PivotItem x:Name="systemPivotItem" x:Uid="DC_SystemPivotItem" Header="System">
+            <PivotItem x:Name="systemPivotItem" x:Uid="DC_SystemPivotItem" Header="System" Padding="12,0,0,0"
+                       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="-12,0,0,0">
                 <RichTextBlock x:Name="systemRichTextBlock" IsTextSelectionEnabled="True">
                     <Paragraph>
                         <Run Text="{x:Bind ViewModel.DeviceSystemInfo, Mode=OneWay}" FontFamily="Courier New"/>
@@ -55,7 +59,8 @@
             </PivotItem>
 
             <!-- memory -->
-            <PivotItem x:Name="memoryPivotItem" x:Uid="DC_MemoryMapPivotItem" Header="Maps">
+            <PivotItem x:Name="memoryPivotItem" x:Uid="DC_MemoryMapPivotItem" Header="Maps" 
+                       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="-12,0,0,0" Padding="12,0,0,0">
 
                 <RichTextBlock x:Name="memoryRichTextBlock" IsTextSelectionEnabled="True">
                     <Paragraph Margin="10,20,0,0">
@@ -78,10 +83,10 @@
                     </Paragraph>
                 </RichTextBlock>
             </PivotItem>
-            
         </Pivot>
 
-        <CommandBar RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+        <CommandBar RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
+                    Background="{ThemeResource LigtherAreaBrush}">
             <AppBarButton x:Name="copyAppBarButton" x:Uid="DC_CopyAppBarButton" Label="Copy All" Icon="Copy" Tapped="{x:Bind ViewModel.CopyAllInfo, Mode=OneWay}"/>
             <AppBarButton x:Name="copyCurrentAppBarButton" x:Uid="DC_CopyCurrentAppBarButton" Label="Copy Current" Icon="Page2" Tapped="{x:Bind ViewModel.CopyCurrentInfo, Mode=OneWay}"/>
         </CommandBar>

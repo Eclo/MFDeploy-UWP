@@ -25,7 +25,7 @@
         </conv10:ValueWhenConverter>
     </Page.Resources>
 
-    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <RelativePanel Padding="0,48,0,0" Background="{ThemeResource LigtherAreaBrush}">
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
@@ -59,9 +59,13 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <Pivot x:Name="mainPivot" Padding="0,48,0,0">
+        <Pivot x:Name="mainPivot"  
+               RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True"
+               RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" 
+               HeaderTemplate="{StaticResource PivotItemHeaderTemplate}" >
             <!-- general configuration -->
-            <PivotItem Header="Network">
+            <PivotItem Header="Network"
+                       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="-12,0,0,0">
                 <Grid>
                     <TextBox x:Name="staticIPAdrressTextBox" x:Uid="CU_StaticIPAdrressTextBox" Header="Static IP Address" HorizontalAlignment="Left" Margin="30,30,0,0" TextWrapping="NoWrap" MaxLength="15" Text="{x:Bind ViewModel.StaticIPAdrress, Mode=TwoWay}" VerticalAlignment="Top" Width="180" InputScope="Number" PlaceholderText="###.###.###.###" TextChanged="IPAdrressTextBox_TextChanged" Paste="{x:Bind IPAdrressTextBox_Paste}" KeyDown="{x:Bind IPAdrressTextBox_KeyDown}" IsEnabled="{Binding IsChecked, ElementName=dhcpEnableCheckBox, Converter={StaticResource BooleanInverterConverter} }"/>
                     <TextBox x:Name="subnetMaskTextBox" x:Uid="CU_SubnetMaskTextBox" Header="Subnet Mask" HorizontalAlignment="Left" Margin="30,100,0,0" TextWrapping="NoWrap" MaxLength="15" Text="{x:Bind ViewModel.SubnetMask, Mode=TwoWay}" VerticalAlignment="Top" Width="180" InputScope="Number" PlaceholderText="###.###.###.###" TextChanged="IPAdrressTextBox_TextChanged" Paste="{x:Bind IPAdrressTextBox_Paste}" KeyDown="{x:Bind IPAdrressTextBox_KeyDown}" IsEnabled="{Binding IsChecked, ElementName=dhcpEnableCheckBox, Converter={StaticResource BooleanInverterConverter} }"/>
@@ -79,7 +83,8 @@
                 </Grid>
             </PivotItem>
             <!-- wireless configuration -->
-            <PivotItem Header="Wireless">
+            <PivotItem Header="Wireless"
+                       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="-12,0,0,0">
                 <Grid>
                     <ComboBox x:Name="authenticationComboBox" x:Uid="CU_AuthenticationComboBox" Header="Authentication" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Margin="30,30,0,0" SelectedIndex="{x:Bind ViewModel.Authentication, Mode=TwoWay}">
                         <ComboBoxItem x:Uid="CU_NoneItem" Content="None"/>
@@ -128,7 +133,8 @@
             </PivotItem>
         </Pivot>
 
-        <CommandBar RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+        <CommandBar RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"
+                    Background="{ThemeResource LigtherAreaBrush}">
             <AppBarButton x:Name="updateAppBarButton" x:Uid="CU_updateAppBarButton" Label="Update" IsEnabled="{x:Bind ViewModel.UpdateButtonEnabled, Mode=OneWay}" Icon="Accept" Tapped="{x:Bind ViewModel.UpdateConfiguration, Mode=OneWay}"/>
         </CommandBar>
     </RelativePanel>

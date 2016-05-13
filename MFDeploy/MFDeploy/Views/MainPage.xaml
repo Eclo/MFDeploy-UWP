@@ -9,7 +9,7 @@
       mc:Ignorable="d"
       DataContext="{Binding MainPageViewModel, Mode=OneWay, Source={StaticResource Locator}}">
 
-    <RelativePanel Padding="0,68,0,0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <RelativePanel Padding="0,48,0,0" Background="{ThemeResource LigtherAreaBrush}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
                 <VisualState x:Name="VisualStateNarrow">
@@ -41,12 +41,19 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+        <Pivot x:Name="MyPivot"  SelectedIndex="0"
+               RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True"
+               RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" 
+               HeaderTemplate="{StaticResource PivotItemHeaderTemplate}" >
+            <PivotItem x:Uid="MP_Output" Header="Output" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="-12,0,0,0">
+                <ScrollViewer >
+                    <TextBlock x:Name="Output" TextWrapping="Wrap"  ScrollViewer.VerticalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                </ScrollViewer>
+            </PivotItem>
 
-        <TextBlock x:Name="OutputHeader" x:Uid="MP_OutputHeader" Text="Output" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignTopWithPanel="True" Margin="20,0,0,0"/>
-        <ScrollViewer Margin="20,12,12,12" RelativePanel.Below="OutputHeader" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.Above="cmdBar">
-            <TextBlock x:Name="Output" TextWrapping="Wrap"  ScrollViewer.VerticalScrollMode="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
-        </ScrollViewer>
-        <CommandBar x:Name="cmdBar" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" >
+        </Pivot>
+        <CommandBar x:Name="cmdBar" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" 
+                    Background="{ThemeResource LigtherAreaBrush}">
             <AppBarButton x:Name="clearOutputAppBarButton" x:Uid="MP_clearOutputAppBarButton" Label="Clear" Icon="Cancel" Tapped="clearOutputAppBarButton_Tapped"/>
         </CommandBar>
     </RelativePanel>

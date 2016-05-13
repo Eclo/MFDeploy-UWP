@@ -9,8 +9,7 @@
     mc:Ignorable="d"
     DataContext="{Binding ConfigUSBViewModel, Mode=OneWay, Source={StaticResource Locator}}">
 
-    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <RelativePanel Padding="0,48,0,0" Background="{ThemeResource LigtherAreaBrush}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
                 <VisualState x:Name="VisualStateNarrow">
@@ -43,16 +42,14 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <ScrollViewer x:Name="pageContent"  Padding="12" VerticalScrollBarVisibility="Auto"
-                      RelativePanel.AlignBottomWithPanel="True"
-                      RelativePanel.AlignTopWithPanel="True"
-                      RelativePanel.AlignLeftWithPanel="True"
-                      RelativePanel.AlignRightWithPanel="True" >
-            <Grid>
+        <Pivot x:Name="MyPivot" SelectedIndex="0"
+               RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True"
+               RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" 
+               HeaderTemplate="{StaticResource PivotItemHeaderTemplate}" >
+            <PivotItem  Header="Config USB" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="-12,0,0,0">
 
-            </Grid>
-
-        </ScrollViewer>
+            </PivotItem>
+        </Pivot>
 
     </RelativePanel>
 </Page>
