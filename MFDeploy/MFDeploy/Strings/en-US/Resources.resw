@@ -288,4 +288,10 @@ Please try again.</value>
   <data name="DP_Pivot.Header" xml:space="preserve">
     <value>Files</value>
   </data>
+  <data name="ST_CurrentFolderPath" xml:space="preserve">
+    <value>No folder selected!</value>
+  </data>
+  <data name="ST_DeployFolderTextBox.Header" xml:space="preserve">
+    <value>Deployment files folder</value>
+  </data>
 </root>

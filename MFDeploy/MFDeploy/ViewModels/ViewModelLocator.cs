@@ -7,6 +7,7 @@ using MFDeploy.Services.Dialog;
 using MFDeploy.Services.SettingsServices;
 using Microsoft.Practices.ServiceLocation;
 using Template10.Services.SettingsService;
+using MFDeploy.Services.StorageService;
 
 namespace MFDeploy.ViewModels
 {
@@ -31,6 +32,7 @@ namespace MFDeploy.ViewModels
             SimpleIoc.Default.Register<IBusyService, BusyService>();
             SimpleIoc.Default.Register<IMyDialogService, MyDialogService>();
             SimpleIoc.Default.Register<IAppSettingsService, AppSettingsService>();
+            SimpleIoc.Default.Register<IStorageInterfaceService, StorageInterfaceService>();
 
             // Template 10
             SimpleIoc.Default.Register<ISettingsHelper, SettingsHelper>();

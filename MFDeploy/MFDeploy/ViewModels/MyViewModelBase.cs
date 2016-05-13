@@ -10,6 +10,7 @@ using PropertyChanged;
 using Template10.Common;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
+using MFDeploy.Services.StorageService;
 
 namespace MFDeploy.ViewModels
 {
@@ -32,7 +33,10 @@ namespace MFDeploy.ViewModels
         public IBusyService BusySrv { get; set; }
 
         [JsonIgnore]
-        public IMyDialogService DialogSrv {get; set;}
+        public IMyDialogService DialogSrv { get; set; }
+
+        [JsonIgnore]
+        public IStorageInterfaceService StorageInterface { get; set; }
 
 
         public override void Cleanup()

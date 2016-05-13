@@ -56,15 +56,28 @@
                 <ScrollViewer Margin="0,12,-12,0" HorizontalContentAlignment="Left"
                               VerticalScrollBarVisibility="Auto">
                     <RelativePanel HorizontalAlignment="Left">
-                        <ToggleSwitch x:Name="AddTimestampToOutputToggleSwitch" x:Uid="ST_AddTimestampToOutputToggleSwitch"
+                        <StackPanel>
+                            <ToggleSwitch x:Name="AddTimestampToOutputToggleSwitch" x:Uid="ST_AddTimestampToOutputToggleSwitch"
                                       Header="Add timestamp to output"
                                       IsOn="{Binding AddTimestampToOutputButton, Mode=TwoWay}"
                                       RelativePanel.AlignLeftWithPanel="True"
                                       RelativePanel.AlignTopWithPanel="True"                                      
                                       />
 
+                            <Grid Margin="4,5,0,0" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignTopWithPanel="True">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Grid.Column="0" x:Name="deployFolderTextBox" x:Uid="ST_DeployFolderTextBox"
+                                         Text="{x:Bind ViewModel.DeployFolderPath, Mode=OneWay}" Margin="0,0,5,0" 
+                                         IsReadOnly="True" />
+                                <Button Grid.Column="1" x:Name="deployFolderButton" Content="..." Tapped="{x:Bind ViewModel.PickDeployFolder, Mode=OneWay}"
+                                        VerticalAlignment="Bottom"/>
+                            </Grid>
+                        </StackPanel>
                     </RelativePanel>
-
+ 
                 </ScrollViewer>
             </PivotItem>
 

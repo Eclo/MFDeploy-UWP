@@ -12,6 +12,9 @@ using Template10.Services.NavigationService;
 using Template10.Services.SettingsService;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
+using Windows.Storage.Pickers;
+using Windows.Storage;
+using MFDeploy.Services.StorageService;
 
 namespace MFDeploy.ViewModels
 {
@@ -20,10 +23,11 @@ namespace MFDeploy.ViewModels
         //private instance of Main to get general stuff
         private MainViewModel MainVM { get { return ServiceLocator.Current.GetInstance<MainViewModel>(); } }
 
-        public SettingsPageViewModel(IMyDialogService dlg, IBusyService busy, IAppSettingsService _appSettings)
+        public SettingsPageViewModel(IMyDialogService dlg, IBusyService busy, IAppSettingsService _appSettings, IStorageInterfaceService _storageInterfaceService)
         {
             SettingsPartViewModel  = new SettingsPartViewModel(dlg, busy, _appSettings);
             AboutPartViewModel = new AboutPartViewModel(dlg, busy);
+            StorageInterface = _storageInterfaceService;
         }
         public SettingsPartViewModel SettingsPartViewModel { get; }
         public AboutPartViewModel AboutPartViewModel { get; }
@@ -39,6 +43,8 @@ namespace MFDeploy.ViewModels
             await Task.CompletedTask;
 
             MainVM.PageHeader = Res.GetString("ST_PageHeader");
+
+            LoadDeployFolder();
         }
 
         public override async Task OnNavigatedFromAsync(IDictionary<string, object> suspensionState, bool suspending)
@@ -57,6 +63,29 @@ namespace MFDeploy.ViewModels
         }
 
         #endregion
+
+        public string DeployFolderPath { get; set; }
+
+        private async void LoadDeployFolder()
+        {
+            StorageFolder folder = await StorageInterface.GetDeployFolder();
+
+            if (folder != null)
+            {
+                DeployFolderPath = folder.Path;
+            }
+            else
+                DeployFolderPath = Res.GetString("ST_CurrentFolderPath");
+        }
+
+        public async void PickDeployFolder()
+        {
+            string folderPath = await StorageInterface.PickDeployFolder();
+            if(folderPath != String.Empty)
+            {
+                DeployFolderPath = folderPath;
+            }
+        }
     }
 
     public class SettingsPartViewModel : MyViewModelBase
