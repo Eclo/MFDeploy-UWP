@@ -55,7 +55,7 @@
                     <RelativePanel >
 
                         <ToggleSwitch x:Name="AddTimestampToOutputToggleSwitch" x:Uid="ST_AddTimestampToOutputToggleSwitch"
-                                    Header="Add timestamp to output" IsOn="{Binding AddTimestampToOutputButton, Mode=TwoWay}"
+                                    Header="Add timestamp to output" IsOn="{x:Bind ViewModel.SettingsPartViewModel.AddTimestampToOutputButton, Mode=TwoWay}"
                                     RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignTopWithPanel="True" />
 
                         <Grid RelativePanel.AlignLeftWithPanel="True" RelativePanel.Below="AddTimestampToOutputToggleSwitch" Margin="0,20,0,0">
@@ -64,9 +64,9 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBox Grid.Column="0" x:Name="deployFolderTextBox" x:Uid="ST_DeployFolderTextBox"
-                                         Text="{x:Bind ViewModel.DeployFolderPath, Mode=OneWay}" Margin="0,0,5,0" 
+                                         Text="{x:Bind ViewModel.SettingsPartViewModel.DeployFolderPath, Mode=OneWay}" Margin="0,0,5,0" 
                                          IsReadOnly="True" Width="500" Style="{StaticResource AppTextBoxStyle}" />
-                                <Button Grid.Column="1" x:Name="deployFolderButton" Content="..." Tapped="{x:Bind ViewModel.PickDeployFolder, Mode=OneWay}"
+                            <Button Grid.Column="1" x:Name="deployFolderButton" Content="..." Tapped="{x:Bind ViewModel.SettingsPartViewModel.PickDeployFolder, Mode=OneWay}"
                                         VerticalAlignment="Bottom" Width="32" Height="32" Style="{StaticResource AppButtonStyle}"/>
                         </Grid>
                        

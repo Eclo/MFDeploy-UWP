@@ -7,12 +7,8 @@ using MFDeploy.Services.Dialog;
 using MFDeploy.Services.SettingsServices;
 using MFDeploy.Utilities;
 using Microsoft.Practices.ServiceLocation;
-using Template10.Mvvm;
 using Template10.Services.NavigationService;
-using Template10.Services.SettingsService;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
-using Windows.Storage.Pickers;
 using Windows.Storage;
 using MFDeploy.Services.StorageService;
 
@@ -25,9 +21,8 @@ namespace MFDeploy.ViewModels
 
         public SettingsPageViewModel(IMyDialogService dlg, IBusyService busy, IAppSettingsService _appSettings, IStorageInterfaceService _storageInterfaceService)
         {
-            SettingsPartViewModel  = new SettingsPartViewModel(dlg, busy, _appSettings);
+            SettingsPartViewModel  = new SettingsPartViewModel(dlg, busy, _appSettings, _storageInterfaceService);
             AboutPartViewModel = new AboutPartViewModel(dlg, busy);
-            StorageInterface = _storageInterfaceService;
         }
         public SettingsPartViewModel SettingsPartViewModel { get; }
         public AboutPartViewModel AboutPartViewModel { get; }
@@ -44,7 +39,7 @@ namespace MFDeploy.ViewModels
 
             MainVM.PageHeader = Res.GetString("ST_PageHeader");
 
-            LoadDeployFolder();
+            SettingsPartViewModel.LoadDeployFolder();
         }
 
         public override async Task OnNavigatedFromAsync(IDictionary<string, object> suspensionState, bool suspending)
@@ -64,9 +59,29 @@ namespace MFDeploy.ViewModels
 
         #endregion
 
+
+    }
+
+    public class SettingsPartViewModel : MyViewModelBase
+    {
+        IAppSettingsService _settings;
+
+        public SettingsPartViewModel(IMyDialogService dlg, IBusyService busy, IAppSettingsService _appSettings, IStorageInterfaceService _storageInterfaceService)
+        {
+            this.DialogSrv = dlg;
+            this.BusySrv = busy;
+            this._settings = _appSettings;
+            this.StorageInterface = _storageInterfaceService;
+        }
+
+        public bool AddTimestampToOutputButton
+        {
+            get { return _settings.AddTimestampToOutput; }
+            set { _settings.AddTimestampToOutput = value; }
+        }
         public string DeployFolderPath { get; set; }
 
-        private async void LoadDeployFolder()
+        public async void LoadDeployFolder()
         {
             StorageFolder folder = await StorageInterface.GetDeployFolder();
 
@@ -81,30 +96,11 @@ namespace MFDeploy.ViewModels
         public async void PickDeployFolder()
         {
             string folderPath = await StorageInterface.PickDeployFolder();
-            if(folderPath != String.Empty)
+            if (folderPath != String.Empty)
             {
                 DeployFolderPath = folderPath;
             }
         }
-    }
-
-    public class SettingsPartViewModel : MyViewModelBase
-    {
-        IAppSettingsService _settings;
-
-        public SettingsPartViewModel(IMyDialogService dlg, IBusyService busy, IAppSettingsService _appSettings)
-        {
-            this.DialogSrv = dlg;
-            this.BusySrv = busy;
-            this._settings = _appSettings;
-        }
-
-        public bool AddTimestampToOutputButton
-        {
-            get { return _settings.AddTimestampToOutput; }
-            set { _settings.AddTimestampToOutput = value; }
-        }
-
     }
 
     public class AboutPartViewModel : MyViewModelBase
