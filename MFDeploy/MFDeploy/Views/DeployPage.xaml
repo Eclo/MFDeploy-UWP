@@ -6,27 +6,28 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Template10.Controls"
+    xmlns:data="using:MFDeploy.Models"
     xmlns:vm="using:MFDeploy.ViewModels" mc:Ignorable="d"
     DataContext="{Binding DeployViewModel, Mode=OneWay, Source={StaticResource Locator}}">
 
     <Page.Resources>
         <!--#region DataTemplate-->
-        <DataTemplate x:Key="ImageOverlayFileDataTemplate">
+        <DataTemplate x:Key="ImageOverlayFileDataTemplate" x:DataType="data:DeployFile">
             <Grid Background="#FF939598" Height="150" Width="150">
                 <Image Source="/SampleImage.png"  Stretch="UniformToFill"/>
                 <StackPanel Orientation="Vertical" Height="75" VerticalAlignment="Bottom">
-                    <TextBlock Text="{Binding FileName}" Margin="10,3,0,0" Width="150"
+                    <TextBlock Text="{x:Bind DFile.DisplayName}" Margin="10,3,0,0" Width="150"
                        TextWrapping="NoWrap" HorizontalAlignment="Left" Foreground="White"/>
-                    <TextBlock Text="{Binding FileTimeStamp}" Margin="10,3,0,0" Width="150"
+                    <TextBlock Text="{x:Bind FileProperties.ItemDate, Mode=OneWay}" Margin="10,3,0,0" Width="150"
                        TextWrapping="NoWrap" HorizontalAlignment="Left" Foreground="White"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding FileBaseAddress}" TextWrapping="NoWrap" Grid.Column="0" 
+                        <TextBlock Text="{x:Bind FileBaseAddress}" TextWrapping="NoWrap" Grid.Column="0" 
                                    Margin="10,3,0,10" Width="75" Foreground="White"/>
-                        <TextBlock Text="{Binding FileSize}" TextWrapping="NoWrap" Grid.Column="1" 
+                        <TextBlock Text="{x:Bind FileSize}" TextWrapping="NoWrap" Grid.Column="1" 
                                    Margin="10,3,0,10" Width="75" Foreground="White"/>
                     </Grid>
                 </StackPanel>
