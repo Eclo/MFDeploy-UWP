@@ -583,7 +583,7 @@
 
         <Button x:Name="AvailableDevicesButton" Grid.Row="0" Grid.Column="0"
                 Style="{StaticResource HeaderButtonHighlightedStyle}" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="250"
-                Content="{x:Bind ViewModel.SelectedDevice.Description, Mode=OneWay}" Margin="0,0,5,0" Height="40"
+                Content="{x:Bind ViewModel.SelectedDeviceDisplayContent, Mode=OneWay}" Margin="0,0,5,0" Height="40"
                 IsEnabled="{x:Bind ViewModel.IsBusyHeader, Converter={StaticResource BooleanInverterConverter}, Mode=OneWay}">
             <Button.Flyout>
                 <Flyout x:Name="AvailableDevicesFlyout" Placement="Bottom" views:AttachProp.IsOpen="False" Opened="AvailableDevicesFlyout_Opened">

@@ -36,7 +36,6 @@ namespace MFDeploy.ViewModels
             SelectedDevice = null;
             SelectedDeviceConnectionResult = PingConnectionResult.None;
             IsBusyHeader = false;
-
         }
 
 
@@ -57,8 +56,7 @@ namespace MFDeploy.ViewModels
             {
                 // Your UI update code goes here!
                 SelectedTransportType = TransportType.Usb;
-            }
-            );
+            });
         }
 
         public string PageHeader { get; set; }
@@ -83,15 +81,18 @@ namespace MFDeploy.ViewModels
                     {
                         // Your UI update code goes here!
                         AvailableDevices = new ObservableCollection<MFDeviceBase>(UsbDebugService.UsbDebugClient.MFDevices);
-                    }
-                    );
+                        if (AvailableDevices.Count == 1)
+                        {
+                            // if there's one, select it
+                            SelectedDevice = AvailableDevices.First();
+                        }
+                    });
                     break;
                 case TransportType.TcpIp:
                     // TODO
                     BusySrv.ShowBusy("Searching TcpIp...");
                     BusySrv.HideBusy();
                     break;
-
             }
         }
 
@@ -107,15 +108,22 @@ namespace MFDeploy.ViewModels
                 SelectedDevice.DebugEngine.SpuriousCharactersReceived += DebugEngine_SpuriousCharactersReceived;
             }
             // try to connect
-            await SelectedDeviceConnect();
-
-           
+            await SelectedDeviceConnect();           
         }
 
         private void DebugEngine_SpuriousCharactersReceived(object sender, Microsoft.SPOT.Debugger.StringEventArgs e)
         {
             string textToSend = settingsSrv.AddTimestampToOutput ? $"[{DateTime.Now.ToString()}] {e.EventText}" : e.EventText;
             this.MessengerInstance.Send<NotificationMessage>(new NotificationMessage(textToSend), WRITE_TO_OUTPUT_TOKEN);
+        }
+
+        public string SelectedDeviceDisplayContent
+        {
+            get
+            {
+                return (SelectedDevice != null) ? SelectedDevice.Description :
+                    ( (AvailableDevices.Count > 0) ? Res.GetString("HC_SelectADevice") : Res.GetString("HC_NoDevices") );
+            }
         }
 
         #region Transport
@@ -165,9 +173,7 @@ namespace MFDeploy.ViewModels
         public bool Disconnecting { get { return (ConnectionStateResult == ConnectionState.Disconnecting); } }
 
         public async void ConnectDisconnect()
-        {
-            IsBusyHeader = true;
-            
+        {                        
             if (ConnectionStateResult == ConnectionState.Connected)
             {
                 SelectedDeviceDisconnect();
@@ -176,12 +182,11 @@ namespace MFDeploy.ViewModels
             {
                 await SelectedDeviceConnect();               
             }
-
-            IsBusyHeader = false;
         }
 
         private async Task SelectedDeviceConnect()
-        {            
+        {
+            IsBusyHeader = true;
             ConnectionStateResult = ConnectionState.Connecting;
             bool connectOk = await SelectedDevice.DebugEngine.ConnectAsync(3, 1000);
 
@@ -190,13 +195,16 @@ namespace MFDeploy.ViewModels
             {
                 await DialogSrv.ShowMessageAsync(Res.GetString("HC_ConnectionError"));
             }
+            IsBusyHeader = false;
         }
 
         private void SelectedDeviceDisconnect()
         {
+            IsBusyHeader = true;
             ConnectionStateResult = ConnectionState.Disconnecting;
             SelectedDevice.DebugEngine.Disconnect();
             ConnectionStateResult = ConnectionState.Disconnected;
+            IsBusyHeader = false;
         }
 
         #endregion

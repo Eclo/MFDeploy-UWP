@@ -294,4 +294,10 @@ Please try again.</value>
   <data name="ST_DeployFolderTextBox.Header" xml:space="preserve">
     <value>Deployment files folder</value>
   </data>
+  <data name="HC_NoDevices" xml:space="preserve">
+    <value>&lt; no devices available &gt;</value>
+  </data>
+  <data name="HC_SelectADevice" xml:space="preserve">
+    <value>&lt; select a device &gt;</value>
+  </data>
 </root>
