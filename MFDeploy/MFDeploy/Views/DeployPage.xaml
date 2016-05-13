@@ -13,22 +13,22 @@
     <Page.Resources>
         <!--#region DataTemplate-->
         <DataTemplate x:Key="ImageOverlayFileDataTemplate" x:DataType="data:DeployFile">
-            <Grid Background="#FF939598" Height="150" Width="150">
+            <Grid Background="{ThemeResource GridViewItemBackgroundBrush}" Height="150" Width="150">
                 <Image Source="/SampleImage.png"  Stretch="UniformToFill"/>
                 <StackPanel Orientation="Vertical" Height="75" VerticalAlignment="Bottom">
-                    <TextBlock Text="{x:Bind DFile.DisplayName}" Margin="10,3,0,0" Width="150"
-                       TextWrapping="NoWrap" HorizontalAlignment="Left" Foreground="White"/>
+                    <TextBlock Text="{x:Bind DFile.DisplayName}" Margin="10,3,0,0" Width="150" TextWrapping="NoWrap" HorizontalAlignment="Left" 
+                               Foreground="{ThemeResource ContrastColorBrush}"/>
                     <TextBlock Text="{x:Bind FileProperties.ItemDate, Mode=OneWay}" Margin="10,3,0,0" Width="150"
-                       TextWrapping="NoWrap" HorizontalAlignment="Left" Foreground="White"/>
+                               TextWrapping="NoWrap" HorizontalAlignment="Left" Foreground="{ThemeResource ContrastColorBrush}"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{x:Bind FileBaseAddress}" TextWrapping="NoWrap" Grid.Column="0" 
-                                   Margin="10,3,0,10" Width="75" Foreground="White"/>
+                        <TextBlock Text="{x:Bind FileBaseAddress}" TextWrapping="NoWrap" Grid.Column="0" Margin="10,3,0,10" Width="75" 
+                                   Foreground="{ThemeResource ContrastColorBrush}" />
                         <TextBlock Text="{x:Bind FileSize}" TextWrapping="NoWrap" Grid.Column="1" 
-                                   Margin="10,3,0,10" Width="75" Foreground="White"/>
+                                   Margin="10,3,0,10" Width="75" Foreground="{ThemeResource ContrastColorBrush}" />
                     </Grid>
                 </StackPanel>
             </Grid>

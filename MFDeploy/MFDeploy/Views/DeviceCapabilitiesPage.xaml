@@ -49,8 +49,8 @@
                HeaderTemplate="{StaticResource PivotItemHeaderTemplate}">
 
             <!-- system -->
-            <PivotItem x:Name="systemPivotItem" x:Uid="DC_SystemPivotItem" Header="System" Padding="12,0,0,0"
-                       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="-12,0,0,0">
+            <PivotItem x:Name="systemPivotItem" x:Uid="DC_SystemPivotItem" Header="System" Padding="24,0,0,0"
+                       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="-12,0,0,0" >
                 <RichTextBlock x:Name="systemRichTextBlock" IsTextSelectionEnabled="True">
                     <Paragraph>
                         <Run Text="{x:Bind ViewModel.DeviceSystemInfo, Mode=OneWay}" FontFamily="Courier New"/>
@@ -60,25 +60,25 @@
 
             <!-- memory -->
             <PivotItem x:Name="memoryPivotItem" x:Uid="DC_MemoryMapPivotItem" Header="Maps" 
-                       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="-12,0,0,0" Padding="12,0,0,0">
+                       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="-12,0,0,0" Padding="24,0,0,0">
 
                 <RichTextBlock x:Name="memoryRichTextBlock" IsTextSelectionEnabled="True">
-                    <Paragraph Margin="10,20,0,0">
+                    <Paragraph Margin="0,20,0,0">
                         <Run x:Uid="DC_DeviceMemoryMapTitle" Text="Memory Map" FontWeight="SemiBold"/>
                     </Paragraph>
-                    <Paragraph Margin="10,5,0,0">
+                    <Paragraph Margin="0,5,0,0">
                         <Run Text="{x:Bind ViewModel.DeviceMemoryMap, Mode=OneWay}" FontFamily="Courier New"/>
                     </Paragraph>
-                    <Paragraph Margin="10,20,0,0">
+                    <Paragraph Margin="0,20,0,0">
                         <Run x:Uid="DC_DeviceFlashSectorMapTitle" Text="Flash Sector Map" FontWeight="SemiBold"/>
                     </Paragraph>
-                    <Paragraph Margin="10,5,0,0">
+                    <Paragraph Margin="0,5,0,0">
                         <Run Text="{x:Bind ViewModel.DeviceFlashSectorMap, Mode=OneWay}" FontFamily="Courier New"/>
                     </Paragraph>
-                    <Paragraph Margin="10,20,0,0">
+                    <Paragraph Margin="0,20,0,0">
                         <Run x:Uid="DC_DeviceDeploymentMapTitle" Text="Deployment Map" FontWeight="SemiBold"/>
                     </Paragraph>
-                    <Paragraph Margin="10,5,0,0">
+                    <Paragraph Margin="0,5,0,0">
                         <Run Text="{x:Bind ViewModel.DeviceDeploymentMap, Mode=OneWay}" FontFamily="Courier New"/>
                     </Paragraph>
                 </RichTextBlock>
