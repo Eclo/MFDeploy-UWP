@@ -24,6 +24,7 @@ namespace MFDeploy.ViewModels
     {
         // messaging tokens
         public const int WRITE_TO_OUTPUT_TOKEN = 1;
+        public const int SELECTED_NULL_TOKEN = 2;
 
         private IAppSettingsService settingsSrv;
         public MainViewModel(IMyDialogService dlg, IBusyService busy, IAppSettingsService settings)
@@ -50,13 +51,11 @@ namespace MFDeploy.ViewModels
             }
         }
 
-        private async void UsbDebugClient_DeviceEnumerationCompleted(object sender, EventArgs e)
+        private void UsbDebugClient_DeviceEnumerationCompleted(object sender, EventArgs e)
         {
-            UsbDebugService.UsbDebugClient.DeviceEnumerationCompleted -= UsbDebugClient_DeviceEnumerationCompleted;
-            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-            () =>
+            UsbDebugService.UsbDebugClient.DeviceEnumerationCompleted -= UsbDebugClient_DeviceEnumerationCompleted;            
+            WindowWrapper.Current().Dispatcher.Dispatch(() =>
             {
-                // Your UI update code goes here!
                 SelectedTransportType = TransportType.Usb;
             });
         }
@@ -72,30 +71,52 @@ namespace MFDeploy.ViewModels
             {
                 case TransportType.Serial:
                     // TODO
-                    BusySrv.ShowBusy("Searching Serial...");
+                    BusySrv.ShowBusy("Not implemented yet! Why not give it a try??");                    
+                    await Task.Delay(2500);
+                    await WindowWrapper.Current().Dispatcher.DispatchAsync(() =>
+                    {
+                        AvailableDevices = new ObservableCollection<MFDeviceBase>();
+                        SelectedDevice = null;
+                    });
                     BusySrv.HideBusy();
                     break;
+
                 case TransportType.Usb:
-                    // need to implement type conversion from MFDevices to MFDeviceBase to be able to copy reference,
-                    // so changes in UsbDebugService.UsbDebugClient.MFDevices get reflected in AvailableDevices
-                    await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-                    () =>
+                   
+                    WindowWrapper.Current().Dispatcher.Dispatch(() =>
                     {
-                        // Your UI update code goes here!
+                        BusySrv.ShowBusy(Res.GetString("HC_Searching"));
                         AvailableDevices = new ObservableCollection<MFDeviceBase>(UsbDebugService.UsbDebugClient.MFDevices);
-                        if (AvailableDevices.Count == 1)
-                        {
-                            // if there's one, select it
-                            SelectedDevice = AvailableDevices.First();
-                        }
+                        UsbDebugService.UsbDebugClient.MFDevices.CollectionChanged += MFDevices_CollectionChanged;
+                        // if there's just one, select it
+                        SelectedDevice = (AvailableDevices.Count == 1) ? AvailableDevices.First() : null;
+                        BusySrv.HideBusy();
                     });
+                   
                     break;
+
                 case TransportType.TcpIp:
                     // TODO
-                    BusySrv.ShowBusy("Searching TcpIp...");
+                    BusySrv.ShowBusy("Not implemented yet! Why not give it a try??");
+                    await Task.Delay(2500);
+                    await WindowWrapper.Current().Dispatcher.DispatchAsync(() =>
+                    {
+                        AvailableDevices = new ObservableCollection<MFDeviceBase>();
+                        SelectedDevice = null;
+                    });
                     BusySrv.HideBusy();
                     break;
             }
+        }
+
+        private  void MFDevices_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            WindowWrapper.Current().Dispatcher.Dispatch(() =>
+            {
+                AvailableDevices = new ObservableCollection<MFDeviceBase>(UsbDebugService.UsbDebugClient.MFDevices);
+                // if there's just one, select it
+                SelectedDevice = (AvailableDevices.Count == 1) ? AvailableDevices.First() : null;
+            });
         }
 
         public MFDeviceBase SelectedDevice { get; set; }
@@ -108,6 +129,10 @@ namespace MFDeploy.ViewModels
             {
                 SelectedDevice.DebugEngine.SpuriousCharactersReceived -= DebugEngine_SpuriousCharactersReceived;
                 SelectedDevice.DebugEngine.SpuriousCharactersReceived += DebugEngine_SpuriousCharactersReceived;
+            }
+            else
+            {
+                this.MessengerInstance.Send<NotificationMessage>(new NotificationMessage(""), SELECTED_NULL_TOKEN);
             }
             // try to connect
            SelectedDeviceConnect();           
@@ -187,37 +212,45 @@ namespace MFDeploy.ViewModels
         }
 
         private async void SelectedDeviceConnect()
-        {            
-            await WindowWrapper.Current().Dispatcher.DispatchAsync(() => {
-                IsBusyHeader = true;
-                ConnectionStateResult = ConnectionState.Connecting;
-            });
-
-            bool connectOk = await SelectedDevice.DebugEngine.ConnectAsync(3, 1000);
-                       
-            await WindowWrapper.Current().Dispatcher.DispatchAsync(() => {
-                ConnectionStateResult = connectOk ? ConnectionState.Connected : ConnectionState.Disconnected;
-                IsBusyHeader = false;
-            });
-            if (!connectOk)
+        {
+            if (SelectedDevice != null)
             {
-                await DialogSrv.ShowMessageAsync(Res.GetString("HC_ConnectionError"));
+                await WindowWrapper.Current().Dispatcher.DispatchAsync(() =>
+                {
+                    IsBusyHeader = true;
+                    ConnectionStateResult = ConnectionState.Connecting;
+                });
+
+                bool connectOk = await SelectedDevice.DebugEngine.ConnectAsync(3, 1000);
+
+                await WindowWrapper.Current().Dispatcher.DispatchAsync(() =>
+                {
+                    ConnectionStateResult = connectOk ? ConnectionState.Connected : ConnectionState.Disconnected;
+                    IsBusyHeader = false;
+                });
+                if (!connectOk)
+                {
+                    await DialogSrv.ShowMessageAsync(Res.GetString("HC_ConnectionError"));
+                }
             }
         }
 
         private void SelectedDeviceDisconnect()
-        {            
-            WindowWrapper.Current().Dispatcher.Dispatch(() => {
-                IsBusyHeader = true;
-                ConnectionStateResult = ConnectionState.Disconnecting;
-            });
-            SelectedDevice.DebugEngine.Disconnect();
-            WindowWrapper.Current().Dispatcher.Dispatch( () => {
-                ConnectionStateResult = ConnectionState.Disconnected;
-                IsBusyHeader = false;
-            });
-            
-           
+        {
+            if (SelectedDevice != null)
+            {
+                WindowWrapper.Current().Dispatcher.Dispatch(() =>
+                {
+                    IsBusyHeader = true;
+                    ConnectionStateResult = ConnectionState.Disconnecting;
+                });
+                SelectedDevice.DebugEngine.Disconnect();
+                WindowWrapper.Current().Dispatcher.Dispatch(() =>
+                {
+                    ConnectionStateResult = ConnectionState.Disconnected;
+                    IsBusyHeader = false;
+                });
+            }                      
         }
 
         #endregion

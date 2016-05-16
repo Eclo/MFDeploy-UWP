@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GalaSoft.MvvmLight.Messaging;
 using MFDeploy.Services.BusyService;
 using MFDeploy.Services.Dialog;
 using MFDeploy.Utilities;
+using MFDeploy.Views.Config;
 using Microsoft.Practices.ServiceLocation;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
@@ -31,6 +33,7 @@ namespace MFDeploy.ViewModels
             {
                 //Value = suspensionState[nameof(Value)]?.ToString();
             }
+            MessengerInstance.Register<NotificationMessage>(this, MainViewModel.SELECTED_NULL_TOKEN, (message) => SelectedIsNullHandler());
             await Task.CompletedTask;
 
             MainVM.PageHeader = Res.GetString("CU_PageHeader");
@@ -42,6 +45,7 @@ namespace MFDeploy.ViewModels
             {
                 //suspensionState[nameof(Value)] = Value;
             }
+            MessengerInstance.Unregister(this);
             await Task.CompletedTask;
         }
 
@@ -52,5 +56,9 @@ namespace MFDeploy.ViewModels
         }
 
         #endregion
+        private void SelectedIsNullHandler()
+        {
+            this.NavigationService.Navigate(Pages.MainPage);
+        }
     }
 }

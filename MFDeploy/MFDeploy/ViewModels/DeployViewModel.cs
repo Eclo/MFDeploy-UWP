@@ -20,6 +20,7 @@ using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml.Navigation;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace MFDeploy.ViewModels
 {
@@ -43,6 +44,7 @@ namespace MFDeploy.ViewModels
             {
                 //Value = suspensionState[nameof(Value)]?.ToString();
             }
+            MessengerInstance.Register<NotificationMessage>(this, MainViewModel.SELECTED_NULL_TOKEN, (message) => SelectedIsNullHandler());
             await Task.CompletedTask;
 
             MainVM.PageHeader = Res.GetString("DP_PageHeader");
@@ -54,6 +56,7 @@ namespace MFDeploy.ViewModels
             {
                 //suspensionState[nameof(Value)] = Value;
             }
+            MessengerInstance.Unregister(this);
             await Task.CompletedTask;
         }
 
@@ -64,6 +67,11 @@ namespace MFDeploy.ViewModels
         }
 
         #endregion
+        private void SelectedIsNullHandler()
+        {
+            this.NavigationService.Navigate(Pages.MainPage);
+        }
+
 
         public ObservableCollection<DeployFile> FilesList { get; set; }
 

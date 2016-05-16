@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Template10.Services.NavigationService;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml.Navigation;
+using MFDeploy.Views.Config;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace MFDeploy.ViewModels
 {
@@ -36,6 +38,7 @@ namespace MFDeploy.ViewModels
             await Task.CompletedTask;
 
             MainVM.PageHeader = Res.GetString("DC_PageHeader");
+            MessengerInstance.Register<NotificationMessage>(this, MainViewModel.SELECTED_NULL_TOKEN, (message) => SelectedIsNullHandler());
 
             // load device info
             LoadDeviceInfo();
@@ -47,8 +50,11 @@ namespace MFDeploy.ViewModels
             {
                 //suspensionState[nameof(Value)] = Value;
             }
+            MessengerInstance.Unregister(this);
             await Task.CompletedTask;
         }
+
+
 
         public override async Task OnNavigatingFromAsync(NavigatingEventArgs args)
         {
@@ -57,6 +63,11 @@ namespace MFDeploy.ViewModels
         }
 
         #endregion    }
+
+        private void SelectedIsNullHandler()
+        {
+            this.NavigationService.Navigate(Pages.MainPage);
+        }
 
         public StringBuilder DeviceDeploymentMap { get; set; }
 
