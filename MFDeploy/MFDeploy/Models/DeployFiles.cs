@@ -1,10 +1,12 @@
-﻿using PropertyChanged;
+﻿using Microsoft.SPOT.Debugger;
+using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Template10.Common;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
 using Windows.System.Threading;
@@ -18,13 +20,13 @@ namespace MFDeploy.Models
 
         public BasicProperties FileProperties { get; set; }
 
-        public string FileName { get; set; }
+        //public string FileName { get; set; }
 
-        public string FilePath { get; set; }
+        //public string FilePath { get; set; }
 
-        public ulong FileBaseAddress { get; set; }
+        public string FileBaseAddress { get; set; }
 
-        public ulong FileSize { get; set; }
+        public string FileSize { get; set; }
 
         public string FileTimeStamp { get; set; }
 
@@ -36,15 +38,31 @@ namespace MFDeploy.Models
             DFile = dFile;
             Selected = selected;
 
-            // 
+            // get file property, we need the file date creation
             LaunchThreadToGetFileProperties();
+
+            // get file memory address and size
+            LaunchThreadToGetBaseAddressAndSize(dFile);
         }
 
-        private async void LaunchThreadToGetFileProperties()
+        private void LaunchThreadToGetBaseAddressAndSize(StorageFile file)
         {
-            await ThreadPool.RunAsync(async (t) =>
+            WindowWrapper.Current().Dispatcher.Dispatch(async () =>
             {
-                FileProperties = await DFile.GetBasicPropertiesAsync();
+                var r = await SRecordFile.ParseAsync(file, null);
+
+                List<SRecordFile.Block> lb = r.Item2;
+                FileSize = String.Format("0x{0}", lb[0].data.Length.ToString("x4"));
+                FileBaseAddress = String.Format("0x{0}", lb[0].address.ToString("x4"));
+            });
+        }
+
+        private void LaunchThreadToGetFileProperties()
+        {
+            WindowWrapper.Current().Dispatcher.Dispatch(async () =>
+            {
+                var prop = await DFile.GetBasicPropertiesAsync();
+                FileTimeStamp = prop.ItemDate.ToString("g");
             });
         }
     }
