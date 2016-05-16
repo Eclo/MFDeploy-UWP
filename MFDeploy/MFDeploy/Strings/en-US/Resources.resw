@@ -300,7 +300,7 @@ Please try again.</value>
   <data name="HC_SelectADevice" xml:space="preserve">
     <value>&lt; select a device &gt;</value>
   </data>
-<data name="DP_Close" xml:space="preserve">
+  <data name="DP_Close" xml:space="preserve">
     <value>Close</value>
   </data>
   <data name="DP_GoToSettings" xml:space="preserve">
@@ -326,5 +326,11 @@ Please try again.</value>
   </data>
   <data name="DP_NoWorkerFolder" xml:space="preserve">
     <value>Oops! You haven't defined the default folder for deploy files. Please choose a folder on Settings page.</value>
+  </data>
+  <data name="HC_Searching" xml:space="preserve">
+    <value>Searching...</value>
+  </data>
+  <data name="ST_Concept" xml:space="preserve">
+    <value>Concept &amp; design by</value>
   </data>
 </root>

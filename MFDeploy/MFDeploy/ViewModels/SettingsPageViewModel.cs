@@ -58,8 +58,6 @@ namespace MFDeploy.ViewModels
         }
 
         #endregion
-
-
     }
 
     public class SettingsPartViewModel : MyViewModelBase
@@ -116,6 +114,14 @@ namespace MFDeploy.ViewModels
         public string DisplayName => Windows.ApplicationModel.Package.Current.DisplayName;
 
         public string Publisher => Windows.ApplicationModel.Package.Current.PublisherDisplayName;
+
+        public string Concept
+        {
+            get
+            {
+                return $"{Res.GetString("ST_Concept")} Eclo Solutions";
+            }
+        }
 
         public string Version
         {

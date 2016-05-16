@@ -99,11 +99,11 @@
                             </Canvas>
                         </Viewbox>
                     </Border>
-                    <StackPanel RelativePanel.RightOf="LogoImage" RelativePanel.AlignVerticalCenterWith="LogoImage"  Margin="20,0,0,0">
-                        <TextBlock x:Name="DisplayNameTextBlock" Margin="0,0,0,12" FontSize="24" Text="{Binding DisplayName}" />
+                    <StackPanel RelativePanel.RightOf="LogoImage"   Margin="20,0,0,0" Height="Auto">
+                        <TextBlock x:Name="DisplayNameTextBlock" Margin="0,0,0,12" FontSize="24" Text="{x:Bind ViewModel.AboutPartViewModel.DisplayName}" />
 
-                        <TextBlock x:Name="PublisherTextBlock" Text="{Binding Publisher}"  />
-
+                        <TextBlock x:Name="PublisherTextBlock" Text="{x:Bind ViewModel.AboutPartViewModel.Publisher}"  />
+                        <TextBlock x:Name="Concept" Text="{x:Bind ViewModel.AboutPartViewModel.Concept}" />
                         <TextBlock x:Name="VersionTextBlock">
                             <Run>Version</Run>
                             <Run Text="{Binding Version}" />
