@@ -18,8 +18,6 @@ namespace MFDeploy.Models
     {
         public StorageFile DFile { get; set; }
 
-        public BasicProperties FileProperties { get; set; }
-
         //public string FileName { get; set; }
 
         //public string FilePath { get; set; }
