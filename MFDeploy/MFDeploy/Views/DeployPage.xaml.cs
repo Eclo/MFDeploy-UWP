@@ -27,10 +27,18 @@ namespace MFDeploy.Views
         {
             // stop selection changed event
             filesListView.SelectionChanged -= filesListView_SelectionChanged;
+            // default
+            ViewModel.AnyFileSelected = false;
             // select all item as default
-            filesListView.SelectRange(new ItemIndexRange(0, (uint)ViewModel.FilesList.Count));
-            // enable deploy button
-            ViewModel.AnyFileSelected = true;
+            for (int i = 0; i < filesListView.Items.Count; i++)
+            {
+                if (ViewModel.FilesList[i].Selected)
+                {
+                    filesListView.SelectedItems.Add(filesListView.Items[i]);
+                    // any item selected, enable deploy button
+                    ViewModel.AnyFileSelected = true;
+                }
+            }
             // back with selection changed event
             filesListView.SelectionChanged += filesListView_SelectionChanged;
         }

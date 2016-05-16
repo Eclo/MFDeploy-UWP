@@ -48,6 +48,9 @@ namespace MFDeploy.ViewModels
             await Task.CompletedTask;
 
             MainVM.PageHeader = Res.GetString("DP_PageHeader");
+
+            if (FilesList != null)
+                FilesListLoaded?.Invoke(this, EventArgs.Empty);
         }
 
         public override async Task OnNavigatedFromAsync(IDictionary<string, object> suspensionState, bool suspending)
@@ -58,6 +61,8 @@ namespace MFDeploy.ViewModels
             }
             MessengerInstance.Unregister(this);
             await Task.CompletedTask;
+            // clear event handler
+            FilesListLoaded = null;
         }
 
         public override async Task OnNavigatingFromAsync(NavigatingEventArgs args)
